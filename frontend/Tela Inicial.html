@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minhas Receitas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    .btn-rosa {
+      background-color: #dda1df;
+      color: black;
+      border: none;
+    }
+    .btn-rosa:hover {
+      background-color: #c28cc8;
+    }
+  </style>
+</head>
+<body class="bg-light">
+
+  <div class="container py-5">
+    <!-- Cabeçalho -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-0">Minhas Receitas</h1>
+      <a href="#" class="btn btn-rosa">Nova Receita</a>
+    </div>
+
+    <!-- Filtros -->
+    <div class="row mb-4">
+      <div class="col-md-8">
+        <input type="text" class="form-control" placeholder="Buscar receita...">
+      </div>
+      <div class="col-md-4 d-flex gap-2 mt-2 mt-md-0">
+        <button class="btn btn-rosa w-100">Doces</button>
+        <button class="btn btn-rosa w-100">Salgados</button>
+        <button class="btn btn-rosa w-100">Todos</button>
+      </div>
+    </div>
+
+    <!-- Cards de receitas -->
+    <div class="row g-4">
+      <!-- Bolo de Chocolate -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://images.unsplash.com/photo-1626263468007-a9e0cf83f1ac?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+               class="card-img-top" 
+               alt="Bolo de Chocolate">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Bolo de Chocolate</h5>
+            <p class="card-text">Tempo de preparo: 45 minutos</p>
+            <a href="#" class="btn btn-rosa mt-auto w-100">Ver Receita</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pizza -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+               class="card-img-top" 
+               alt="Pizza">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Pizza Caseira</h5>
+            <p class="card-text">Tempo de preparo: 30 minutos</p>
+            <a href="#" class="btn btn-rosa mt-auto w-100">Ver Receita</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lasanha -->
+      <div class="col-md-4">
+        <div class="card h-100">
+          <img src="https://images.unsplash.com/photo-1709429790175-b02bb1b19207?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+               class="card-img-top" 
+               alt="Lasanha">
+          <div class="card-body d-flex flex-column">
+            <h5 class="card-title">Lasanha de Carne</h5>
+            <p class="card-text">Tempo de preparo: 50 minutos</p>
+            <a href="#" class="btn btn-rosa mt-auto w-100">Ver Receita</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
