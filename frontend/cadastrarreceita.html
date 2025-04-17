@@ -131,7 +131,7 @@
         <div class="section">
             <div class="section-title">Porções:</div>
             <div class="input-field">
-                <input type="text" placeholder="Número de porções">
+                <input type="number" placeholder="Número de porções" value="1" min="1" >
             </div>
         </div>
         
@@ -181,7 +181,7 @@
                 alert('Receita cadastrada com sucesso!');
             });
             
-            // Adicionar funcionalidade aos itens do dropdown de filtros
+            
             const filterItems = document.querySelectorAll('.dropdown-content a');
             filterItems.forEach(item => {
                 item.addEventListener('click', function(e) {
