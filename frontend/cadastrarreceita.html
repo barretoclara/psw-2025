@@ -159,7 +159,7 @@
         
         <div class="section">
             <div class="section-title">Ingredientes:</div>
-            <button class="select-button">Selecionar Ingredientes</button>
+            <button class="select-button" onclick="window.location.href='selecingredientes.html'">Selecionar Ingredientes</button>
         </div>
         
         <div class="section">
@@ -172,10 +172,6 @@
         <button class="add-button">Adicionar</button>
 
         <script>
-            document.querySelector('.select-button').addEventListener('click', function() {
-                alert('Aqui deve abrir pagina de seleção de ingredientes usando checkbox');
-            });
-            
             
             document.querySelector('.add-button').addEventListener('click', function() {
                 alert('Receita cadastrada com sucesso!');
@@ -192,5 +188,7 @@
             });
         </script>
     </div>
+
+    
 </body>
 </html>
