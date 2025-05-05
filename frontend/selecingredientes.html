@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Selecionar Ingredientes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 500px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+      margin-right: 10px;
+    }
+
+    .botao {
+      background-color: #dda1df;
+      color: rgb(0, 0, 0);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .botao:hover {
+      background-color: #c18dc3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Selecione os Ingredientes</h1>
+
+    <div class="checkbox-item"><input type="checkbox" id="pimentareino"><label for="pimentareino">Pimenta do Reino</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="mostarda"><label for="mostarda">Mostarda</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="ketchup"><label for="ketchup">Ketchup</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="cremedeleite"><label for="cremedeleite">Creme de Leite</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="manteiga"><label for="manteiga">Manteiga</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="cebola"><label for="cebola">Cebola</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="frango"><label for="frango">Frango</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="oleo"><label for="oleo">Óleo</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="sal"><label for="sal">Sal</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="cogumelos"><label for="cogumelos">Cogumelos</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="batatapalha"><label for="batatapalha">Batata Palha</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="maionese"><label for="maionese">Maionese</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="ovos"><label for="ovos">Ovos</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="arroz"><label for="arroz">Arroz</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="feijao"><label for="feijao">Feijão</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="banana"><label for="banana">Banana</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="leite"><label for="leite">Leite</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="fermento"><label for="fermento">Fermento</label></div>
+    <div class="checkbox-item"><input type="checkbox" id="acucar"><label for="acucar">Açucar</label></div>
+
+    <button class="botao" onclick="confirmarIngredientes()">Confirmar</button>
+  </div>
+
+  <script>
+    // Carrega os ingredientes já selecionados da localStorage (se existirem)
+    window.onload = function() {
+      const selecionados = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        if (selecionados.includes(cb.nextElementSibling.innerText)) {
+          cb.checked = true;
+        }
+      });
+    };
+
+    function confirmarIngredientes() {
+      const selecionados = [];
+      document.querySelectorAll('input[type="checkbox"]:checked').forEach(cb => {
+        selecionados.push(cb.nextElementSibling.innerText);
+      });
+
+      localStorage.setItem('ingredientesSelecionados', JSON.stringify(selecionados));
+      window.location.href = 'cadastrarreceita.html';
+    }
+  </script>
+</body>
+</html>
