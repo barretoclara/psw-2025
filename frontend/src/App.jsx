@@ -7,7 +7,7 @@ import {
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import ReceitaDetalhe from './components/ReceitaDetalhe';
+import ReceitaDetalhe from './components/Receita';
 import ListaMercado from './components/ListaMercado';
 import Estoque from './components/Estoque';
 import NotFound from './components/NotFound';
@@ -19,7 +19,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/receita/:id" element={<ReceitaDetalhe />} />
+        <Route path="/receita/:id" element={<Receita />} />
         <Route path="/lista-mercado" element={<ListaMercado />} />
         <Route path="/estoque" element={<Estoque />} />
         <Route path="*" element={<NotFound />} />
