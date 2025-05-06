@@ -7,7 +7,8 @@ import {
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import ReceitaDetalhe from './components/Receita';
+import Receita from './components/Receita';
+import CadastraReceita from './components/CadastraReceita';
 import ListaMercado from './components/ListaMercado';
 import Estoque from './components/Estoque';
 import NotFound from './components/NotFound';
@@ -20,6 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/receita/:id" element={<Receita />} />
+        <Route path="/cadastra-receita" element={CadastraReceita />} />
         <Route path="/lista-mercado" element={<ListaMercado />} />
         <Route path="/estoque" element={<Estoque />} />
         <Route path="*" element={<NotFound />} />
