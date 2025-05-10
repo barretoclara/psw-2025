@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panelinha Digital - Favoritos</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fceeff;
+            color: #333;
+        }
+        
+        .header {
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .logo {
+            font-family: 'Comic Sans MS', cursive;
+            color: #dda1df;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .search-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .search-input {
+            padding: 8px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            background-color: #faf0fb;
+            width: 200px;
+            transition: width 0.3s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #dda1df;
+            width: 250px;
+        }
+        
+        .search-icon {
+            color: #dda1df;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
+        .page-title {
+            padding: 20px 5%;
+            font-size: 1.5rem;
+            color: #dda1df;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-title i {
+            margin-right: 10px;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 5%;
+            color: #666;
+            display: none;
+        }
+        
+        .empty-state i {
+            font-size: 3rem;
+            color: #dda1df;
+            margin-bottom: 15px;
+        }
+        
+        .recipes-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 0 5% 80px;
+        }
+        
+        .recipe-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .recipe-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .recipe-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .recipe-info {
+            padding: 15px;
+            position: relative;
+        }
+        
+        .recipe-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .recipe-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+            font-size: 0.85rem;
+        }
+        
+        .favorite-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #ff6b6b;
+            font-size: 1.3rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            font-size: 0.7rem;
+            text-decoration: none;
+            flex: 1;
+            padding: 5px 0;
+        }
+        
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        
+        .nav-item.active {
+            color: #dda1df;
+        }
+        
+        @media (min-width: 1200px) {
+            .recipes-container {
+                grid-template-columns: repeat(3, 1fr);
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 0 20px 80px;
+            }
+            
+            .search-input {
+                width: 250px;
+            }
+            
+            .search-input:focus {
+                width: 300px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .search-input {
+                width: 150px;
+            }
+            
+            .search-input:focus {
+                width: 180px;
+            }
+            
+            .search-container {
+                flex-direction: row-reverse;
+            }
+            
+            .search-input {
+                display: none;
+            }
+            
+            .search-input.visible {
+                display: block;
+            }
+            
+            .nav-item {
+                font-size: 0.65rem;
+            }
+            
+            .nav-item i {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">Panelinha Digital</div>
+        <div class="search-container">
+            <input type="text" class="search-input" placeholder="Pesquisar favoritos..." id="search-input">
+            <i class="bi bi-search search-icon" id="search-icon"></i>
+        </div>
+    </div>
+    
+    <div class="page-title">
+        <i class="bi bi-heart-fill"></i>
+        Receitas Favoritas
+    </div>
+    
+    <div class="empty-state" id="empty-state">
+        <i class="bi bi-heart"></i>
+        <h3>Nenhuma receita favoritada</h3>
+        <p>Salve suas receitas preferidas clicando no coração</p>
+    </div>
+    
+    <div class="recipes-container" id="recipes-container">
+        <!-- Receita favorita 1 -->
+        <div class="recipe-card" data-name="bolo de chocolate premium">
+            <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f" class="recipe-image" alt="Bolo de Chocolate">
+            <div class="recipe-info">
+                <button class="favorite-btn">
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+                <div class="recipe-title">Bolo de Chocolate Premium</div>
+                <div class="recipe-meta">
+                    <span>45 min • 8 ingredientes</span>
+                    <span>⭐ 4.9</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Receita favorita 2 -->
+        <div class="recipe-card" data-name="pizza caseira da vovó">
+            <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3" class="recipe-image" alt="Pizza Caseira">
+            <div class="recipe-info">
+                <button class="favorite-btn">
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+                <div class="recipe-title">Pizza Caseira da Vovó</div>
+                <div class="recipe-meta">
+                    <span>30 min • 6 ingredientes</span>
+                    <span>⭐ 4.8</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Receita favorita 3 -->
+        <div class="recipe-card" data-name="salada tropical light">
+            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" class="recipe-image" alt="Salada Tropical">
+            <div class="recipe-info">
+                <button class="favorite-btn">
+                    <i class="bi bi-heart-fill"></i>
+                </button>
+                <div class="recipe-title">Salada Tropical Light</div>
+                <div class="recipe-meta">
+                    <span>15 min • 5 ingredientes</span>
+                    <span>⭐ 4.6</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="nav-footer">
+        <a href="#" class="nav-item">
+            <i class="bi bi-house-door"></i>
+            Início
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-fire"></i>
+            Em alta
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="bi bi-heart-fill"></i>
+            Favoritos
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-box-seam"></i>
+            Estoque
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-list-check"></i>
+            Lista de mercado
+        </a>
+    </div>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <script>
+        // Elementos DOM
+        const searchInput = document.getElementById('search-input');
+        const searchIcon = document.getElementById('search-icon');
+        const recipeCards = document.querySelectorAll('.recipe-card');
+        const emptyState = document.getElementById('empty-state');
+        const recipesContainer = document.getElementById('recipes-container');
+        
+        // Função de pesquisa
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            let visibleCards = 0;
+            
+            recipeCards.forEach(card => {
+                const recipeName = card.getAttribute('data-name');
+                if (recipeName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                    visibleCards++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            // Mostra estado vazio se nenhum card for encontrado
+            if (visibleCards === 0 && searchTerm !== '') {
+                emptyState.innerHTML = `
+                    <i class="bi bi-search"></i>
+                    <h3>Nenhuma receita encontrada</h3>
+                    <p>Tente buscar com outros termos</p>
+                `;
+                emptyState.style.display = 'block';
+                recipesContainer.style.display = 'none';
+            } else {
+                emptyState.style.display = 'none';
+                recipesContainer.style.display = 'grid';
+            }
+        });
+        
+        // Alternar entre ícone de lupa e campo de pesquisa no celular
+        if (window.innerWidth <= 768) {
+            searchInput.style.display = 'none';
+            
+            searchIcon.addEventListener('click', function() {
+                searchInput.classList.toggle('visible');
+                if (searchInput.classList.contains('visible')) {
+                    searchInput.focus();
+                }
+            });
+        }
+        
+        // Remover dos favoritos
+        document.querySelectorAll('.favorite-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const card = this.closest('.recipe-card');
+                card.style.display = 'none';
+                
+                // Verifica se não há mais favoritos
+                const visibleCards = document.querySelectorAll('.recipe-card[style*="display: block"], .recipe-card:not([style])');
+                if (visibleCards.length === 0) {
+                    emptyState.innerHTML = `
+                        <i class="bi bi-heart"></i>
+                        <h3>Nenhuma receita favoritada</h3>
+                        <p>Salve suas receitas preferidas clicando no coração</p>
+                    `;
+                    emptyState.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
