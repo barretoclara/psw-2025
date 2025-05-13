@@ -21,7 +21,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/receita/:id" element={<Receita />} />
-        <Route path="/cadastra-receita" element={CadastraReceita />} />
+        <Route path="/cadastra-receita" element={<CadastraReceita />} />
         <Route path="/lista-mercado" element={<ListaMercado />} />
         <Route path="/estoque" element={<Estoque />} />
         <Route path="*" element={<NotFound />} />
