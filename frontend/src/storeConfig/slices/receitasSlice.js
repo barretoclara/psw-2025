@@ -1,11 +1,10 @@
-// src/storeConfig/slices/receitasSlice.js
 import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
   isAnyOf,
 } from "@reduxjs/toolkit";
-import baseUrl from "../../api/baseUrl"; // ou '../api/baseUrl' dependendo da estrutura
+import baseUrl from "../../api/baseUrl";
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
 const receitasAdapter = createEntityAdapter();
