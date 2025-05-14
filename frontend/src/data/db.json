@@ -1,6 +1,12 @@
 {
   "usuarios": [
     {
+      "id": 2,
+      "nome": "Admin",
+      "email": "admin@email.com",
+      "senha": "Admin"
+    },
+    {
       "id": 1,
       "nome": "Maria",
       "email": "maria@email.com",
@@ -8,8 +14,14 @@
     }
   ],
   "categorias": [
-    { "id": 1, "nome": "Doce" },
-    { "id": 2, "nome": "Salgado" }
+    { "id": 1,
+      "userId": 1,
+      "nome": "Doce"
+    },
+    { "id": 1,
+      "userId":2,
+      "nome": "Salgado"
+    }
   ],
   "receitas": [
     {
@@ -27,6 +39,5 @@
   "estoque": [
     { "id": 1, "nome": "Farinha de trigo", "quantidade": 1, "unidade": "xícaras" },
     { "id": 2, "nome": "Ovos", "quantidade": 2, "unidade": "unidades" }
-  ],
-  "listaMercado": []
+  ]
 }
