@@ -1,33 +1,27 @@
-import {
-  BrowserRouter,
-  Router,
-  Routes,
-  Route 
-} from 'react-router-dom';
-import Home from './components/Home';
-import Login from './components/Login';
-import Register from './components/Register';
-import Receita from './components/Receita';
-import CadastraReceita from './components/CadastraReceita';
-import ListaMercado from './components/ListaMercado';
-import Estoque from './components/Estoque';
-import NotFound from './components/NotFound';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+import ReceitaPage from './pages/ReceitaPage';
+import EstoquePage from './pages/EstoquePage';
+import ListaMercadoPage from './pages/ListaMercadoPage';
+import LoginPage from './pages/LoginPage';
+import Header from './components/Header';
+import ProtectedRoute from './components/ProtectedRoute';
 
-function App() {
+const App = () => {
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/home" element={<Home />} />
-        <Route path="/receita/:id" element={<Receita />} />
-        <Route path="/cadastra-receita" element={<CadastraReceita />} />
-        <Route path="/lista-mercado" element={<ListaMercado />} />
-        <Route path="/estoque" element={<Estoque />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Header />
+      <main className="p-6">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/receita/:id" element={<ReceitaPage />} />
+          <Route path="/estoque" element={<ProtectedRoute><EstoquePage /></ProtectedRoute>} />
+          <Route path="/lista-mercado" element={<ProtectedRoute><ListaMercadoPage /></ProtectedRoute>} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </main>
     </Router>
   );
-}
+};
 
 export default App;
