@@ -1,0 +1,6 @@
+{
+  "/api/:userId/receitas": "/receitas?userId=:userId",
+  "/api/:userId/estoque": "/estoque?userId=:userId",
+  "/api/:userId/categorias": "/categorias?userId=:userId",
+  "/api/:userId/lista-mercado": "/listaMercado?userId=:userId"
+}

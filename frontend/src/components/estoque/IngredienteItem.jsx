@@ -1,8 +1,44 @@
-const IngredienteItem = ({ ingrediente }) => (
-  <li className="p-2 border rounded shadow flex justify-between">
-    <span>{ingrediente.nome}</span>
-    <span className="font-semibold">{ingrediente.quantidade}</span>
-  </li>
-);
+import { useDispatch } from 'react-redux';
+import { deleteEstoqueItem, updateEstoqueItem } from '../storeConfig/slices/estoqueSlice';
+import { useUserData } from '../hooks/useUserData';
+
+const IngredienteItem = ({ ingrediente }) => {
+  const dispatch = useDispatch();
+  const { validateUser } = useUserData();
+
+  const handleDelete = () => {
+    dispatch(deleteEstoqueItem({
+      id: ingrediente.id,
+      userId: validateUser()
+    }));
+  };
+
+  const handleUpdate = (novosDados) => {
+    dispatch(updateEstoqueItem({
+      itemData: { ...ingrediente, ...novosDados },
+      userId: validateUser()
+    }));
+  };
+
+  return (
+    <li className="flex justify-between items-center p-2 border rounded">
+      <span>{ingrediente.nome} - {ingrediente.quantidade}</span>
+      <div className="space-x-2">
+        <button 
+          onClick={() => handleUpdate({ quantidade: ingrediente.quantidade + 1 })}
+          className="px-2 bg-green-100"
+        >
+          +
+        </button>
+        <button 
+          onClick={handleDelete}
+          className="px-2 bg-red-100"
+        >
+          Remover
+        </button>
+      </div>
+    </li>
+  );
+};
 
 export default IngredienteItem;

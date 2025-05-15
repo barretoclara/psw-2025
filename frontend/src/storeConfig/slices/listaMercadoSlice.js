@@ -1,19 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { selectAllReceitas } from './receitasSlice';
-import { selectAllEstoque } from './estoqueSlice';
 
 export const gerarListaMercado = createAsyncThunk(
   'listaMercado/gerar',
-  async (receitasIds, { getState }) => {
+  async ({receitasIds, userId}, { getState }) => {
     const state = getState();
-    const receitas = selectAllReceitas(state);
-    const estoque = selectAllEstoque(state);
+    const userId = selectCurrentUserId(state);
+
+    const receitas = Object.values(state.receitas.entities)
+      .filter(r => r.userId === userId && receitasIds.includes(r.id));
     
-    const receitasSelecionadas = receitas.filter(r => receitasIds.includes(r.id));
-    
+    const estoque = Object.values(state.estoque.entities)
+      .filter(e => e.userId === userId);
+
     const ingredientesNecessarios = {};
     
-    receitasSelecionadas.forEach(receita => {
+    receitas.forEach(receita => {
       receita.ingredientes.forEach(ing => {
         const estoqueItem = estoque.find(e => e.id === ing.id);
         const quantidadeNecessaria = ing.quantidade - (estoqueItem?.quantidade || 0);

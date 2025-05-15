@@ -4,14 +4,23 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchEstoque } from '../storeConfig/slices/estoqueSlice';
 import { fetchReceitas } from '../storeConfig/slices/receitasSlice';
+import { fetchCategorias } from '../storeConfig/slices/categoriasSlice';
+import { useUserData } from '../hooks/useUserData';
 
 const HomePage = () => {
   const dispatch = useDispatch();
+  const { userId, validateUser } = useUserData();
 
   useEffect(() => {
-    dispatch(fetchEstoque());
-    dispatch(fetchReceitas());
-  }, [dispatch]);
+    try {
+      const validUserId = validateUser();
+      dispatch(fetchReceitas(validUserId));
+      dispatch(fetchEstoque(validUserId));
+      dispatch(fetchCategorias(validUserId));
+    } catch (error) {
+      console.error("Erro de autenticação:", error);
+    }
+  }, [dispatch, validateUser]);
 
   return (
     <div className="space-y-6">

@@ -12,28 +12,46 @@ const receitasAdapter = createEntityAdapter();
 const initialState = receitasAdapter.getInitialState({
   status: "idle",
   error: null,
+  filtro: null,
 });
 
-export const fetchReceitas = createAsyncThunk("receitas/fetchAll", async () => {
-  return httpGet(`${baseUrl}/receitas`);
-});
+export const fetchReceitas = createAsyncThunk(
+  'receitas/fetchAll',
+  async (userId) => {
+    return httpGet(`${baseUrl}/receitas?userId=${userId}`);
+  }
+);
 
-export const addReceita = createAsyncThunk("receitas/add", async (novaReceita) => {
-  return httpPost(`${baseUrl}/receitas`, novaReceita);
-});
+export const addReceita = createAsyncThunk(
+  'receitas/add',
+  async ({ receitaData, userId }) => {
+    return httpPost(`${baseUrl}/receitas`, { ...receitaData, userId });
+  }
+);
 
-export const updateReceita = createAsyncThunk("receitas/update", async (receita) => {
-  return httpPut(`${baseUrl}/receitas/${receita.id}`, receita);
-});
+export const updateReceita = createAsyncThunk(
+  'receitas/update',
+  async ({ receitaData, userId }) => {
+    return httpPut(`${baseUrl}/receitas/${receitaData.id}`, { ...receitaData, userId });
+  }
+);
 
-export const deleteReceita = createAsyncThunk("receitas/delete", async (id) => {
-  await httpDelete(`${baseUrl}/receitas/${id}`);
-  return id;
-});
+export const deleteReceita = createAsyncThunk(
+  'receitas/delete',
+  async ({ id, userId }) => {
+    await httpDelete(`${baseUrl}/receitas/${id}`);
+    return id;
+  }
+);
 
 const receitasSlice = createSlice({
   name: "receitas",
   initialState,
+  reducers: {
+    setFiltro(state, action) {
+      state.filtro = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchReceitas.fulfilled, (state, action) => {
@@ -80,7 +98,15 @@ const receitasSlice = createSlice({
 export const {
   selectAll: selectAllReceitas,
   selectById: selectReceitaById,
-  selectIds: selectReceitaIds,
 } = receitasAdapter.getSelectors((state) => state.receitas);
 
+export const selectReceitasDoUsuario = (state) => {
+  const userId = state.usuario.usuario?.id;
+  if (!userId) return [];
+  
+  return Object.values(state.receitas.entities)
+    .filter(r => r.userId === userId);
+};
+
+export const { setFiltro } = receitasSlice.actions;
 export default receitasSlice.reducer;

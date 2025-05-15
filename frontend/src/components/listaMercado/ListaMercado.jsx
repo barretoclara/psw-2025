@@ -8,14 +8,18 @@ export default function ListaMercado() {
   const { items, status } = useSelector(state => state.listaMercado);
   const receitas = useSelector(selectAllReceitas);
   const [receitasSelecionadas, setReceitasSelecionadas] = useState([]);
+  const userId = useSelector(selectCurrentUserId);
 
   useEffect(() => {
-    if (receitasSelecionadas.length > 0) {
-      dispatch(gerarListaMercado(receitasSelecionadas));
-    } else {
+    if (userId && receitasSelecionadas.length > 0) {
+      dispatch(gerarListaMercado({ 
+        receitasIds: receitasSelecionadas,
+        userId 
+      }));
+    } else {    // !
       dispatch(limparLista());
     }
-  }, [receitasSelecionadas, dispatch]);
+  }, [receitasSelecionadas, userId, dispatch]);
 
   const toggleReceita = (id) => {
     setReceitasSelecionadas(prev => 

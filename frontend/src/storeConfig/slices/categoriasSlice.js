@@ -14,22 +14,34 @@ const initialState = categoriasAdapter.getInitialState({
   error: null,
 });
 
-export const fetchCategorias = createAsyncThunk("categorias/fetch", async () => {
-  return httpGet(`${baseUrl}/categorias`);
-});
+export const fetchCategorias = createAsyncThunk(
+  'categorias/fetchAll',
+  async (userId) => {
+    return httpGet(`${baseUrl}/categorias?userId=${userId}`);
+  }
+);
 
-export const addCategoria = createAsyncThunk("categorias/add", async (categoria) => {
-  return httpPost(`${baseUrl}/categorias`, categoria);
-});
+export const addCategoria = createAsyncThunk(
+  'categorias/add',
+  async ({ nome, userId }) => {
+    return httpPost(`${baseUrl}/categorias`, { nome, userId });
+  }
+);
 
-export const updateCategoria = createAsyncThunk("categorias/update", async (categoria) => {
-  return httpPut(`${baseUrl}/categorias/${categoria.id}`, categoria);
-});
+export const updateCategoria = createAsyncThunk(
+  'categorias/update',
+  async ({ categoria, userId }) => {
+    return httpPut(`${baseUrl}/categorias/${categoria.id}`, { ...categoria, userId });
+  }
+);
 
-export const deleteCategoria = createAsyncThunk("categorias/delete", async (id) => {
-  await httpDelete(`${baseUrl}/categorias/${id}`);
-  return id;
-});
+export const deleteCategoria = createAsyncThunk(
+  'categorias/delete',
+  async ({ id, userId }) => {
+    await httpDelete(`${baseUrl}/categorias/${id}`);
+    return id;
+  }
+);
 
 const categoriasSlice = createSlice({
   name: "categorias",
@@ -81,5 +93,13 @@ export const {
   selectAll: selectAllCategorias,
   selectById: selectCategoriaById,
 } = categoriasAdapter.getSelectors((state) => state.categorias);
+
+export const selectCategoriasDoUsuario = (state) => {
+  const userId = state.usuario.usuario?.id;
+  if (!userId) return [];
+  
+  return Object.values(state.categorias.entities)
+    .filter(c => c.userId === userId);
+};
 
 export default categoriasSlice.reducer;

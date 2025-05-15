@@ -5,7 +5,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 const ReceitaForm = ({ onSubmit }) => {
   const dispatch = useDispatch();
-  
+  const userId = useSelector(selectCurrentUserId);
+
   const categorias = useSelector(state => state.categorias.entities);
   const estoque = useSelector(state => state.estoque.entities);
 
@@ -41,7 +42,8 @@ const ReceitaForm = ({ onSubmit }) => {
     e.preventDefault();
     onSubmit({ 
       id: uuidv4(), 
-      nome, 
+      nome,
+      userId,
       categoria, 
       tempo_preparo: tempoPreparo, 
       modo_preparo: modoPreparo, 

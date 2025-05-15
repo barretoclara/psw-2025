@@ -1,14 +1,28 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import CategoriaItem from './CategoriaItem';
+import { useUserData } from '../hooks/useUserData';
+import { fetchCategorias } from '../storeConfig/slices/categoriasSlice';
 
 const CategoriaList = () => {
-  const categorias = useSelector(state => state.categorias.entities);
+  const dispatch = useDispatch();
+  const { userId, validateUser } = useUserData();
+  
+  useEffect(() => {
+    if (userId) {
+      dispatch(fetchCategorias(validateUser()));
+    }
+  }, [userId, dispatch, validateUser]);
 
-  if (!categorias) return <p>Nenhuma categoria cadastrada.</p>;
+  const categorias = useSelector(state => 
+    Object.values(state.categorias.entities).filter(c => c.userId === userId)
+  );
+
+  if (!categorias) return <p>Carregando categorias...</p>;
+  if (categorias.length === 0) return <p>Nenhuma categoria cadastrada.</p>;
 
   return (
     <div className="flex gap-4 flex-wrap">
-      {Object.values(categorias).map(cat => (
+      {categorias.map(cat => (
         <CategoriaItem key={cat.id} categoria={cat} />
       ))}
     </div>

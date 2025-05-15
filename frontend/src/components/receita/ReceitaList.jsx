@@ -1,15 +1,23 @@
 import { useSelector } from 'react-redux';
 import ReceitaItem from './ReceitaItem';
+import { useUserData } from '../hooks/useUserData';
 
 const ReceitaList = () => {
-  const receitas = useSelector(state => state.receitas.entities);
+  const { userId } = useUserData();
   const filtro = useSelector(state => state.receitas.filtro);
+  
+  const receitasFiltradas = useSelector(state => {
+    const todasReceitas = Object.values(state.receitas.entities);
+    const doUsuario = todasReceitas.filter(r => r.userId === userId);
+    
+    return filtro 
+      ? doUsuario.filter(r => r.categoria === filtro)
+      : doUsuario;
+  });
 
-  const receitasFiltradas = filtro
-    ? Object.values(receitas).filter(r => r.categoria === filtro)
-    : Object.values(receitas);
-
-  if (!receitasFiltradas.length) return <p>Nenhuma receita encontrada.</p>;
+  if (!receitasFiltradas.length) {
+    return <p>{filtro ? "Nenhuma receita nesta categoria." : "Nenhuma receita encontrada."}</p>;
+  }
 
   return (
     <ul className="space-y-3">

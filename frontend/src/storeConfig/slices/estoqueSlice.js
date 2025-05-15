@@ -14,22 +14,34 @@ const initialState = estoqueAdapter.getInitialState({
   error: null,
 });
 
-export const fetchEstoque = createAsyncThunk("estoque/fetch", async () => {
-  return httpGet(`${baseUrl}/estoque`);
-});
+export const fetchEstoque = createAsyncThunk(
+  'estoque/fetchAll',
+  async (userId) => {
+    return httpGet(`${baseUrl}/estoque?userId=${userId}`);
+  }
+);
 
-export const addEstoqueItem = createAsyncThunk("estoque/add", async (item) => {
-  return httpPost(`${baseUrl}/estoque`, item);
-});
+export const addEstoqueItem = createAsyncThunk(
+  'estoque/add',
+  async ({ itemData, userId }) => {
+    return httpPost(`${baseUrl}/estoque`, { ...itemData, userId });
+  }
+);
 
-export const updateEstoqueItem = createAsyncThunk("estoque/update", async (item) => {
-  return httpPut(`${baseUrl}/estoque/${item.id}`, item);
-});
+export const updateEstoqueItem = createAsyncThunk(
+  'estoque/update',
+  async ({ itemData, userId }) => {
+    return httpPut(`${baseUrl}/estoque/${itemData.id}`, { ...itemData, userId });
+  }
+);
 
-export const deleteEstoqueItem = createAsyncThunk("estoque/delete", async (id) => {
-  await httpDelete(`${baseUrl}/estoque/${id}`);
-  return id;
-});
+export const deleteEstoqueItem = createAsyncThunk(
+  'estoque/delete',
+  async ({ id, userId }) => {
+    await httpDelete(`${baseUrl}/estoque/${id}`);
+    return id;
+  }
+);
 
 const estoqueSlice = createSlice({
   name: "estoque",
