@@ -1,56 +1,33 @@
-import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
-
-// Estoque mockado (exemplo por enquanto)
-const estoqueUsuario = [
-  { nome: "Farinha de trigo", quantidade: 1, unidade: "xícaras" },
-  { nome: "Açúcar", quantidade: 1, unidade: "xícaras" },
-  { nome: "Ovos", quantidade: 2, unidade: "unidades" },
-];
-
-function calcularListaDeMercado(receitas, estoque) {
-  const mapaIngredientes = new Map();
-
-  receitas.forEach(receita => {
-    receita.ingredientes.forEach(ing => {
-      const chave = `${ing.nome}-${ing.unidade}`;
-      const atual = mapaIngredientes.get(chave) || 0;
-      mapaIngredientes.set(chave, atual + ing.quantidade);
-    });
-  });
-
-  estoque.forEach(item => {
-    const chave = `${item.nome}-${item.unidade}`;
-    const quantidadeEstoque = mapaIngredientes.get(chave);
-    if (quantidadeEstoque !== undefined) {
-      const restante = quantidadeEstoque - item.quantidade;
-      if (restante > 0) {
-        mapaIngredientes.set(chave, restante);
-      } else {
-        mapaIngredientes.delete(chave);
-      }
-    }
-  });
-
-  const listaFinal = [];
-  mapaIngredientes.forEach((quantidade, chave) => {
-    const [nome, unidade] = chave.split("-");
-    listaFinal.push({ nome, quantidade, unidade });
-  });
-
-  return listaFinal;
-}
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { gerarListaMercado, limparLista } from "../storeConfig/slices/listaMercadoSlice";
+import { selectAllReceitas } from "../storeConfig/slices/receitasSlice";
 
 export default function ListaMercado() {
-  const [lista, setLista] = useState([]);
+  const dispatch = useDispatch();
+  const { items, status } = useSelector(state => state.listaMercado);
+  const receitas = useSelector(selectAllReceitas);
+  const [receitasSelecionadas, setReceitasSelecionadas] = useState([]);
 
   useEffect(() => {
-    const receitasSelecionadas = JSON.parse(localStorage.getItem("receitasSelecionadas") || "[]");
-    const listaCalculada = calcularListaDeMercado(receitasSelecionadas, estoqueUsuario);
-    setLista(listaCalculada);
-  }, []);
+    if (receitasSelecionadas.length > 0) {
+      dispatch(gerarListaMercado(receitasSelecionadas));
+    } else {
+      dispatch(limparLista());
+    }
+  }, [receitasSelecionadas, dispatch]);
 
-  const textoLista = lista.map(item => `${item.quantidade} ${item.unidade} de ${item.nome}`).join("\n");
+  const toggleReceita = (id) => {
+    setReceitasSelecionadas(prev => 
+      prev.includes(id) 
+        ? prev.filter(rId => rId !== id)
+        : [...prev, id]
+    );
+  };
+
+  const textoLista = items.map(item => 
+    `${item.quantidade} ${item.unidade} de ${item.nome}`
+  ).join("\n");
 
   function copiarLista() {
     navigator.clipboard.writeText(textoLista).then(() => {
@@ -84,25 +61,50 @@ export default function ListaMercado() {
   return (
     <div className="max-w-xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-4 text-center">Lista de Mercado</h1>
-
-      {lista.length === 0 ? (
-        <p className="text-center text-gray-600">Nenhum item necessário — você tem tudo em estoque!</p>
-      ) : (
-        <ul className="mb-6 space-y-2">
-          {lista.map((item, index) => (
-            <li key={index} className="bg-pink-100 border border-gray-400 p-2 rounded">
-              {item.quantidade} {item.unidade} de {item.nome}
-            </li>
+      
+      <div className="mb-6">
+        <h2 className="text-xl font-semibold mb-2">Selecione as receitas:</h2>
+        <div className="space-y-2">
+          {receitas.map(receita => (
+            <div key={receita.id} className="flex items-center">
+              <input
+                type="checkbox"
+                id={`receita-${receita.id}`}
+                checked={receitasSelecionadas.includes(receita.id)}
+                onChange={() => toggleReceita(receita.id)}
+                className="mr-2"
+              />
+              <label htmlFor={`receita-${receita.id}`}>{receita.nome}</label>
+            </div>
           ))}
-        </ul>
-      )}
-
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        <Button onClick={() => window.print()}>Imprimir</Button>
-        <Button onClick={copiarLista}>Copiar</Button>
-        <Button onClick={baixarLista}>Download</Button>
-        <Button onClick={compartilharLista}>Compartilhar</Button>
+        </div>
       </div>
+
+      {status === 'loading' ? (
+        <p>Calculando lista...</p>
+      ) : items.length === 0 ? (
+        <p className="text-center text-gray-600">
+          {receitasSelecionadas.length > 0 
+            ? "Você tem todos os ingredientes em estoque!" 
+            : "Selecione receitas para gerar a lista"}
+        </p>
+      ) : (
+        <>
+          <ul className="mb-6 space-y-2">
+            {items.map((item, index) => (
+              <li key={index} className="bg-pink-100 border border-gray-400 p-2 rounded">
+                {item.quantidade} {item.unidade} de {item.nome}
+              </li>
+            ))}
+          </ul>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <Button onClick={() => window.print()}>Imprimir</Button>
+            <Button onClick={copiarLista}>Copiar</Button>
+            <Button onClick={baixarLista}>Download</Button>
+            <Button onClick={compartilharLista}>Compartilhar</Button>
+          </div>
+        </>
+      )}
     </div>
   );
 }
