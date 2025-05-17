@@ -4,7 +4,7 @@ import {
   createEntityAdapter,
   isAnyOf,
 } from "@reduxjs/toolkit";
-import { baseUrl } from '../../api/baseUrl';
+import baseUrl from '../../api/baseUrl';
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
 const categoriasAdapter = createEntityAdapter();

@@ -4,7 +4,7 @@ import {
   createEntityAdapter,
   isAnyOf,
 } from "@reduxjs/toolkit";
-import { baseUrl } from '../../api/baseUrl';
+import baseUrl from '../../api/baseUrl';
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
 const estoqueAdapter = createEntityAdapter();
@@ -93,5 +93,13 @@ export const {
   selectAll: selectAllEstoque,
   selectById: selectEstoqueById,
 } = estoqueAdapter.getSelectors((state) => state.estoque);
+
+export const selectIngredientes = (state) => {
+  const userId = state.usuario.usuario?.id;
+  if (!userId) return [];
+  
+  return Object.values(state.estoque.entities)
+    .filter(e => e.userId === userId);
+};
 
 export default estoqueSlice.reducer;
