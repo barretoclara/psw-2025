@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { adicionarIngredienteAoEstoque } from '../../storeConfig/slices/estoqueSlice';
+import { addEstoqueItem } from '../../storeConfig/slices/estoqueSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const ReceitaForm = ({ onSubmit }) => {
@@ -27,7 +27,7 @@ const ReceitaForm = ({ onSubmit }) => {
       ingredienteId = existente.id;
     } else {
       ingredienteId = uuidv4();
-      dispatch(adicionarIngredienteAoEstoque({ 
+      dispatch(addEstoqueItem({ 
         id: ingredienteId, 
         nome: novoIngrediente,
         quantidade: 0,
