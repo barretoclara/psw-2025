@@ -51,4 +51,12 @@ const EstoqueList = () => {
   );
 };
 
+export const selectIngredientes = (state) => {
+  const userId = state.usuario.usuario?.id;
+  if (!userId) return [];
+  
+  return Object.values(state.estoque.entities)
+    .filter(e => e.userId === userId);
+};
+
 export default EstoqueList;
