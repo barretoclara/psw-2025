@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { gerarListaMercado, limparLista } from "../storeConfig/slices/listaMercadoSlice";
-import { selectAllReceitas } from "../storeConfig/slices/receitasSlice";
+import { gerarListaMercado, limparLista } from "../../storeConfig/slices/listaMercadoSlice";
+import { selectAllReceitas } from "../../storeConfig/slices/receitasSlice";
+import { Button } from '@/components/ui/button';
 
 export default function ListaMercado() {
   const dispatch = useDispatch();

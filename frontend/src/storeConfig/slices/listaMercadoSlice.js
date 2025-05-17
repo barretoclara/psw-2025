@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const gerarListaMercado = createAsyncThunk(
   'listaMercado/gerar',
-  async ({receitasIds, userId}, { getState }) => {
+  async ({receitasIds}, { getState }) => {
     const state = getState();
     const userId = selectCurrentUserId(state);
 

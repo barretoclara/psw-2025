@@ -31,3 +31,5 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware().concat(usuarioMiddleware)
 });
+
+export default store;

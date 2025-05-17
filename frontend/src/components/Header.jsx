@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-const Header = () => (
+export function Header() {
   <header className="bg-green-600 text-white px-6 py-4 flex justify-between">
     <h1 className="text-xl font-bold">App de Receitas</h1>
     <nav className="space-x-4">
@@ -10,4 +10,4 @@ const Header = () => (
       <Link to="/login">Login</Link>
     </nav>
   </header>
-);
+};

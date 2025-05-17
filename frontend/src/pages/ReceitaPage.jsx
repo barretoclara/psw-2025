@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import ReceitaDetalhe from '../components/receitas/ReceitaDetalhe';
+import ReceitaDetalhe from '../components/receita/ReceitaDetalhe';
 
 const ReceitaPage = () => {
   const { id } = useParams();

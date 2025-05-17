@@ -4,14 +4,15 @@ import {
   fetchEstoque,
   addEstoqueItem,
   selectEstoqueDoUsuario 
-} from '../storeConfig/slices/estoqueSlice';
-import { useUserData } from '../hooks/useUserData';
+} from '../../storeConfig/slices/estoqueSlice';
+import { useUserData } from '../../hooks/useUserData';
 import IngredienteItem from './IngredienteItem';
 
 const EstoqueList = () => {
   const dispatch = useDispatch();
   const { userId, validateUser } = useUserData();
   const estoque = useSelector(selectEstoqueDoUsuario);
+  const ingredientes = useSelector(selectIngredientes);
 
   useEffect(() => {
     if (userId) {

@@ -4,7 +4,7 @@ import ReceitaPage from './pages/ReceitaPage';
 import EstoquePage from './pages/EstoquePage';
 import ListaMercadoPage from './pages/ListaMercadoPage';
 import LoginPage from './pages/LoginPage';
-import Header from './components/Header';
+import { Header } from './components/Header'
 import ProtectedRoute from './components/ProtectedRoute';
 import { loadUserFromStorage } from './storeConfig/slices/usuarioSlice';
 
