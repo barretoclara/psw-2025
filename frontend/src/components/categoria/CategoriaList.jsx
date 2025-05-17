@@ -1,7 +1,8 @@
-import { useSelector, useDispatch, useEffect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import CategoriaItem from './CategoriaItem';
-import { useUserData } from '../hooks/useUserData';
-import { fetchCategorias } from '../storeConfig/slices/categoriasSlice';
+import { useUserData } from '../../hooks/useUserData';
+import { fetchCategorias } from '../../storeConfig/slices/categoriasSlice';
 
 const CategoriaList = () => {
   const dispatch = useDispatch();

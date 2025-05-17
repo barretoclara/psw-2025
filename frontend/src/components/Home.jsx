@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../components/ui/button';
 
 const receitasMock = [
   {
@@ -42,7 +41,7 @@ export default function Home() {
       {/* Cabeçalho */}
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Minhas Receitas</h1>
-        <Button onClick={() => navigate('/cadastrar')}>Nova Receita</Button>
+        <button onClick={() => navigate('/cadastrar')}>Nova Receita</button>
       </div>
 
       {/* Filtros */}
@@ -55,9 +54,9 @@ export default function Home() {
           className="form-input px-4 py-2 border rounded w-full md:w-2/3"
         />
         <div className="flex gap-2 w-full md:w-1/3">
-          <Button onClick={() => setFiltroCategoria('doce')} className="w-full">Doces</Button>
-          <Button onClick={() => setFiltroCategoria('salgado')} className="w-full">Salgados</Button>
-          <Button onClick={() => setFiltroCategoria('todos')} className="w-full">Todos</Button>
+          <button onClick={() => setFiltroCategoria('doce')} className="w-full">Doces</button>
+          <button onClick={() => setFiltroCategoria('salgado')} className="w-full">Salgados</button>
+          <button onClick={() => setFiltroCategoria('todos')} className="w-full">Todos</button>
         </div>
       </div>
 

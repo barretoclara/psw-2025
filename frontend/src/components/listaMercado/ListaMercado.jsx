@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { gerarListaMercado, limparLista } from "../storeConfig/slices/listaMercadoSlice";
-import { selectAllReceitas } from "../storeConfig/slices/receitasSlice";
-import { Button } from '../components/ui/button';
-import { selectCurrentUserId } from '../storeConfig/slices/usuarioSlice';
+import { gerarListaMercado, limparLista } from "../../storeConfig/slices/listaMercadoSlice";
+import { selectAllReceitas } from "../../storeConfig/slices/receitasSlice";
+import { selectCurrentUserId } from '../../storeConfig/slices/usuarioSlice';
 
 export default function ListaMercado() {
   const dispatch = useDispatch();
@@ -104,10 +103,10 @@ export default function ListaMercado() {
             ))}
           </ul>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <Button onClick={() => window.print()}>Imprimir</Button>
-            <Button onClick={copiarLista}>Copiar</Button>
-            <Button onClick={baixarLista}>Download</Button>
-            <Button onClick={compartilharLista}>Compartilhar</Button>
+            <button onClick={() => window.print()}>Imprimir</button>
+            <button onClick={copiarLista}>Copiar</button>
+            <button onClick={baixarLista}>Download</button>
+            <button onClick={compartilharLista}>Compartilhar</button>
           </div>
         </>
       )}

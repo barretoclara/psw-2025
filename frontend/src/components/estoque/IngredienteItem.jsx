@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { deleteEstoqueItem, updateEstoqueItem } from '../storeConfig/slices/estoqueSlice';
-import { useUserData } from '../hooks/useUserData';
+import { deleteEstoqueItem, updateEstoqueItem } from '../../storeConfig/slices/estoqueSlice';
+import { useUserData } from '../../hooks/useUserData';
 
 const IngredienteItem = ({ ingrediente }) => {
   const dispatch = useDispatch();
