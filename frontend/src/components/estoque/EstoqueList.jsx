@@ -27,6 +27,7 @@ const EstoqueList = () => {
   };
 
   if (!estoque) return <p>Carregando estoque...</p>;
+  if (ingredientes.length === 0) return <p>Nenhum ingrediente no estoque.</p>;
 
   return (
     <div>
@@ -37,7 +38,7 @@ const EstoqueList = () => {
       </ul>
       
       <button 
-        onClick={() => handleAddItem({ nome: "Novo Item", quantidade: 1 })}
+        onClick={() => handleAddItem({ nome: "Novo Ingrediente", quantidade: 0 })}
         className="mt-4 p-2 bg-blue-500 text-white"
       >
         Adicionar Item
