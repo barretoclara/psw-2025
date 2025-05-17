@@ -1,14 +1,14 @@
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
 
 const ProtectedRoute = ({ children }) => {
-  const usuario = useSelector(state => state?.usuario?.usuario)
+  const usuario = useSelector(state => state?.usuario?.usuario);
   
   if (!usuario) {
-    window.location.href = '/login'
-    return null
+    return <Navigate to="/login" replace />;
   }
   
-  return children
-}
+  return children;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;

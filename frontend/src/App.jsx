@@ -4,6 +4,8 @@ import EstoquePage from './pages/EstoquePage';
 import ListaMercadoPage from './pages/ListaMercadoPage';
 import LoginPage from './pages/LoginPage';
 import ReceitaPage from './pages/ReceitaPage';
+import CadastroReceitaPage from './pages/CadastroReceitaPage';
+import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
