@@ -3,15 +3,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { 
   fetchEstoque,
   addEstoqueItem,
-  selectEstoqueDoUsuario 
+  selectAllEstoque,
+  selectIngredientes
 } from '../../storeConfig/slices/estoqueSlice';
-import { useUserData } from '../../hooks/useUserData';
+import { useUserData } from '../hooks/useUserData';
 import IngredienteItem from './IngredienteItem';
 
 const EstoqueList = () => {
   const dispatch = useDispatch();
   const { userId, validateUser } = useUserData();
-  const estoque = useSelector(selectEstoqueDoUsuario);
+  const estoque = useSelector(state =>
+  selectAllEstoque(state).filter(item => item.userId === usuarioId)
+);
   const ingredientes = useSelector(selectIngredientes);
 
   useEffect(() => {

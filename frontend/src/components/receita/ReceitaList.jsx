@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import ReceitaItem from './ReceitaItem';
-import { useUserData } from '../../hooks/useUserData';
+import { useUserData } from '../hooks/useUserData';
 
 const ReceitaList = () => {
   const { userId } = useUserData();

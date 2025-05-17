@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { adicionarIngredienteAoEstoque } from '../../storeConfig/slices/estoqueSlice';
+import { adicionarIngredienteAoEstoque } from '../storeConfig/slices/estoqueSlice';
 import { v4 as uuidv4 } from 'uuid';
 
 const ReceitaForm = ({ onSubmit }) => {

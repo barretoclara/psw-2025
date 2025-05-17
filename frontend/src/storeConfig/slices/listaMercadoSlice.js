@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { selectCurrentUserId } from './usuarioSlice';
 
 export const gerarListaMercado = createAsyncThunk(
   'listaMercado/gerar',

@@ -1,8 +1,8 @@
 import EstoqueList from '../components/estoque/EstoqueList';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchEstoque } from '../../storeConfig/slices/estoqueSlice';
-import { useUserData } from '../../hooks/useUserData';
+import { fetchEstoque } from '../storeConfig/slices/estoqueSlice';
+import { useUserData } from '../hooks/useUserData';
 
 const EstoquePage = () => {
   const dispatch = useDispatch();

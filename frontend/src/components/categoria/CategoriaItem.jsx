@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
-import { setFiltro } from '../../storeConfig/slices/receitasSlice';
-import { useUserData } from '../../hooks/useUserData';
+import { setFiltro } from '../storeConfig/slices/receitasSlice';
+import { useUserData } from '../hooks/useUserData';
 
 const CategoriaItem = ({ categoria }) => {
   const dispatch = useDispatch();
