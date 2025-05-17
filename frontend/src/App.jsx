@@ -31,6 +31,26 @@ function App() {
             <ReceitaPage />
           </ProtectedRoute>
         } />
+        <Route path="/cadastrar-receita" element={
+          <ProtectedRoute>
+            <CadastroReceitaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/editar-receita/:id" element={
+          <ProtectedRoute>
+            <CadastroReceitaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/cadastrar-categoria" element={
+          <ProtectedRoute>
+            <CadastroCategoriaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/editar-categoria/:id" element={
+          <ProtectedRoute>
+            <CadastroCategoriaPage />
+          </ProtectedRoute>
+        } />
       </Routes>
     </Router>
   );
