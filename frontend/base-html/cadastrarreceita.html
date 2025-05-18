@@ -1,194 +1,193 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastrar Receita</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f5f5f5;
-        }
-        .container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
-        }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .section {
-            margin-bottom: 15px;
-        }
-        .section-title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-        .input-field {
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-        .input-field input[type="text"] {
-            background-color: #f0d8f1;
-            padding: 8px;
-            border: 1px solid #3e3a3e;
-            border-radius: 4px;
-            width: 100%;
-        }
-        .checkbox-item {
-            margin-bottom: 5px;
-            display: flex;
-            align-items: center;
-        }
-       
-        .dropdown {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            width: 100%;
-            box-shadow: 0px 8px 16px 0px rgba(57, 56, 56, 0.2);
-            z-index: 1;
-        }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .add-button {
-            background-color: #dda1df;
-            color: rgb(0, 0, 0);
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
-        }
-        .add-button:hover {
-            background-color: #dda1df;
-        }
-        .select-button {
-            background-color: #dda1df;
-            color: rgb(0, 0, 0);
-            padding: 8px 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-top: 5px;
-            width: 100%;
-        }
-        .select-button:hover {
-            background-color: #dda1df;
-        }
-        .dropdown-toggle {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-        .dropdown-toggle input {
-            flex-grow: 1;
-        }
-        .dropdown-toggle span {
-            margin-left: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastrar Receita</title>
+  <!-- Bootstrap CSS + Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+  <style>
+    body {
+      background-color: #fceeff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      padding: 20px 0;
+    }
+    .logo {
+      font-family: 'Comic Sans MS', cursive;
+      color: #dda1df;
+      font-size: 2rem;
+      font-weight: bold;
+      text-align: center;
+    }
+    .container-custom {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 30px;
+    }
+    .file-upload {
+      background-color: #faf0fb;
+      border: 2px dashed #dda1df;
+      border-radius: 8px;
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+    .file-upload:hover {
+      background-color: #f3e5f5;
+    }
+    .btn-custom {
+      background-color: #dda1df;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 25px;
+      width: 100%;
+    }
+    .btn-custom:hover {
+      background-color: #c07ad6;
+    }
+    .form-control-custom {
+      background-color: #faf0fb;
+      border: 1px solid #e0e0e0;
+      padding: 10px 12px;
+      border-radius: 8px;
+      width: 100%;
+    }
+    .back-button {
+      position: absolute;
+      left: 15px; /* Posição da borda esquerda */
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .back-button i {
+      font-size: 1.5rem;
+      color: #dda1df;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Cadastrar Receita</h1>
-        
-        <div class="section">
-            <div class="section-title">Nome da Receita:</div>
-            <div class="input-field">
-                <input type="text" placeholder="Digite o nome da receita">
-            </div>
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Porções:</div>
-            <div class="input-field">
-                <input type="number" placeholder="Número de porções" value="1" min="1" >
-            </div>
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Filtros:</div>
-            <div class="dropdown">
-                <div class="dropdown-toggle">
-                    <input type="text" placeholder="Selecione os filtros" readonly>
-                    <span>▼</span>
-                </div>
-                <div class="dropdown-content">
-                    <a href="#">Salgados</a>
-                    <a href="#">Doces</a>
-                    <a href="#">Pratos principais</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Tempo de preparo:</div>
-            <div class="input-field">
-                <input type="text" placeholder="Tempo de preparo">
-            </div>
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Ingredientes:</div>
-            <button class="select-button" onclick="window.location.href='selecingredientes.html'">Selecionar Ingredientes</button>
-        </div>
-        
-        <div class="section">
-            <div class="section-title">Modo de Fazer:</div>
-            <div class="input-field">
-                <input type="text" placeholder="Descreva o modo de preparo">
-            </div>
-        </div>
-        
-        <button class="add-button">Adicionar</button>
+  <header class="header">
+    <a href="#" class="back-button" id="back-button">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <div class="logo">Panelinha Digital</div>
+  </header>
 
-        <script>
-            
-            document.querySelector('.add-button').addEventListener('click', function() {
-                alert('Receita cadastrada com sucesso!');
-            });
-            
-            
-            const filterItems = document.querySelectorAll('.dropdown-content a');
-            filterItems.forEach(item => {
-                item.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const filterInput = document.querySelector('.dropdown input');
-                    filterInput.value = this.textContent;
-                });
-            });
-        </script>
+  <main>
+    <div class="container-custom">
+      <h1 class="text-center mb-4" style="color: #dda1df;">Cadastrar Receita</h1>
+
+      <!-- Imagem da Receita -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Imagem da Receita:</label>
+        <div class="file-upload" id="file-upload">
+          <i class="bi bi-cloud-arrow-up" style="font-size: 2.5rem; color: #dda1df;"></i>
+          <p class="mb-0">Arraste e solte uma imagem aqui ou clique para selecionar</p>
+          <div id="file-name" class="small text-muted mt-2"></div>
+        </div>
+        <input type="file" id="file-input" accept="image/*" class="d-none">
+      </div>
+
+      <!-- Restante do formulário... -->
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Nome da Receita:</label>
+        <input type="text" class="form-control form-control-custom" placeholder="Digite o nome da receita">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Porções:</label>
+        <input type="number" class="form-control form-control-custom" placeholder="Número de porções" value="1" min="1">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Filtros:</label>
+        <select class="form-select form-control-custom">
+          <option selected>Selecione os filtros</option>
+          <option>Salgados</option>
+          <option>Doces</option>
+          <option>Pratos principais</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Tempo de preparo:</label>
+        <input type="text" class="form-control form-control-custom" placeholder="Tempo de preparo">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold">Ingredientes:</label>
+        <button class="btn btn-custom" onclick="window.location.href='selecingredientes.html'">
+          <i class="bi bi-list-check me-2"></i>
+          Selecionar Ingredientes
+        </button>
+      </div>
+
+      <div class="mb-4">
+        <label class="form-label fw-semibold">Modo de Fazer:</label>
+        <textarea class="form-control form-control-custom" rows="4" placeholder="Descreva o modo de preparo"></textarea>
+      </div>
+
+      <button class="btn btn-custom py-2 fw-semibold">
+        <i class="bi bi-plus-circle me-2"></i>
+        Adicionar Receita
+      </button>
     </div>
+  </main>
 
-    
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Back button functionality
+    document.getElementById('back-button').addEventListener('click', function(e) {
+      e.preventDefault();
+      window.history.back();
+    });
+
+    // File upload functionality
+    const fileUpload = document.getElementById('file-upload');
+    const fileInput = document.getElementById('file-input');
+    const fileName = document.getElementById('file-name');
+
+    fileUpload.addEventListener('click', function() {
+      fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function() {
+      if (fileInput.files.length > 0) {
+        fileName.textContent = fileInput.files[0].name;
+      }
+    });
+
+    // Drag and drop functionality
+    fileUpload.addEventListener('dragover', function(e) {
+      e.preventDefault();
+      this.style.backgroundColor = '#f3e5f5';
+    });
+
+    fileUpload.addEventListener('dragleave', function() {
+      this.style.backgroundColor = '#faf0fb';
+    });
+
+    fileUpload.addEventListener('drop', function(e) {
+      e.preventDefault();
+      this.style.backgroundColor = '#faf0fb';
+      
+      if (e.dataTransfer.files.length) {
+        fileInput.files = e.dataTransfer.files;
+        fileName.textContent = fileInput.files[0].name;
+      }
+    });
+  </script>
 </body>
 </html>
