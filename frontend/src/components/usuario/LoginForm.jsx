@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginForm.css'; // para organizar, você pode mover o CSS para um arquivo separado
+import './LoginForm.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../storeConfig/slices/usuarioSlice';
 
@@ -9,9 +9,9 @@ const LoginForm = () => {
   const [senha, setSenha] = useState('');
 
   const handleLogin = (e) => {
-    e.preventDefault();
-    dispatch(login({ email })); // autenticação fictícia
-  };
+  e.preventDefault();
+  dispatch(login({ email, senha }));
+};
 
   return (
     <div className="login-wrapper">

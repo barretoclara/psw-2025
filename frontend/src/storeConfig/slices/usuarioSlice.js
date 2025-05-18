@@ -12,10 +12,10 @@ export const login = createAsyncThunk(
         localStorage.setItem('currentUserId', data[0].id);
         return data[0];
       } else {
-        return thunkAPI.rejectWithValue({ error: 'Credenciais inválidas' });
+        return thunkAPI.rejectWithValue('Credenciais inválidas');
       }
     } catch (error) {
-      return thunkAPI.rejectWithValue({ error: error.message });
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -37,11 +37,11 @@ const usuarioSlice = createSlice({
       state.error = null;
     },
     loadUserFromStorage(state) {
-      const userId = localStorage.getItem('currentUserId');
-      if (userId) {
-        state.status = 'loading';
-      }
+    const userId = localStorage.getItem('currentUserId');
+    if (userId) {
+      state.status = 'loading';
     }
+  }
   },
   extraReducers: (builder) => {
     builder

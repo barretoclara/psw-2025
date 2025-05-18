@@ -1,4 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loadUserFromStorage } from './storeConfig/slices/usuarioSlice';
 import HomePage from './pages/HomePage';
 import EstoquePage from './pages/EstoquePage';
 import ListaMercadoPage from './pages/ListaMercadoPage';
@@ -8,7 +11,16 @@ import CadastroReceitaPage from './pages/CadastroReceitaPage';
 import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
 import ProtectedRoute from './components/ProtectedRoute';
 
+
+
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUserFromStorage());
+  }, [dispatch]);
+
+
   return (
     <Router>
       <Routes>
