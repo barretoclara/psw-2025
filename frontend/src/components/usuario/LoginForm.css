@@ -132,6 +132,40 @@ h1 {
     text-decoration: underline;
 }
 
+.secondary-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: white;
+    color: #dda1df;
+    border: 1px solid #dda1df;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.secondary-btn:hover {
+    background-color: #faf0fb;
+}
+
+.register-link {
+    margin-top: 20px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.register-link a {
+    color: #dda1df;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
 .nav-footer {
     position: fixed;
     bottom: 0;

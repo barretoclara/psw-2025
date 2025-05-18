@@ -62,26 +62,8 @@ const LoginForm = () => {
           <a href="#" className="forgot-password">Esqueceu sua senha?</a>
 
           <button type="submit" className="login-btn">Entrar</button>
+          <button type="button" className="secondary-btn">Cadastre-se</button>
         </form>
-      </div>
-
-      <div className="nav-footer">
-        <a href="#" className="nav-item active">
-          <i className="bi bi-house-door"></i>
-          Início
-        </a>
-        <a href="#" className="nav-item">
-          <i className="bi bi-list-ul"></i>
-          Categorias
-        </a>
-        <a href="#" className="nav-item">
-          <i className="bi bi-search"></i>
-          Pesquisa
-        </a>
-        <a href="#" className="nav-item">
-          <i className="bi bi-heart"></i>
-          Favoritos
-        </a>
       </div>
     </div>
   );
