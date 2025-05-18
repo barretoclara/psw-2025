@@ -1,41 +1,89 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import './LoginForm.css'; // para organizar, você pode mover o CSS para um arquivo separado
 import { useDispatch } from 'react-redux';
 import { login } from '../../storeConfig/slices/usuarioSlice';
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-    dispatch(login({ email, senha }));
+    dispatch(login({ email })); // autenticação fictícia
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block font-medium">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-        />
+    <div className="login-wrapper">
+      <div className="logo">Panelinha Digital</div>
+
+      <div className="login-container">
+        <h1>Junte-se ao clube!</h1>
+        <p className="subtitle">
+          Teste receitas, faça anotações, contribua e divirta-se!<br />
+          E é <span className="highlight">gratuito</span>!
+        </p>
+
+        <button className="social-btn">
+          <i className="bi bi-google"></i> Continuar com Google
+        </button>
+
+        <button className="social-btn">
+          <i className="bi bi-facebook"></i> Continuar com Facebook
+        </button>
+
+        <div className="divider">ou</div>
+
+        <form onSubmit={handleLogin}>
+          <div className="input-field">
+            <label htmlFor="email">E-mail</label>
+            <input
+              type="email"
+              id="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="input-field">
+            <label htmlFor="password">Senha</label>
+            <input
+              type="password"
+              id="password"
+              placeholder="Digite sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+            />
+          </div>
+
+          <a href="#" className="forgot-password">Esqueceu sua senha?</a>
+
+          <button type="submit" className="login-btn">Entrar</button>
+        </form>
       </div>
-      <div>
-        <label className="block font-medium">Senha</label>
-        <input
-          type="password"
-          value={senha}
-          onChange={e => setSenha(e.target.value)}
-          className="w-full border px-3 py-2 rounded"
-        />
+
+      <div className="nav-footer">
+        <a href="#" className="nav-item active">
+          <i className="bi bi-house-door"></i>
+          Início
+        </a>
+        <a href="#" className="nav-item">
+          <i className="bi bi-list-ul"></i>
+          Categorias
+        </a>
+        <a href="#" className="nav-item">
+          <i className="bi bi-search"></i>
+          Pesquisa
+        </a>
+        <a href="#" className="nav-item">
+          <i className="bi bi-heart"></i>
+          Favoritos
+        </a>
       </div>
-      <button type="submit" className="bg-green-600 text-white px-4 py-2 rounded">
-        Entrar
-      </button>
-    </form>
+    </div>
   );
 };
 
