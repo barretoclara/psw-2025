@@ -1,0 +1,163 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #fceeff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    color: #333;
+}
+
+.logo {
+    font-family: 'Comic Sans MS', cursive;
+    color: #dda1df;
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 30px 0;
+    text-align: center;
+}
+
+.login-container {
+    background-color: white;
+    width: 100%;
+    max-width: 400px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: #dda1df;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+.highlight {
+    color: #dda1df;
+    font-weight: bold;
+}
+
+.social-btn {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 25px;
+    border: 1px solid #ddd;
+    background-color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.social-btn:hover {
+    background-color: #f8f8f8;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    color: #999;
+    font-size: 0.9rem;
+}
+
+.divider::before, .divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #eee;
+    margin: 0 10px;
+}
+
+.input-field {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: #555;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #faf0fb;
+    box-sizing: border-box;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #dda1df;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+    background-color: #c07ad6;
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 15px;
+    color: #dda1df;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 15px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #888;
+    font-size: 0.8rem;
+    text-decoration: none;
+}
+
+.nav-item i {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.nav-item.active {
+    color: #dda1df;
+}
