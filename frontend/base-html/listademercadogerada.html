@@ -4,94 +4,310 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Mercado</title>
+    <!-- Bootstrap CSS + Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            color: #333;
+            background-color: #fceeff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             min-height: 100vh;
-            background-color: #f5f5f5;
+            padding-bottom: 70px;
         }
-        .container {
+        .header {
             background-color: white;
-            padding: 30px;
-            border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 500px;
+            padding: 15px 0;
+            position: relative;
         }
-        h1 {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .logo {
+            font-family: 'Comic Sans MS', cursive;
+            color: #dda1df;
+            font-size: 1.5rem;
+            font-weight: bold;
             text-align: center;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        .container-custom {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
         }
-        li {
-            background-color: #f0d8f1;
-            padding: 10px;
-            border: 1px solid #3e3a3e;
-            border-radius: 4px;
+        .lista-item {
+            background-color: #faf0fb;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 15px;
             margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        .lista-item:hover {
+            background-color: #f3e5f5;
+        }
+        .lista-item.checked {
+            background-color: #e8d4f5; 
+            border-color: #dda1df;
+        }
+        .item-text {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 1rem;
+        }
+        .btn-custom {
+            background-color: #dda1df;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+        .btn-custom:hover {
+            background-color: #c07ad6;
+        }
+        .back-button {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .back-button i {
+            font-size: 1.5rem;
+            color: #dda1df;
         }
         .button-group {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
             gap: 10px;
             margin-top: 20px;
         }
-        .button {
-            background-color: #dda1df;
-            color: black;
-            padding: 10px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            flex: 1;
-            min-width: 48%;
+        .button-group .btn {
+            flex: 1 1 45%;
+            min-width: 120px;
         }
-        .button:hover {
-            background-color: #c07ad6;
+        .add-item-btn {
+            background-color: #dda1df;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px auto;
+            cursor: pointer;
+        }
+        
+        .nav-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #888;
+            font-size: 0.7rem;
+            text-decoration: none;
+            flex: 1;
+            padding: 5px 0;
+        }
+        .nav-item i {
+            font-size: 1.2rem;
+            margin-bottom: 3px;
+        }
+        .nav-item.active {
+            color: #dda1df;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Lista de Mercado</h1>
-        <ul id="lista-mercado">
-            <li>Item 1</li>
-            <li>Item 2</li>
-            <li>Item 3</li>
-            <li>Item 4</li>
-        </ul>
-        <div class="button-group">
-            <button class="button" onclick="window.print()">Imprimir</button>
-            <button class="button" onclick="copiarLista()">Copiar</button>
-            <button class="button" onclick="baixarLista()">Download</button>
-            <button class="button" onclick="compartilharLista()">Compartilhar</button>
-        </div>
-    </div>
+    <!-- Header -->
+    <header class="header">
+        <a href="#" class="back-button" id="back-button">
+            <i class="bi bi-arrow-left"></i>
+        </a>
+        <div class="logo">Panelinha Digital</div>
+    </header>
 
+    <!-- Main Content -->
+    <main class="flex-grow-1">
+        <div class="container-custom">
+            <h1 class="text-center mb-4" style="color: #dda1df;">Lista de Mercado</h1>
+            
+            <ul class="list-unstyled" id="lista-mercado">
+                <!-- Os 3 itens vazios iniciais -->
+                <li class="lista-item">
+                    <i class="bi bi-circle me-2 toggle-check" style="color: #dda1df; cursor: pointer;"></i>
+                    <input type="text" class="item-text" placeholder="Digite um item">
+                    <i class="bi bi-trash ms-2 remove-item" style="color: #dda1df; cursor: pointer;"></i>
+                </li>
+                <li class="lista-item">
+                    <i class="bi bi-circle me-2 toggle-check" style="color: #dda1df; cursor: pointer;"></i>
+                    <input type="text" class="item-text" placeholder="Digite um item">
+                    <i class="bi bi-trash ms-2 remove-item" style="color: #dda1df; cursor: pointer;"></i>
+                </li>
+                <li class="lista-item">
+                    <i class="bi bi-circle me-2 toggle-check" style="color: #dda1df; cursor: pointer;"></i>
+                    <input type="text" class="item-text" placeholder="Digite um item">
+                    <i class="bi bi-trash ms-2 remove-item" style="color: #dda1df; cursor: pointer;"></i>
+                </li>
+            </ul>
+
+            <button class="add-item-btn" id="add-item-btn">
+                <i class="bi bi-plus"></i>
+            </button>
+
+            <div class="button-group">
+                <button class="btn btn-custom" onclick="window.print()">
+                    <i class="bi bi-printer me-2"></i>
+                    Imprimir
+                </button>
+                <button class="btn btn-custom" onclick="copiarLista()">
+                    <i class="bi bi-clipboard me-2"></i>
+                    Copiar
+                </button>
+                <button class="btn btn-custom" onclick="baixarLista()">
+                    <i class="bi bi-download me-2"></i>
+                    Download
+                </button>
+                <button class="btn btn-custom" onclick="compartilharLista()">
+                    <i class="bi bi-share me-2"></i>
+                    Compartilhar
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Barra de navegação inferior -->
+    <nav class="nav-footer">
+        <a href="#" class="nav-item">
+            <i class="bi bi-house-door"></i>
+            Início
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-heart"></i>
+            Favoritos
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-box-seam"></i>
+            Estoque
+        </a>
+        <a href="#" class="nav-item active">
+            <i class="bi bi-cart3"></i>
+            Lista de mercado
+        </a>
+        <a href="#" class="nav-item">
+            <i class="bi bi-person"></i>
+            Assinatura
+        </a>
+    </nav>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
     <script>
+        // Back button functionality
+        document.getElementById('back-button').addEventListener('click', function(e) {
+            e.preventDefault();
+            window.history.back();
+        });
+
+        // Função para adicionar novo item
+        document.getElementById('add-item-btn').addEventListener('click', function() {
+            const lista = document.getElementById('lista-mercado');
+            const novoItem = document.createElement('li');
+            novoItem.className = 'lista-item';
+            novoItem.innerHTML = `
+                <i class="bi bi-circle me-2 toggle-check" style="color: #dda1df; cursor: pointer;"></i>
+                <input type="text" class="item-text" placeholder="Digite um item">
+                <i class="bi bi-trash ms-2 remove-item" style="color: #dda1df; cursor: pointer;"></i>
+            `;
+            lista.appendChild(novoItem);
+            novoItem.querySelector('.item-text').focus();
+        });
+
+        // Função para marcar/desmarcar itens
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('toggle-check')) {
+                const item = e.target.closest('.lista-item');
+                
+                if (e.target.classList.contains('bi-circle')) {
+                    e.target.classList.remove('bi-circle');
+                    e.target.classList.add('bi-check-circle-fill');
+                    item.classList.add('checked');
+                } else {
+                    e.target.classList.remove('bi-check-circle-fill');
+                    e.target.classList.add('bi-circle');
+                    item.classList.remove('checked');
+                }
+            }
+            
+            // Função para remover item
+            if (e.target.classList.contains('remove-item')) {
+                e.target.closest('.lista-item').remove();
+                
+                // Se não houver mais itens, adiciona um campo vazio
+                if (document.querySelectorAll('#lista-mercado .lista-item').length === 0) {
+                    document.getElementById('add-item-btn').click();
+                }
+            }
+        });
+
+        // Função para copiar lista
         function copiarLista() {
-            const itens = document.querySelectorAll("ul li");
-            const texto = Array.from(itens).map(item => item.textContent).join("\n");
+            const itens = document.querySelectorAll("#lista-mercado .item-text");
+            const texto = Array.from(itens)
+                .map(item => {
+                    const checked = item.closest('.lista-item').classList.contains('checked') ? '✓ ' : '';
+                    return checked + item.value.trim();
+                })
+                .filter(item => item.replace('✓ ', '') !== "")
+                .join("\n");
+            
+            if (texto === "") {
+                alert("A lista está vazia!");
+                return;
+            }
+            
             navigator.clipboard.writeText(texto).then(() => {
                 alert("Lista copiada para a área de transferência!");
             });
         }
 
+        // Função para baixar lista
         function baixarLista() {
-            const itens = document.querySelectorAll("ul li");
-            const texto = Array.from(itens).map(item => item.textContent).join("\n");
+            const itens = document.querySelectorAll("#lista-mercado .item-text");
+            const texto = Array.from(itens)
+                .map(item => {
+                    const checked = item.closest('.lista-item').classList.contains('checked') ? '✓ ' : '';
+                    return checked + item.value.trim();
+                })
+                .filter(item => item.replace('✓ ', '') !== "")
+                .join("\n");
+            
+            if (texto === "") {
+                alert("A lista está vazia!");
+                return;
+            }
+            
             const blob = new Blob([texto], { type: "text/plain" });
             const url = URL.createObjectURL(blob);
 
@@ -103,18 +319,39 @@
             URL.revokeObjectURL(url);
         }
 
+        // Função para compartilhar lista
         function compartilharLista() {
-            const itens = document.querySelectorAll("ul li");
-            const texto = Array.from(itens).map(item => item.textContent).join("\n");
+            const itens = document.querySelectorAll("#lista-mercado .item-text");
+            const texto = Array.from(itens)
+                .map(item => {
+                    const checked = item.closest('.lista-item').classList.contains('checked') ? '✓ ' : '';
+                    return checked + item.value.trim();
+                })
+                .filter(item => item.replace('✓ ', '') !== "")
+                .join("\n");
+            
+            if (texto === "") {
+                alert("A lista está vazia!");
+                return;
+            }
+            
             if (navigator.share) {
                 navigator.share({
-                    title: "Lista de Mercado",
+                    title: "Minha Lista de Mercado",
                     text: texto
                 }).catch((error) => console.error("Erro ao compartilhar:", error));
             } else {
                 alert("Compartilhamento não suportado neste navegador.");
             }
         }
+
+        // Adiciona um campo vazio ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            const lista = document.getElementById('lista-mercado');
+            if (lista.children.length === 0) {
+                document.getElementById('add-item-btn').click();
+            }
+        });
     </script>
 </body>
 </html>
