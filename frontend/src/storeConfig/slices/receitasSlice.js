@@ -108,5 +108,11 @@ export const selectReceitasDoUsuario = (state) => {
     .filter(r => r.userId === userId);
 };
 
+export const selectReceitasPorCategoria = (state, categoriaId) => {
+  return Object.values(state.receitas.entities).filter(
+    receita => receita.categoriaId === categoriaId
+  );
+};
+
 export const { setFiltro } = receitasSlice.actions;
 export default receitasSlice.reducer;

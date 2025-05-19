@@ -39,17 +39,17 @@ const ReceitaForm = ({ onSubmit }) => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit({ 
-      id: uuidv4(), 
-      nome,
-      userId,
-      categoria, 
-      tempo_preparo: tempoPreparo, 
-      modo_preparo: modoPreparo, 
-      ingredientes 
-    });
-  };
+  e.preventDefault();
+  onSubmit({ 
+    id: uuidv4(), 
+    nome,
+    userId,
+    categoriaId: categoria,
+    tempo_preparo: tempoPreparo, 
+    modo_preparo: modoPreparo, 
+    ingredientes 
+  });
+};
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">

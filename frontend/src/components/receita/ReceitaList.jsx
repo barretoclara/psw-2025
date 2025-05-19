@@ -1,5 +1,6 @@
 import { useSelector } from 'react-redux';
 import ReceitaItem from './ReceitaItem';
+import { selectReceitasPorCategoria } from '../../storeConfig/slices/receitasSlice';
 import { useUserData } from '../../hooks/useUserData';
 
 const ReceitaList = () => {
@@ -7,15 +8,15 @@ const ReceitaList = () => {
   const filtro = useSelector(state => state.receitas.filtro);
   
   const receitasFiltradas = useSelector(state => {
-    const todasReceitas = Object.values(state.receitas.entities);
-    const doUsuario = todasReceitas.filter(r => r.userId === userId);
-    
-    return filtro 
-      ? doUsuario.filter(r => r.categoria === filtro)
-      : doUsuario;
+    if (filtro) {
+      return selectReceitasPorCategoria(state, filtro)
+        .filter(r => r.userId === userId);
+    }
+    return Object.values(state.receitas.entities)
+      .filter(r => r.userId === userId);
   });
 
-  if (!receitasFiltradas.length) {
+  if (receitasFiltradas.length === 0) {
     return <p>{filtro ? "Nenhuma receita nesta categoria." : "Nenhuma receita encontrada."}</p>;
   }
 

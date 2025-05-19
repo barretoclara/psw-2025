@@ -5,48 +5,37 @@
       "nome": "Admin",
       "email": "admin@email.com",
       "senha": "Admin"
-    },
-    {
-      "id": 2,
-      "nome": "Maria",
-      "email": "maria@email.com",
-      "senha": "123456"
     }
   ],
   "categorias": [
-    { "id": 1,
-      "userId": 1,
-      "nome": "Doce"
-    },
-    { "id": 2,
-      "userId":1,
-      "nome": "Salgado"
-    }
+    { "id": 1, "userId": 1, "nome": "Doce" },
+    { "id": 2, "userId": 1, "nome": "Salgado" }
   ],
   "receitas": [
     {
       "id": 1,
-      "userId":1,
+      "userId": 1,
       "nome": "Bolo de Chocolate",
-      "tempoPreparo": "45 minutos",
+      "tempo_preparo": 45,
       "categoriaId": 1,
-      "ingredientes": [
-        { "nome": "Farinha de trigo", "quantidade": 2, "unidade": "xícaras" },
-        { "nome": "Ovos", "quantidade": 3, "unidade": "unidades" }
-      ],
-      "modoPreparo": "Misture e asse por 40 minutos."
+      "ingredientes": [1, 2],
+      "modo_preparo": "Misture e asse por 40 minutos."
     }
   ],
   "estoque": [
-    { "id": 1,
+    { 
+      "id": 1,
       "userId": 1,
       "nome": "Farinha de trigo",
       "quantidade": 1,
-      "unidade": "xícaras" },
-    { "id": 2,
+      "unidade": "xícaras" 
+    },
+    { 
+      "id": 2,
       "userId": 1,
       "nome": "Ovos",
       "quantidade": 2,
-      "unidade": "unidades" }
+      "unidade": "unidades" 
+    }
   ]
 }
