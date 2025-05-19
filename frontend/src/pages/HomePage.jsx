@@ -29,80 +29,106 @@ export default function HomePage() {
   );
 
   return (
-    <div className="container-fluid py-4 d-flex justify-content-center">
-      <div className="container px-3" style={{ maxWidth: '1140px' }}>
-        <div className="header-bar mb-4 d-flex justify-content-between align-items-center">
-          <h1 className="logo">Panelinha Digital</h1>
-          <div className="button-group d-flex gap-2">
-            <Link to="/cadastrar-receita" className="btn btn-rosa">Nova Receita</Link>
-            <Link to="/cadastrar-categoria" className="btn btn-rosa">Nova Categoria</Link>
-          </div>
+    <div className="container py-3" style={{ maxWidth: '1200px', padding: '0 15px' }}>
+      {/* Cabeçalho */}
+      <div className="header-bar">
+        <h1 className="logo">Panelinha Digital</h1>
+        <div className="button-group">
+          <Link to="/cadastrar-receita" className="btn btn-rosa">
+            Nova Receita
+          </Link>
+          <Link to="/cadastrar-categoria" className="btn btn-rosa">
+            Nova Categoria
+          </Link>
         </div>
+      </div>
 
-        {/* Barra de pesquisa */}
-        <div className="search-wrapper mb-4">
-          <div className="input-group w-100">
-            <input type="text" className="form-control form-control-lg" placeholder="Buscar receitas..." />
-            <button className="btn btn-rosa px-4" type="button">
-              <i className="bi bi-search"></i>
-            </button>
-          </div>
+      {/* Barra de pesquisa */}
+      <div className="search-wrapper mb-4">
+        <div className="input-group">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Buscar receitas..."
+            style={{
+              height: '45px',
+              borderRadius: '25px 0 0 25px',
+              borderRight: 'none'
+            }}
+          />
+          <button 
+            className="btn btn-rosa" 
+            type="button"
+            style={{
+              borderRadius: '0 25px 25px 0',
+              padding: '0 20px'
+            }}
+          >
+            <i className="bi bi-search"></i>
+          </button>
         </div>
+      </div>
 
-        {/* Categorias */}
-        <div className="d-flex flex-wrap mb-4">
-          {categorias.map((cat) => (
-            <button key={cat.id} className="btn btn-categoria">{cat.nome}</button>
-          ))}
-        </div>
+      {/* Categorias */}
+      <div className="d-flex flex-wrap mb-4">
+        {categorias.map((cat) => (
+          <button key={cat.id} className="btn btn-categoria">{cat.nome}</button>
+        ))}
+      </div>
 
-        {/* Seção de receitas rápidas */}
-        {receitasRapidas.length > 0 && (
-          <div className="mb-5">
-            <div className="d-flex justify-content-between align-items-center mb-3">
-              <h4 className="section-title mb-0">Receitas Rápidas</h4>
-              <a href="#" className="ver-tudo">Ver tudo</a>
-            </div>
-            <div className="row">
-              {receitasRapidas.map((rec) => (
-                <div key={rec.id} className="col-6 col-md-4 col-lg-3">
-                  <div className="card card-receita">
-                    <div className="card-body">
-                      <h6 className="card-title">{rec.nome}</h6>
-                      <p className="card-text">{rec.tempo_preparo ?? "Tempo não informado"}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Todas as receitas */}
+      {/* Seção de receitas rápidas */}
+      {receitasRapidas.length > 0 && (
         <div className="mb-5">
-          <h4 className="section-title">Todas as Receitas</h4>
-          <div className="row">
-            {receitas.map((rec) => (
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h4 className="section-title mb-0">Receitas Rápidas</h4>
+            <a href="#" className="ver-tudo">Ver tudo</a>
+          </div>
+          <div className="row g-3">
+            {receitasRapidas.map((rec) => (
               <div key={rec.id} className="col-6 col-md-4 col-lg-3">
-                <div className="card card-receita">
-                  <div className="card-body">
+                <div className="card card-receita h-100">
+                  <div className="card-body p-3">
                     <h6 className="card-title">{rec.nome}</h6>
-                    <p className="card-text">{rec.tempo_preparo ?? "Tempo não informado"}</p>
+                    <p className="card-text">
+                      {rec.tempo_preparo ?? "Tempo não informado"} min • 
+                      {rec.ingredientes?.length ?? 0} ingredientes
+                    </p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      )}
 
-        {/* Banner promocional */}
-        <div className="ad-banner text-center">
-          <h2>Compre agora com desconto exclusivo!</h2>
-          <button>Saiba mais</button>
+      {/* Todas as receitas */}
+      <div className="mb-5">
+        <h4 className="section-title">Todas as Receitas</h4>
+        <div className="row g-3">
+          {receitas.map((rec) => (
+            <div key={rec.id} className="col-6 col-md-4 col-lg-3">
+              <div className="card card-receita h-100">
+                <div className="card-body p-3">
+                  <h6 className="card-title">{rec.nome}</h6>
+                  <p className="card-text">
+                    {rec.tempo_preparo ?? "Tempo não informado"} min • 
+                    {rec.ingredientes?.length ?? 0} ingredientes
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
-
-        <Footer />
       </div>
+
+      {/* Banner promocional */}
+      <div className="promo-banner text-center mt-4">
+        <h5>Black da Amazon</h5>
+        <p className="mb-2">Até 70% de desconto em utensílios</p>
+        <button className="btn btn-light btn-sm">Conferir Ofertas</button>
+      </div>
+
+      <Footer />
     </div>
   );
 }

@@ -148,3 +148,107 @@ body {
   max-width: 1200px;
   margin: 0 auto;
 }
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+}
+
+.search-wrapper {
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+}
+
+.search-wrapper .input-group {
+  width: 100%;
+}
+
+.search-wrapper .form-control {
+  height: 45px;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: 1px solid #ced4da;
+  border-right: none;
+}
+
+.search-wrapper .btn {
+  height: 45px;
+  padding: 0 25px;
+  border: 1px solid #ced4da;
+  border-left: none;
+}
+
+.card-receita {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  background-color: white;
+  height: 100%;
+}
+
+.card-receita:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #343a40;
+}
+
+.card-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 20px 0 15px;
+  color: #495057;
+}
+
+.ver-tudo {
+  font-size: 0.9rem;
+  color: #dda1df;
+  text-decoration: none;
+}
+
+.promo-banner {
+  background: linear-gradient(135deg, #343a40, #212529);
+  color: white;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 40px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.promo-banner h5 {
+  margin-bottom: 10px;
+}
+
+.promo-banner .btn {
+  background-color: white;
+  color: #212529;
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 0.9rem;
+}
