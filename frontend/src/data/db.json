@@ -20,6 +20,15 @@
       "categoriaId": 1,
       "ingredientes": [1, 2],
       "modo_preparo": "Misture e asse por 40 minutos."
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "nome": "Strogonoff de frango",
+      "tempo_preparo": 20,
+      "categoriaId": 1,
+      "ingredientes": [3, 4],
+      "modo_preparo": "Incorpore o creme de leite e retire do fogo antes de ferver."
     }
   ],
   "estoque": [
@@ -35,6 +44,20 @@
       "userId": 1,
       "nome": "Ovos",
       "quantidade": 2,
+      "unidade": "unidades" 
+    },
+    { 
+      "id": 3,
+      "userId": 1,
+      "nome": "Peito de Frango",
+      "quantidade": 2,
+      "unidade": "unidades" 
+    },
+    { 
+      "id": 4,
+      "userId": 1,
+      "nome": "Creme de Leite",
+      "quantidade": 4,
       "unidade": "unidades" 
     }
   ]

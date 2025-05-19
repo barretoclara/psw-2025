@@ -1,8 +1,14 @@
+body {
+  background-color: #fceeff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 60px;
+}
+
 .logo {
   font-family: 'Comic Sans MS', cursive;
   color: #dda1df;
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
 .btn-rosa {
@@ -11,8 +17,10 @@
   border: none;
   border-radius: 20px;
   font-weight: 500;
-  padding: 6px 16px;
+  padding: 8px 20px;
+  margin-left: 10px;
 }
+
 .btn-rosa:hover {
   background-color: #c28cc8;
   color: white;
@@ -23,31 +31,120 @@
   color: #495057;
   border: 1px solid #dee2e6;
   border-radius: 20px;
-  margin: 0 5px 10px 0;
+  margin: 0 8px 10px 0;
   font-size: 0.9rem;
-  padding: 6px 15px;
+  padding: 6px 16px;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-categoria:hover {
+  background-color: #f8f9fa;
+  transform: scale(1.05);
+}
+
+.search-bar {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 30px auto;
+}
+
+.search-bar input {
+  height: 50px;
+  font-size: 1rem;
+}
+
+.search-bar input.form-control {
+  font-size: 1.1rem;
+  padding: 14px 20px;
+  border-radius: 25px 0 0 25px;
+  border: 1px solid #ced4da;
+}
+
+.search-bar .btn {
+  border-radius: 0 25px 25px 0;
+  padding: 0 25px;
+  font-size: 1.1rem;
 }
 
 .card-receita {
   border-radius: 12px;
   overflow: hidden;
   border: none;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s;
   margin-bottom: 20px;
   background-color: white;
+  min-height: 120px;
 }
+
 .card-receita:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
 }
+
 .card-title {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 5px;
   color: #343a40;
 }
+
 .card-text {
   font-size: 0.85rem;
   color: #6c757d;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 20px 0 15px;
+  color: #495057;
+}
+
+.ad-banner {
+  background: linear-gradient(135deg, #343a40, #212529);
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
+  border-radius: 10px;
+  margin: 40px 0;
+  position: relative;
+}
+
+.ad-banner button {
+  background-color: #dda1df;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 24px;
+  font-weight: 600;
+  color: white;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.ad-banner button:hover {
+  background-color: #c28cc8;
+}
+
+.header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.header-bar .logo {
+  margin-bottom: 10px;
+}
+
+.header-bar .button-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
