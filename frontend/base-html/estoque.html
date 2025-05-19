@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estoque | Panelinha Digital</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --rosa-principal: #dda1df;
+      --rosa-hover: #c28cc8;
+      --fundo-rosa: #fceeff;
+    }
+    
+    body {
+      background-color: var(--fundo-rosa);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-bottom: 120px;
+    }
+    
+    /* Header */
+    .header-estoque {
+      padding: 15px;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      text-align: left;
+      padding-left: 20px;
+    }
+    
+    .header-estoque .logo {
+      font-family: 'Comic Sans MS', cursive;
+      color: var(--rosa-principal);
+      font-weight: bold;
+      font-size: 1.5rem;
+      margin-left: 10px;
+    }
+    
+    /* Título da página */
+    .page-title {
+      text-align: center;
+      color: var(--rosa-principal);
+      font-weight: 600;
+      font-size: 1.8rem;
+      margin: 10px 0 20px;
+    }
+    
+    /* Container principal */
+    .main-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+    
+    /* Barra de pesquisa */
+    .search-container {
+      margin: 15px 0;
+    }
+    
+    .search-input {
+      width: 100%;
+      padding: 10px 15px;
+      border: 1px solid #e0e0e0;
+      border-radius: 20px;
+      background-color: #faf0fb;
+    }
+    
+    /* Itens de estoque */
+    .estoque-container {
+      margin-bottom: 20px;
+    }
+    
+    .estoque-item {
+      background-color: white;
+      border-radius: 12px;
+      padding: 15px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .item-info {
+      flex-grow: 1;
+    }
+    
+    .item-name {
+      font-weight: 600;
+      color: #333;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+    }
+    
+    .item-details {
+      font-size: 0.95rem;
+      color: #666;
+    }
+    
+    .item-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--rosa-principal);
+      font-size: 1.3rem;
+    }
+    
+    .modal-content {
+      border-radius: 12px;
+      border: none;
+    }
+    
+    .modal-header {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .modal-title {
+      color: var(--rosa-principal);
+      font-weight: 600;
+    }
+    
+    .form-label {
+      font-weight: 500;
+      color: #555;
+    }
+    
+    .form-control {
+      border-radius: 10px;
+      padding: 10px 15px;
+      border: 1px solid #e0e0e0;
+    }
+    
+    .btn-salvar {
+      background-color: var(--rosa-principal);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 25px;
+      font-weight: 600;
+    }
+    
+    .btn-salvar:hover {
+      background-color: var(--rosa-hover);
+    }
+    
+    /* Rodapé fixo */
+    .nav-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #888;
+      font-size: 0.7rem;
+      text-decoration: none;
+      flex: 1;
+      padding: 5px 0;
+    }
+    
+    .nav-item i {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
+    
+    .nav-item.active {
+      color: var(--rosa-principal);
+    }
+    
+    /* Botão de adicionar */
+    .add-btn {
+      position: fixed;
+      bottom: 90px;
+      right: 25px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: var(--rosa-principal);
+      color: white;
+      border: none;
+      font-size: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <div class="header-estoque">
+    <div class="logo">Panelinha Digital</div>
+  </div>
+
+  <!-- Título da página -->
+  <div class="page-title">Ingredientes em estoque</div>
+
+  <!-- Container principal -->
+  <div class="main-container">
+    <!-- Barra de pesquisa -->
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Pesquisar no estoque..." id="searchInput">
+    </div>
+
+    <!-- Lista de itens -->
+    <div class="estoque-container" id="ingredientesList">
+      <!-- Itens serão carregados dinamicamente via JavaScript -->
+    </div>
+  </div>
+
+  <!-- Botão flutuante adicionar -->
+  <button class="add-btn" data-bs-toggle="modal" data-bs-target="#ingredienteModal">
+    <i class="bi bi-plus"></i>
+  </button>
+
+  <!-- Modal para editar/adicionar ingrediente -->
+  <div class="modal fade" id="ingredienteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalTitle">Adicionar Ingrediente</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="ingredienteForm">
+            <input type="hidden" id="ingredienteId">
+            <div class="mb-3">
+              <label for="nomeIngrediente" class="form-label">Nome do Ingrediente</label>
+              <input type="text" class="form-control" id="nomeIngrediente" required>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="quantidade" class="form-label">Quantidade</label>
+                <input type="number" class="form-control" id="quantidade" min="0" step="0.01" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="unidade" class="form-label">Unidade</label>
+                <input type="text" class="form-control" id="unidade" placeholder="ex: kg, unidades, litros" required>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-salvar" id="salvarIngrediente">Salvar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rodapé fixo -->
+  <nav class="nav-footer">
+    <a href="#" class="nav-item">
+      <i class="bi bi-house-door"></i>
+      Início
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-heart"></i>
+      Favoritos
+    </a>
+    <a href="#" class="nav-item active">
+      <i class="bi bi-box-seam"></i>
+      Estoque
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-cart3"></i>
+      Lista de mercado
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-person"></i>
+      Assinatura
+    </a>
+  </nav>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Alguns ingredientes já colocados por padrão
+    let ingredientes = [
+      { id: 1, nome: "Pimenta do Reino", quantidade: 1, unidade: "unidade" },
+      { id: 2, nome: "Mostarda", quantidade: 1, unidade: "pote" },
+      { id: 3, nome: "Ketchup", quantidade: 1, unidade: "pote" },
+      { id: 4, nome: "Creme de Leite", quantidade: 2, unidade: "caixas" },
+      { id: 5, nome: "Manteiga", quantidade: 1, unidade: "tablete" },
+      { id: 6, nome: "Cebola", quantidade: 3, unidade: "unidades" },
+      { id: 7, nome: "Frango", quantidade: 1, unidade: "kg" },
+      { id: 8, nome: "Óleo", quantidade: 1, unidade: "litro" },
+      { id: 9, nome: "Sal", quantidade: 1, unidade: "pacote" },
+      { id: 10, nome: "Cogumelos", quantidade: 200, unidade: "g" },
+      { id: 11, nome: "Batata Palha", quantidade: 1, unidade: "pacote" },
+      { id: 12, nome: "Maionese", quantidade: 1, unidade: "pote" },
+      { id: 13, nome: "Ovos", quantidade: 12, unidade: "unidades" },
+      { id: 14, nome: "Arroz", quantidade: 2, unidade: "kg" },
+      { id: 15, nome: "Feijão", quantidade: 1, unidade: "kg" },
+      { id: 16, nome: "Banana", quantidade: 6, unidade: "unidades" },
+      { id: 17, nome: "Leite", quantidade: 1, unidade: "litro" },
+      { id: 18, nome: "Fermento", quantidade: 1, unidade: "pacote" },
+      { id: 19, nome: "Açúcar", quantidade: 1, unidade: "kg" }
+    ];
+
+    // Elementos DOM
+    const ingredientesList = document.getElementById('ingredientesList');
+    const searchInput = document.getElementById('searchInput');
+    const ingredienteForm = document.getElementById('ingredienteForm');
+    const modalTitle = document.getElementById('modalTitle');
+    const nomeIngrediente = document.getElementById('nomeIngrediente');
+    const quantidade = document.getElementById('quantidade');
+    const unidade = document.getElementById('unidade');
+    const ingredienteId = document.getElementById('ingredienteId');
+    const salvarIngrediente = document.getElementById('salvarIngrediente');
+    const ingredienteModal = new bootstrap.Modal(document.getElementById('ingredienteModal'));
+
+    // Função para renderizar a lista de ingredientes
+    function renderIngredientes(filter = '') {
+      ingredientesList.innerHTML = '';
+      
+      const filtered = ingredientes.filter(ing => 
+        ing.nome.toLowerCase().includes(filter.toLowerCase())
+      );
+      
+      filtered.forEach(ingrediente => {
+        const item = document.createElement('div');
+        item.className = 'estoque-item';
+        item.innerHTML = `
+          <div class="item-info">
+            <div class="item-name">${ingrediente.nome}</div>
+            <div class="item-details">Quantidade: ${ingrediente.quantidade} ${ingrediente.unidade}</div>
+          </div>
+          <div class="item-actions">
+            <button class="action-btn btn-editar" data-id="${ingrediente.id}">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="action-btn btn-remover" data-id="${ingrediente.id}">
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        `;
+        ingredientesList.appendChild(item);
+      });
+
+      // Adiciona eventos aos botões
+      document.querySelectorAll('.btn-editar').forEach(btn => {
+        btn.addEventListener('click', (e) => editarIngrediente(e.target.closest('button').dataset.id));
+      });
+
+      document.querySelectorAll('.btn-remover').forEach(btn => {
+        btn.addEventListener('click', (e) => removerIngrediente(e.target.closest('button').dataset.id));
+      });
+    }
+
+    // Função para editar ingrediente
+    function editarIngrediente(id) {
+      const ingrediente = ingredientes.find(ing => ing.id == id);
+      if (ingrediente) {
+        modalTitle.textContent = 'Editar Ingrediente';
+        nomeIngrediente.value = ingrediente.nome;
+        quantidade.value = ingrediente.quantidade;
+        unidade.value = ingrediente.unidade;
+        ingredienteId.value = ingrediente.id;
+        ingredienteModal.show();
+      }
+    }
+
+    // Função para remover ingrediente
+    function removerIngrediente(id) {
+      if (confirm('Tem certeza que deseja remover este ingrediente?')) {
+        ingredientes = ingredientes.filter(ing => ing.id != id);
+        renderIngredientes(searchInput.value);
+      }
+    }
+
+    // Função para adicionar/atualizar ingrediente
+    function salvarIngredienteHandler() {
+      const id = ingredienteId.value;
+      const novoIngrediente = {
+        nome: nomeIngrediente.value,
+        quantidade: parseFloat(quantidade.value),
+        unidade: unidade.value
+      };
+
+      if (id) {
+        // Editar existente
+        const index = ingredientes.findIndex(ing => ing.id == id);
+        if (index !== -1) {
+          ingredientes[index] = { ...ingredientes[index], ...novoIngrediente };
+        }
+      } else {
+        // Adicionar novo
+        novoIngrediente.id = ingredientes.length > 0 ? 
+          Math.max(...ingredientes.map(ing => ing.id)) + 1 : 1;
+        ingredientes.push(novoIngrediente);
+      }
+
+      ingredienteModal.hide();
+      renderIngredientes(searchInput.value);
+      ingredienteForm.reset();
+    }
+
+    // Evento de pesquisa
+    searchInput.addEventListener('input', (e) => {
+      renderIngredientes(e.target.value);
+    });
+
+    // Evento para salvar ingrediente
+    salvarIngrediente.addEventListener('click', salvarIngredienteHandler);
+
+    // Evento para novo ingrediente (limpa o formulário)
+    document.querySelector('.add-btn').addEventListener('click', () => {
+      modalTitle.textContent = 'Adicionar Ingrediente';
+      ingredienteId.value = '';
+      ingredienteForm.reset();
+    });
+
+    // Inicializa a lista
+    renderIngredientes();
+  </script>
+</body>
+</html>
