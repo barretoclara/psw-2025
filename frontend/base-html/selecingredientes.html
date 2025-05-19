@@ -402,16 +402,21 @@
     }
 
     // Carrega os ingredientes já selecionados (se existirem)
-    window.onload = function() {
-      const selecionados = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
-      selecionados.forEach(ing => {
-        const index = ingredientes.findIndex(i => i.id === ing.id);
-        if (index !== -1) {
-          ingredientes[index] = ing;
-        }
-      });
-      renderIngredientes();
-    };
+    document.addEventListener('DOMContentLoaded', function() {
+      try {
+        const selecionados = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
+        selecionados.forEach(ing => {
+          const index = ingredientes.findIndex(i => i.id === ing.id);
+          if (index !== -1) {
+            ingredientes[index] = ing;
+          }
+        });
+        renderIngredientes();
+      } catch (e) {
+        console.error("Erro ao carregar ingredientes:", e);
+        renderIngredientes();
+      }
+    });
   </script>
 </body>
 </html>
