@@ -1,0 +1,53 @@
+.logo {
+  font-family: 'Comic Sans MS', cursive;
+  color: #dda1df;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+.btn-rosa {
+  background-color: #dda1df;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-weight: 500;
+  padding: 6px 16px;
+}
+.btn-rosa:hover {
+  background-color: #c28cc8;
+  color: white;
+}
+
+.btn-categoria {
+  background-color: white;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  border-radius: 20px;
+  margin: 0 5px 10px 0;
+  font-size: 0.9rem;
+  padding: 6px 15px;
+}
+
+.card-receita {
+  border-radius: 12px;
+  overflow: hidden;
+  border: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: transform 0.3s;
+  margin-bottom: 20px;
+  background-color: white;
+}
+.card-receita:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+}
+.card-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: #343a40;
+}
+.card-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+}

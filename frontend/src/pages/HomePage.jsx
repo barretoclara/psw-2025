@@ -1,35 +1,66 @@
-import CategoriaList from '../components/categoria/CategoriaList';
-import ReceitaList from '../components/receita/ReceitaList';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchEstoque } from '../storeConfig/slices/estoqueSlice';
-import { fetchReceitas } from '../storeConfig/slices/receitasSlice';
-import { fetchCategorias } from '../storeConfig/slices/categoriasSlice';
-import { useUserData } from '../hooks/useUserData';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
+import "./HomePage.css";
+import { fetchReceitas, selectAllReceitas } from "../storeConfig/slices/receitasSlice";
+import { fetchCategorias, selectAllCategorias } from "../storeConfig/slices/categoriasSlice";
+import { useUserData } from "../hooks/useUserData";
 
-const HomePage = () => {
+export default function HomePage() {
   const dispatch = useDispatch();
-  const { userId, validateUser } = useUserData();
+  const { validateUser } = useUserData();
+
+  const receitas = useSelector(selectAllReceitas);
+  const categorias = useSelector(selectAllCategorias);
 
   useEffect(() => {
     try {
-      const validUserId = validateUser();
-      dispatch(fetchReceitas(validUserId));
-      dispatch(fetchEstoque(validUserId));
-      dispatch(fetchCategorias(validUserId));
+      const userId = validateUser(); // garante que está logado
+      dispatch(fetchReceitas(userId));
+      dispatch(fetchCategorias(userId));
     } catch (error) {
-      console.error("Erro de autenticação:", error);
+      console.error("Usuário não autenticado:", error);
     }
   }, [dispatch, validateUser]);
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Categorias</h1>
-      <CategoriaList />
-      <h2 className="text-2xl font-semibold">Receitas</h2>
-      <ReceitaList />
+    <div className="container py-3">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <div className="logo">Panelinha Digital</div>
+        <div>
+          <Link to="/cadastrar-receita" className="btn btn-rosa me-2">Nova Receita</Link>
+          <Link to="/cadastrar-categoria" className="btn btn-rosa">Nova Categoria</Link>
+        </div>
+      </div>
+
+      <div className="input-group mb-4">
+        <input type="text" className="form-control" placeholder="Buscar receitas..." />
+        <button className="btn btn-rosa" type="button">
+          <i className="bi bi-search"></i>
+        </button>
+      </div>
+
+      <div className="d-flex flex-wrap mb-3">
+        {categorias.map((cat) => (
+          <button key={cat.id} className="btn btn-categoria">{cat.nome}</button>
+        ))}
+      </div>
+
+      <div className="row">
+        {receitas.map((rec) => (
+          <div key={rec.id} className="col-6 col-md-4 col-lg-3">
+            <div className="card card-receita">
+              <div className="card-body">
+                <h6 className="card-title">{rec.nome}</h6>
+                <p className="card-text">{rec.tempo_preparo ?? "Tempo não informado"}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <Footer />
     </div>
   );
-};
-
-export default HomePage;
+}
