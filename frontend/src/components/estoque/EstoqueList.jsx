@@ -40,13 +40,6 @@ const EstoqueList = () => {
           <IngredienteItem key={ing.id} ingrediente={ing} />
         ))}
       </ul>
-      
-      <button 
-        onClick={() => handleAddItem({ nome: "Novo Ingrediente", quantidade: 0 })}
-        className="mt-4 p-2 bg-blue-500 text-white"
-      >
-        Adicionar Item
-      </button>
     </div>
   );
 };
