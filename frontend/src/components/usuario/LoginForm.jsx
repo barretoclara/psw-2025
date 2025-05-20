@@ -2,9 +2,14 @@ import React, { useState } from 'react';
 import './LoginForm.css';
 import { useDispatch } from 'react-redux';
 import { login } from '../../storeConfig/slices/usuarioSlice';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isLoggedIn = useSelector(state => state.usuario.isLoggedIn);
+  
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
@@ -13,6 +18,12 @@ const LoginForm = () => {
   dispatch(login({ email, senha }));
 };
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn, navigate]);
+  
   return (
     <div className="login-wrapper">
       <div className="logo">Panelinha Digital</div>
