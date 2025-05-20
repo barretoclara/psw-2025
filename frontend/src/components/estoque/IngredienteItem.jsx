@@ -20,10 +20,22 @@ const IngredienteItem = ({ ingrediente }) => {
     }));
   };
 
+  const diminuirQuantidade = () => {
+    if (ingrediente.quantidade > 0) {
+      handleUpdate({ quantidade: ingrediente.quantidade - 1 });
+    }
+  };
+
   return (
     <li className="flex justify-between items-center p-2 border rounded">
       <span>{ingrediente.nome} - {ingrediente.quantidade}</span>
       <div className="space-x-2">
+        <button 
+          onClick={diminuirQuantidade}
+          className="px-2 bg-yellow-100"
+        >
+          -
+        </button>
         <button 
           onClick={() => handleUpdate({ quantidade: ingrediente.quantidade + 1 })}
           className="px-2 bg-green-100"
