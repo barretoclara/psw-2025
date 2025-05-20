@@ -29,45 +29,48 @@ export default function HomePage() {
   );
 
   return (
-    <div className="container py-3" style={{ maxWidth: '1200px', padding: '0 15px' }}>
+    <div className="container py-3" style={{ maxWidth: '1200px', padding: '0 10px' }}>
       {/* Cabeçalho */}
-      <div className="header-bar">
-        <h1 className="logo">Panelinha Digital</h1>
-        <div className="button-group">
-          <Link to="/cadastrar-receita" className="btn btn-rosa">
+    <div className="header-bar text-center mb-4">
+      <h1 className="logo mb-3">Panelinha Digital</h1>
+
+      <div className="d-flex flex-column align-items-center">
+        <div className="mb-3">
+          <Link to="/cadastrar-receita" className="btn btn-rosa me-2">
             Nova Receita
           </Link>
           <Link to="/cadastrar-categoria" className="btn btn-rosa">
             Nova Categoria
           </Link>
         </div>
-      </div>
 
-      {/* Barra de pesquisa */}
-      <div className="search-wrapper mb-4">
+        <div className="search-wrapper" style={{ marginTop: '10px' }}>
         <div className="input-group">
           <input
             type="text"
             className="form-control"
             placeholder="Buscar receitas..."
             style={{
-              height: '45px',
+              height: '23px',
               borderRadius: '25px 0 0 25px',
-              borderRight: 'none'
+              borderRight: 'none',
+              maxWidth: '280px'
             }}
           />
-          <button 
-            className="btn btn-rosa" 
+          <button
+            className="btn btn-rosa"
             type="button"
             style={{
               borderRadius: '0 25px 25px 0',
-              padding: '0 20px'
+              padding: '0 33px'
             }}
           >
             <i className="bi bi-search"></i>
           </button>
         </div>
       </div>
+      </div>
+    </div>
 
       {/* Categorias */}
       <div className="d-flex flex-wrap mb-4">
