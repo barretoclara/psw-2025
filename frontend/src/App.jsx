@@ -10,6 +10,7 @@ import ReceitaPage from './pages/ReceitaPage';
 import CadastroReceitaPage from './pages/CadastroReceitaPage';
 import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
 import ProtectedRoute from './components/ProtectedRoute';
+import CadastroUsuario from './pages/CadastroUsuario';
 
 
 
@@ -25,6 +26,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/cadastro" element={<CadastroUsuario />} />
         <Route path="/" element={
           <ProtectedRoute>
             <HomePage />
