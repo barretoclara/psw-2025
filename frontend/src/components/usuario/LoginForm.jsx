@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; 
+import React, { useState, useEffect } from 'react';
 import './LoginForm.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../storeConfig/slices/usuarioSlice';
@@ -7,18 +7,17 @@ import { useNavigate } from 'react-router-dom';
 const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isLoggedIn = useSelector(state => state.usuario.isLoggedIn);
+
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
-
-  
-  const isLoggedIn = useSelector(state => state.usuario.isLoggedIn);
 
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(login({ email, senha }));
   };
 
-  
   useEffect(() => {
     if (isLoggedIn) {
       navigate('/');
@@ -74,7 +73,15 @@ const LoginForm = () => {
           <a href="#" className="forgot-password">Esqueceu sua senha?</a>
 
           <button type="submit" className="login-btn">Entrar</button>
-          <button type="button" className="secondary-btn">Cadastre-se</button>
+
+          
+          <button
+            type="button"
+            className="secondary-btn"
+            onClick={() => navigate('/cadastro')}
+          >
+            Cadastre-se
+          </button>
         </form>
       </div>
     </div>
