@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selecionar Receita</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <style>
     :root {
       --rosa-principal: #dda1df;
@@ -15,7 +16,8 @@
     body {
       background-color: var(--fundo-rosa);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      padding-bottom: 80px;
+      padding-bottom: 100px;
+      min-height: 100vh;
     }
     
     .logo {
@@ -23,7 +25,14 @@
       color: var(--rosa-principal);
       font-weight: bold;
       font-size: 1.5rem;
-      text-align: center;
+      margin-left: 10px;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
     }
     
     .btn-rosa {
@@ -41,15 +50,13 @@
     }
     
     .back-button {
+      color: var(--rosa-principal);
+      border: none;
+      background: none;
+      font-size: 1.5rem;
+      padding: 0;
       position: absolute;
       left: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-    }
-    
-    .back-button i {
-      font-size: 1.5rem;
-      color: var(--rosa-principal);
     }
     
     .card-receita {
@@ -117,6 +124,8 @@
       padding: 10px 0;
       box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
       z-index: 1000;
+      white-space: nowrap;
+      overflow-x: auto;
     }
     
     .nav-item {
@@ -128,6 +137,7 @@
       text-decoration: none;
       flex: 1;
       padding: 5px 0;
+      min-width: 60px;
     }
     
     .nav-item i {
@@ -140,16 +150,17 @@
     }
     
     .section-title {
-      font-size: 1rem;
+      font-size: 1.5rem;
       font-weight: 600;
-      margin: 10px 0 15px;
-      color: #495057;
+      margin: 25px 0 30px;
+      color: var(--rosa-principal);
       text-align: center;
+      padding: 0 20px;
     }
     
     .btn-confirmar {
       position: fixed;
-      bottom: 80px;
+      bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1000;
@@ -158,18 +169,36 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15);
       width: 90%;
       max-width: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
     
     .search-container {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
+      padding: 0 15px;
     }
     
     .search-container .btn {
       position: absolute;
-      right: 5px;
-      top: 5px;
+      right: 25px;
+      top: 50%;
+      transform: translateY(-50%);
       z-index: 2;
+      background: none;
+      border: none;
+      color: var(--rosa-principal);
+      font-size: 1.2rem;
+      padding: 0 15px;
+    }
+    
+    .search-container .form-control {
+      padding-right: 50px;
+      border-radius: 20px;
+      border: 1px solid #ddd;
+      height: 45px;
     }
     
     .select-indicator {
@@ -213,31 +242,49 @@
       position: relative;
       margin-bottom: 10px;
     }
+    
+    .container-custom {
+      padding-bottom: 100px;
+      min-height: calc(100vh - 180px);
+    }
+    
+    .receitas-container {
+      margin-bottom: 30px;
+    }
+    
+    .no-results {
+      text-align: center;
+      color: #6c757d;
+      padding: 40px 0;
+      display: none;
+    }
   </style>
 </head>
 <body>
   <!-- Cabeçalho -->
   <header class="header">
-    <a href="lista-mercado.html" class="back-button">
-      <i class="bi bi-arrow-left"></i>
-    </a>
-    <div class="logo">Panelinha Digital</div>
+    <div class="header-content">
+      <a href="lista-mercado.html" class="back-button">
+        <i class="bi bi-arrow-left"></i>
+      </a>
+      <div class="logo">Panelinha Digital</div>
+    </div>
   </header>
 
-  <div class="container py-3">
+  <div class="container py-3 container-custom">
     <!-- Título -->
     <h5 class="section-title">Selecione uma receita</h5>
     
     <!-- Barra de busca -->
     <div class="search-container">
-      <input type="text" class="form-control rounded-pill ps-3" placeholder="Buscar receitas..." id="search-input">
-      <button class="btn btn-rosa rounded-pill" type="button">
+      <input type="text" class="form-control" placeholder="Buscar receitas..." id="search-input">
+      <button class="btn" type="button" id="search-btn">
         <i class="bi bi-search"></i>
       </button>
     </div>
     
     <!-- Lista de receitas -->
-    <div class="row" id="receitas-container">
+    <div class="row receitas-container" id="receitas-container">
       <!-- Receita 1 -->
       <div class="col-6 col-md-4 col-lg-3">
         <div class="card card-receita" data-receita-id="1" data-ingredientes="Carne, Molho, Temperos, Cebola, Alho">
@@ -333,11 +380,41 @@
           </div>
         </div>
       </div>
+      
+      <!-- Receita 9 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="9" data-ingredientes="Frango, Arroz, Feijão, Farofa">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae" class="card-img-top" alt="PF Completo">
+          <div class="card-body">
+            <h6 class="card-title">PF Completo</h6>
+            <p class="card-text">4 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 10 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="10" data-ingredientes="Macarrão, Molho, Queijo">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141" class="card-img-top" alt="Macarrão">
+          <div class="card-body">
+            <h6 class="card-title">Macarrão Simples</h6>
+            <p class="card-text">3 ingredientes</p>
+          </div>
+        </div>
+      </div>
     </div>
     
-    <!-- Botão de confirmar -->
-    <button class="btn btn-rosa btn-confirmar d-none" id="confirmar-btn">
-      Adicionar à Lista
+    <!-- Mensagem quando não há resultados -->
+    <div class="no-results" id="no-results">
+      <i class="bi bi-search" style="font-size: 2rem; margin-bottom: 10px;"></i>
+      <p>Nenhuma receita encontrada</p>
+    </div>
+    
+    <!-- Botão de confirmar  -->
+    <button class="btn btn-rosa btn-confirmar" id="confirmar-btn">
+      <i class="bi bi-plus-lg"></i> Adicionar à Lista
     </button>
   </div>
     
@@ -365,8 +442,6 @@
     </a>
   </nav>
 
-  <!-- Bootstrap Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   
@@ -389,9 +464,6 @@
           nome: this.querySelector('.card-title').textContent,
           ingredientes: this.getAttribute('data-ingredientes').split(', ')
         };
-        
-        // Mostra o botão de confirmar
-        document.getElementById('confirmar-btn').classList.remove('d-none');
       });
     });
     
@@ -403,20 +475,20 @@
         
         // Redireciona de volta para a lista de mercado
         window.location.href = 'lista-mercado.html';
+      } else {
+        // Mostra mensagem se nenhuma receita foi selecionada
+        alert('Por favor, selecione uma receita antes de continuar.');
       }
     });
     
     // Função de busca
-    document.querySelector('.search-container .btn').addEventListener('click', buscarReceitas);
-    document.getElementById('search-input').addEventListener('keypress', function(e) {
-      if (e.key === 'Enter') {
-        buscarReceitas();
-      }
-    });
+    document.getElementById('search-btn').addEventListener('click', buscarReceitas);
+    document.getElementById('search-input').addEventListener('input', buscarReceitas);
     
     function buscarReceitas() {
       const termo = document.getElementById('search-input').value.toLowerCase();
       const cards = document.querySelectorAll('.card-receita');
+      let resultadosEncontrados = 0;
       
       cards.forEach(card => {
         const nome = card.querySelector('.card-title').textContent.toLowerCase();
@@ -424,10 +496,19 @@
         
         if (nome.includes(termo) || ingredientes.includes(termo)) {
           card.parentElement.style.display = 'block';
+          resultadosEncontrados++;
         } else {
           card.parentElement.style.display = 'none';
         }
       });
+      
+      // Mostra mensagem se não houver resultados
+      const noResults = document.getElementById('no-results');
+      if (resultadosEncontrados === 0 && termo !== '') {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
     }
   </script>
 </body>
