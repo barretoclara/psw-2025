@@ -1,0 +1,192 @@
+body {
+    background-color: #fceeff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-bottom: 70px;
+  }
+  
+  .header {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+    position: relative;
+  }
+  
+  .logo {
+    font-family: 'Comic Sans MS', cursive;
+    color: #dda1df;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .container-custom {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  
+  .lista-item {
+    background-color: #faf0fb;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+  
+  .lista-item:hover {
+    background-color: #f3e5f5;
+  }
+  
+  .lista-item.checked {
+    background-color: #e8d4f5; 
+    border-color: #dda1df;
+  }
+  
+  .item-text {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  .btn-custom {
+    background-color: #dda1df;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 25px;
+    font-weight: 500;
+  }
+  
+  .btn-custom:hover {
+    background-color: #c07ad6;
+    color: white;
+  }
+  
+  .back-button {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .back-icon {
+    font-size: 1.5rem;
+    color: #dda1df;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .button-group .btn {
+    flex: 1 1 45%;
+    min-width: 120px;
+  }
+  
+  .add-item-btn {
+    background-color: #dda1df;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 15px auto;
+    cursor: pointer;
+  }
+  
+  .nav-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+    z-index: 1000;
+  }
+  
+  .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #888;
+    font-size: 0.7rem;
+    text-decoration: none;
+    flex: 1;
+    padding: 5px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .nav-icon {
+    font-size: 1.2rem;
+    margin-bottom: 3px;
+  }
+  
+  .nav-item.active {
+    color: #dda1df;
+  }
+  
+  .divider {
+    text-align: center;
+    margin: 10px 0;
+    color: #888;
+    font-weight: bold;
+  }
+  
+  .recipe-btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  
+  .toggle-check {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+  
+  .checked-icon, .unchecked-icon {
+    color: #dda1df;
+    font-size: 1.2rem;
+  }
+  
+  .remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  
+  .trash-icon {
+    color: #dda1df;
+    font-size: 1.2rem;
+  }
+  
+  .plus-icon {
+    font-size: 1.2rem;
+  }
