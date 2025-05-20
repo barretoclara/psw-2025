@@ -11,6 +11,7 @@ import CadastroReceitaPage from './pages/CadastroReceitaPage';
 import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import CadastroUsuario from './pages/CadastroUsuario';
+import SelecionaIngredientes from './pages/SelecionaIngredientes';
 
 
 
@@ -50,6 +51,11 @@ function App() {
         <Route path="/cadastrar-receita" element={
           <ProtectedRoute>
             <CadastroReceitaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/selecionar-ingredientes" element={
+          <ProtectedRoute>
+            <SelecionaIngredientes />
           </ProtectedRoute>
         } />
         <Route path="/editar-receita/:id" element={
