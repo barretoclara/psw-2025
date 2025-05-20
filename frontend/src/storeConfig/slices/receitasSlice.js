@@ -25,7 +25,22 @@ export const fetchReceitas = createAsyncThunk(
 export const addReceita = createAsyncThunk(
   'receitas/add',
   async ({ receitaData, userId }) => {
-    return httpPost(`${baseUrl}/receitas`, { ...receitaData, userId });
+    try {
+      const dadosParaEnviar = {
+        nome: receitaData.nome,
+        tempo_preparo: Number(receitaData.tempo_preparo),
+        categoriaId: Number(receitaData.categoriaId),
+        ingredientes: receitaData.ingredientes,
+        modo_preparo: receitaData.modo_preparo,
+        userId: Number(userId)
+      };
+
+      const response = await httpPost(`${baseUrl}/receitas`, dadosParaEnviar);
+      return response;
+    } catch (error) {
+      console.error("Erro na requisição:", error);
+      throw error;
+    }
   }
 );
 

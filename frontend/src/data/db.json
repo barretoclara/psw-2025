@@ -8,8 +8,16 @@
     }
   ],
   "categorias": [
-    { "id": 1, "userId": 1, "nome": "Doce" },
-    { "id": 2, "userId": 1, "nome": "Salgado" }
+    {
+      "id": 1,
+      "userId": 1,
+      "nome": "Doce"
+    },
+    {
+      "id": 2,
+      "userId": 1,
+      "nome": "Salgado"
+    }
   ],
   "receitas": [
     {
@@ -19,9 +27,19 @@
       "tempo_preparo": 45,
       "categoriaId": 1,
       "ingredientes": [
-      { "id": 1, "nome": "Farinha de Trigo", "quantidade": 2, "unidade": "xícaras" },
-      { "id": 2, "nome": "Ovo", "quantidade": 3, "unidade": "unidades" }
-    ],
+        {
+          "id": 1,
+          "nome": "Farinha de Trigo",
+          "quantidade": 2,
+          "unidade": "xícaras"
+        },
+        {
+          "id": 2,
+          "nome": "Ovo",
+          "quantidade": 3,
+          "unidade": "unidades"
+        }
+      ],
       "modo_preparo": "Misture e asse por 40 minutos."
     },
     {
@@ -31,40 +49,191 @@
       "tempo_preparo": 20,
       "categoriaId": 2,
       "ingredientes": [
-        { "id": 3, "nome": "Peito de Frango", "quantidade": 2, "unidade": "unidades" },
-        { "id": 4, "nome": "Creme de Leite", "quantidade": 1, "unidade": "unidades" }
+        {
+          "id": 3,
+          "nome": "Peito de Frango",
+          "quantidade": 2,
+          "unidade": "unidades"
+        },
+        {
+          "id": 4,
+          "nome": "Creme de Leite",
+          "quantidade": 1,
+          "unidade": "unidades"
+        }
       ],
       "modo_preparo": "Incorpore o creme de leite e retire do fogo antes de ferver."
+    },
+    {
+      "nome": "Omelete",
+      "tempo_preparo": 10,
+      "categoriaId": 2,
+      "ingredientes": [
+        {
+          "id": 2,
+          "nome": "Ovo",
+          "quantidade": 1,
+          "unidade": "unidades"
+        },
+        {
+          "id": 6,
+          "nome": "Óleo",
+          "quantidade": 1,
+          "unidade": "unidades"
+        }
+      ],
+      "modo_preparo": "...",
+      "userId": 1,
+      "id": 3
     }
   ],
   "estoque": [
-    { 
+    {
       "id": 1,
-      "userId": 1,
       "nome": "Farinha de Trigo",
       "quantidade": 1,
-      "unidade": "xícaras" 
+      "unidade": "xícaras",
+      "userId": 1
     },
-    { 
+    {
       "id": 2,
-      "userId": 1,
       "nome": "Ovo",
-      "quantidade": 2,
-      "unidade": "unidades" 
+      "quantidade": 1,
+      "unidade": "unidades",
+      "userId": 1
     },
-    { 
+    {
       "id": 3,
-      "userId": 1,
       "nome": "Peito de Frango",
-      "quantidade": 2,
-      "unidade": "unidades" 
+      "quantidade": 0,
+      "unidade": "unidades",
+      "userId": 1
     },
-    { 
+    {
       "id": 4,
-      "userId": 1,
       "nome": "Creme de Leite",
-      "quantidade": 4,
-      "unidade": "unidades" 
+      "quantidade": 1,
+      "unidade": "unidades",
+      "userId": 1
+    },
+    {
+      "id": 5,
+      "nome": "Cebola",
+      "quantidade": 0,
+      "unidade": "unidades",
+      "userId": 1
+    },
+    {
+      "id": 6,
+      "nome": "Óleo",
+      "quantidade": 1,
+      "unidade": "unidades",
+      "userId": 1
+    },
+    {
+      "id": 7,
+      "nome": "Banana",
+      "quantidade": 0,
+      "unidade": "unidades",
+      "userId": 1
+    },
+    {
+      "id": 8,
+      "nome": "Pimenta do Reino",
+      "quantidade": 0,
+      "unidade": "unidade",
+      "userId": 1
+    },
+    {
+      "id": 9,
+      "nome": "Mostarda",
+      "quantidade": 0,
+      "unidade": "pote",
+      "userId": 1
+    },
+    {
+      "id": 10,
+      "nome": "Ketchup",
+      "quantidade": 0,
+      "unidade": "pote",
+      "userId": 1
+    },
+    {
+      "id": 11,
+      "nome": "Manteiga",
+      "quantidade": 0,
+      "unidade": "tablete",
+      "userId": 1
+    },
+    {
+      "id": 12,
+      "nome": "Frango",
+      "quantidade": 0,
+      "unidade": "kg",
+      "userId": 1
+    },
+    {
+      "id": 13,
+      "nome": "Sal",
+      "quantidade": 0,
+      "unidade": "pacote",
+      "userId": 1
+    },
+    {
+      "id": 14,
+      "nome": "Cogumelos",
+      "quantidade": 0,
+      "unidade": "g",
+      "userId": 1
+    },
+    {
+      "id": 15,
+      "nome": "Batata Palha",
+      "quantidade": 0,
+      "unidade": "pacote",
+      "userId": 1
+    },
+    {
+      "id": 16,
+      "nome": "Maionese",
+      "quantidade": 0,
+      "unidade": "pote",
+      "userId": 1
+    },
+    {
+      "id": 17,
+      "nome": "Arroz",
+      "quantidade": 0,
+      "unidade": "kg",
+      "userId": 1
+    },
+    {
+      "id": 18,
+      "nome": "Feijão",
+      "quantidade": 0,
+      "unidade": "kg",
+      "userId": 1
+    },
+    {
+      "id": 19,
+      "nome": "Leite",
+      "quantidade": 0,
+      "unidade": "litro",
+      "userId": 1
+    },
+    {
+      "id": 20,
+      "nome": "Fermento",
+      "quantidade": 0,
+      "unidade": "pacote",
+      "userId": 1
+    },
+    {
+      "id": 21,
+      "nome": "Açúcar",
+      "quantidade": 0,
+      "unidade": "kg",
+      "userId": 1
     }
   ]
 }

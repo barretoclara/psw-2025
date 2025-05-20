@@ -1,25 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { addReceita } from '../../storeConfig/slices/receitasSlice';
+import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
 
 function ReceitaForm() {
+  const dispatch = useDispatch();
+  const { userId } = useUserData();
+  const categorias = useSelector(state => state.categorias.entities);
+  
   const [nome, setNome] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [tempo, setTempo] = useState('');
+  const [categoriaId, setCategoriaId] = useState('');
+  const [tempo_preparo, setTempo_preparo] = useState('');
   const [ingredientes, setIngredientes] = useState([]);
-  const [novoIngrediente, setNovoIngrediente] = useState('');
-  const [modoPreparo, setModoPreparo] = useState('');
+  const [modo_preparo, setModo_preparo] = useState('');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const dadosSalvos = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
+    setNome(dadosSalvos.nome || '');
+    setCategoriaId(dadosSalvos.categoriaId || '');
+    setTempo_preparo(dadosSalvos.tempo_preparo || '');
+    setModo_preparo(dadosSalvos.modo_preparo || '');
+    
+    const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
+    setIngredientes(ingredientesSalvos);
+  }, []);
+
   const adicionarIngrediente = () => {
+    localStorage.setItem('dadosReceitaParcial', JSON.stringify({
+      nome,
+      categoriaId,
+      tempo_preparo,
+      modo_preparo
+    }));
     navigate('/selecionar-ingredientes');
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const novaReceita = { nome, categoria, tempo, ingredientes, modoPreparo };
-    console.log('Receita cadastrada:', novaReceita);
-    // Aqui você pode adicionar lógica de envio para o backend
+    
+    if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
+      alert('Preencha todos os campos obrigatórios!');
+      return;
+    }
+
+    try {
+      const novaReceita = {
+        nome,
+        tempo_preparo: Number(tempo_preparo),
+        categoriaId: Number(categoriaId),
+        ingredientes: ingredientes.map(ing => ({
+          id: ing.id,
+          nome: ing.nome,
+          quantidade: Number(ing.quantidade),
+          unidade: ing.unidade
+        })),
+        modo_preparo,
+        userId: Number(userId)
+      };
+
+      await dispatch(addReceita({
+        receitaData: novaReceita,
+        userId
+      })).unwrap();
+      
+      localStorage.removeItem('dadosReceitaParcial');
+      localStorage.removeItem('ingredientesSelecionados');
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao cadastrar receita:', error);
+      alert('Erro ao cadastrar receita');
+    }
   };
 
   return (
@@ -36,20 +89,21 @@ function ReceitaForm() {
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               placeholder="Digite o nome da receita"
+              required
             />
           </div>
 
           <div className="input-field">
             <label>Categoria:</label>
             <select
-              value={categoria}
-              onChange={(e) => setCategoria(e.target.value)}
+              value={categoriaId}
+              onChange={(e) => setCategoriaId(e.target.value)}
+              required
             >
               <option value="">Selecione a categoria</option>
-              <option value="Café da manhã">Café da manhã</option>
-              <option value="Almoço">Almoço</option>
-              <option value="Jantar">Jantar</option>
-              <option value="Sobremesa">Sobremesa</option>
+              {categorias && Object.values(categorias).map(cat => (
+                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+              ))}
             </select>
           </div>
 
@@ -57,9 +111,10 @@ function ReceitaForm() {
             <label>Tempo de preparo (min):</label>
             <input
               type="number"
-              value={tempo}
-              onChange={(e) => setTempo(e.target.value)}
+              value={tempo_preparo}
+              onChange={(e) => setTempo_preparo(e.target.value)}
               placeholder="Ex: 30"
+              required
             />
           </div>
 
@@ -76,7 +131,7 @@ function ReceitaForm() {
             </div>
             <ul style={{ textAlign: 'left', marginTop: '10px' }}>
               {ingredientes.map((ing, i) => (
-                <li key={i}>{ing}</li>
+                <li key={i}>{ing.nome} - {ing.quantidade} {ing.unidade}</li>
               ))}
             </ul>
           </div>
@@ -84,8 +139,8 @@ function ReceitaForm() {
           <div className="input-field">
             <label>Modo de preparo:</label>
             <textarea
-              value={modoPreparo}
-              onChange={(e) => setModoPreparo(e.target.value)}
+              value={modo_preparo}
+              onChange={(e) => setModo_preparo(e.target.value)}
               placeholder="Descreva o modo de preparo"
               rows="4"
               style={{
@@ -96,6 +151,7 @@ function ReceitaForm() {
                 border: '1px solid #e0e0e0',
                 resize: 'none'
               }}
+              required
             />
           </div>
 

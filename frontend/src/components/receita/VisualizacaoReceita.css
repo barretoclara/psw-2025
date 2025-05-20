@@ -1,0 +1,51 @@
+.visualizacao-receita {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.visualizacao-receita h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.tempo-preparo {
+  font-style: italic;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.ingredientes, .modo-preparo {
+  margin-bottom: 2rem;
+}
+
+.ingredientes ul {
+  list-style: disc;
+  padding-left: 1.5rem;
+}
+
+.botoes {
+  display: flex;
+  gap: 1rem;
+}
+
+.btn-editar, .btn-deletar {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-editar {
+  background-color: #3498db;
+  color: white;
+}
+
+.btn-deletar {
+  background-color: #e74c3c;
+  color: white;
+}

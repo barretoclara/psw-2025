@@ -15,6 +15,7 @@ import SelecionaIngredientes from './pages/SelecionaIngredientes';
 import AssinaturaPremium from './pages/AssinaturaPremium';
 import GerarListaMercado from "./components/listaMercado/GerarListaMercado";
 import FavoritosPage from './pages/FavoritosPage'; 
+import VisualizacaoReceita from './components/receita/VisualizacaoReceita';
 
 function App() {
   const dispatch = useDispatch();
@@ -71,6 +72,11 @@ function App() {
         <Route path="/editar-receita/:id" element={
           <ProtectedRoute>
             <CadastroReceitaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/visualizar-receita/:id" element={
+          <ProtectedRoute>
+            <VisualizacaoReceita />
           </ProtectedRoute>
         } />
         <Route path="/cadastrar-categoria" element={
