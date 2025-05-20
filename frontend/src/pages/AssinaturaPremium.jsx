@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import './AssinaturaPremium.css'; 
+import './styles/AssinaturaPremium.css'; 
 
 export default function AssinaturaPremium() {
   return (
@@ -19,9 +19,10 @@ export default function AssinaturaPremium() {
           <small>7 dias grátis • Cancele quando quiser</small>
         </div>
 
-        <button className="btn-premium">
-          <i className="bi bi-gem"></i> Experimente Grátis
-        </button>
+        <a href="/termosDeUso.html">
+          <button className="btn-premium">Experimente Grátis</button>
+        </a>
+
 
         <p className="text-muted">Cobrança mensal apenas após o teste gratuito.</p>
       </div>

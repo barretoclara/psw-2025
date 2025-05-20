@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import "./HomePage.css";
+import "./styles/HomePage.css";
 import { fetchReceitas, selectAllReceitas } from "../storeConfig/slices/receitasSlice";
 import { fetchCategorias, selectAllCategorias } from "../storeConfig/slices/categoriasSlice";
 import { useUserData } from "../hooks/useUserData";

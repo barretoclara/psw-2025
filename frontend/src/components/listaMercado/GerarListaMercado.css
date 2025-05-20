@@ -1,0 +1,89 @@
+.gerar-lista-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  font-family: sans-serif;
+}
+
+.titulo {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.receitas-selecao {
+  margin-bottom: 2rem;
+}
+
+.subtitulo {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.lista-receitas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.card-receita {
+  padding: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #fff;
+  transition: all 0.2s ease-in-out;
+}
+
+.card-receita:hover {
+  background-color: #fce4ec;
+}
+
+.card-receita.selecionada {
+  border-color: #f06292;
+  background-color: #fce4ec;
+}
+
+.resultado-lista {
+  text-align: center;
+}
+
+.status-msg {
+  color: #888;
+  font-style: italic;
+}
+
+.itens-lista {
+  text-align: left;
+  margin: 1rem 0;
+}
+
+.item-lista {
+  background-color: #ffe0eb;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ddd;
+}
+
+.botoes-acao {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.botoes-acao button {
+  padding: 0.5rem 1rem;
+  border: none;
+  background-color: #f06292;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.botoes-acao button:hover {
+  background-color: #e91e63;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './CadastroUsuario.css'; // você pode criar um CSS parecido com o do login
+import './styles/CadastroUsuario.css';
 
 const CadastroUsuario = () => {
   const [nome, setNome] = useState('');
@@ -9,7 +9,6 @@ const CadastroUsuario = () => {
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erroSenha, setErroSenha] = useState(false);
 
-  // Função para formatar telefone (igual ao JS do seu exemplo)
   const formatarTelefone = (valor) => {
     let v = valor.replace(/\D/g, '');
     if (v.length > 2) v = `(${v.substring(0, 2)}) ${v.substring(2)}`;
@@ -28,9 +27,7 @@ const CadastroUsuario = () => {
       return;
     }
     setErroSenha(false);
-    // Aqui você integraria a lógica de cadastro (ex: chamar API)
     alert('Cadastro feito com sucesso!');
-    // Depois de cadastrar, pode redirecionar para login ou home
   };
 
   return (

@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import CadastroUsuario from './pages/CadastroUsuario';
 import SelecionaIngredientes from './pages/SelecionaIngredientes';
 import AssinaturaPremium from './pages/AssinaturaPremium';
+import GerarListaMercado from "./components/listaMercado/GerarListaMercado";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ function App() {
         <Route path="/lista-mercado" element={
           <ProtectedRoute>
             <ListaMercadoPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/lista-mercado/gerar" element={
+          <ProtectedRoute>
+            <GerarListaMercado />
           </ProtectedRoute>
         } />
         <Route path="/receita/:id" element={

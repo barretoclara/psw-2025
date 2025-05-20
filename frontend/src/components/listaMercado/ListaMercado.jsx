@@ -104,7 +104,7 @@ const ListaMercado = () => {
 
   // Escolher receita
   const escolherReceita = () => {
-    alert("Funcionalidade de escolher receita será implementada em breve!");
+    navigate("/lista-mercado/gerar");
   };
 
   return (
