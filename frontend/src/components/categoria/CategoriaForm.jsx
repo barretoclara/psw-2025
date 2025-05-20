@@ -11,37 +11,42 @@ export default function CategoriaForm({ categoriaExistente, userId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const categoriaData = { nome, userId };
-    
+
     if (categoriaExistente) {
-      dispatch(updateCategoria({ 
+      dispatch(updateCategoria({
         categoria: { ...categoriaExistente, ...categoriaData },
         userId
       }));
     } else {
       dispatch(addCategoria(categoriaData));
     }
-    
+
     navigate('/');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block mb-1">Nome da Categoria</label>
-        <input
-          type="text"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        />
-      </div>
-      <button
-        type="submit"
-        className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
-      >
-        {categoriaExistente ? 'Atualizar' : 'Salvar'}
-      </button>
-    </form>
+    <div className="card p-4 rounded-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3 text-center">
+          <label className="form-label fw-bold">Nome da Categoria</label>
+          <input
+            type="text"
+            className="form-control text-center"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            required
+          />
+        </div>
+        <div className="d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn text-white"
+            style={{ backgroundColor: '#dda1df' }}
+          >
+            {categoriaExistente ? 'Atualizar' : 'Salvar'}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

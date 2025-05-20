@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { HouseDoor, Heart, BoxSeam, Cart3, Person } from "react-bootstrap-icons";
+import './Footer.css';
 
 export default function Footer() {
   const location = useLocation();

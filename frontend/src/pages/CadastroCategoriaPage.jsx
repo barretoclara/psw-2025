@@ -6,18 +6,15 @@ import { useUserData } from '../hooks/useUserData';
 export default function CadastroCategoriaPage() {
   const { id } = useParams();
   const { userId } = useUserData();
-  const categoria = useSelector(state => 
+  const categoria = useSelector(state =>
     id ? state.categorias.entities[id] : null
   );
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-6">
-        {id ? 'Editar Categoria' : 'Nova Categoria'}
-      </h1>
-      <CategoriaForm 
-        categoriaExistente={categoria} 
-        userId={userId} 
+    <div className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh', backgroundColor: '#fceeff' }}>
+      <CategoriaForm
+        categoriaExistente={categoria}
+        userId={userId}
       />
     </div>
   );
