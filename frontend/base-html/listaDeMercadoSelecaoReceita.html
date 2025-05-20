@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Selecionar Receita</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --rosa-principal: #dda1df;
+      --rosa-hover: #c28cc8;
+      --fundo-rosa: #fceeff;
+    }
+    
+    body {
+      background-color: var(--fundo-rosa);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding-bottom: 80px;
+    }
+    
+    .logo {
+      font-family: 'Comic Sans MS', cursive;
+      color: var(--rosa-principal);
+      font-weight: bold;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+    
+    .btn-rosa {
+      background-color: var(--rosa-principal);
+      color: white;
+      border: none;
+      border-radius: 20px;
+      font-weight: 500;
+      padding: 8px 20px;
+    }
+    
+    .btn-rosa:hover {
+      background-color: var(--rosa-hover);
+      color: white;
+    }
+    
+    .back-button {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+    .back-button i {
+      font-size: 1.5rem;
+      color: var(--rosa-principal);
+    }
+    
+    .card-receita {
+      border-radius: 12px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      transition: transform 0.3s;
+      margin-bottom: 20px;
+      background-color: white;
+      cursor: pointer;
+      position: relative;
+    }
+    
+    .card-receita:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+    
+    .card-receita.selecionada {
+      border: 2px solid var(--rosa-principal);
+      box-shadow: 0 0 0 4px rgba(221, 161, 223, 0.3);
+    }
+    
+    .card-img-top {
+      height: 160px;
+      object-fit: cover;
+    }
+    
+    .card-body {
+      padding: 15px;
+    }
+    
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #343a40;
+    }
+    
+    .card-text {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+    
+    .badge-novo {
+      background-color: #ff6b6b;
+      color: white;
+      font-size: 0.7rem;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      padding: 3px 8px;
+      border-radius: 10px;
+    }
+    
+    .nav-footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: white;
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+    
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #888;
+      font-size: 0.7rem;
+      text-decoration: none;
+      flex: 1;
+      padding: 5px 0;
+    }
+    
+    .nav-item i {
+      font-size: 1.2rem;
+      margin-bottom: 3px;
+    }
+    
+    .nav-item.active {
+      color: #dda1df;
+    }
+    
+    .section-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 10px 0 15px;
+      color: #495057;
+      text-align: center;
+    }
+    
+    .btn-confirmar {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1000;
+      padding: 12px 40px;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 90%;
+      max-width: 400px;
+    }
+    
+    .search-container {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    
+    .search-container .btn {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      z-index: 2;
+    }
+    
+    .select-indicator {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid white;
+      background-color: rgba(255, 255, 255, 0.7);
+      z-index: 2;
+    }
+    
+    .card-receita.selecionada .select-indicator {
+      background-color: var(--rosa-principal);
+      border-color: var(--rosa-principal);
+    }
+    
+    .select-indicator::after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 7px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    
+    .card-receita.selecionada .select-indicator::after {
+      display: block;
+    }
+    
+    .header {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      padding: 15px 0;
+      position: relative;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Cabeçalho -->
+  <header class="header">
+    <a href="lista-mercado.html" class="back-button">
+      <i class="bi bi-arrow-left"></i>
+    </a>
+    <div class="logo">Panelinha Digital</div>
+  </header>
+
+  <div class="container py-3">
+    <!-- Título -->
+    <h5 class="section-title">Selecione uma receita</h5>
+    
+    <!-- Barra de busca -->
+    <div class="search-container">
+      <input type="text" class="form-control rounded-pill ps-3" placeholder="Buscar receitas..." id="search-input">
+      <button class="btn btn-rosa rounded-pill" type="button">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+    
+    <!-- Lista de receitas -->
+    <div class="row" id="receitas-container">
+      <!-- Receita 1 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="1" data-ingredientes="Carne, Molho, Temperos, Cebola, Alho">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1551183053-bf91a1d81141" class="card-img-top" alt="Carne Marinada">
+          <div class="card-body">
+            <h6 class="card-title">Carne Marinada</h6>
+            <p class="card-text">5 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 2 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="2" data-ingredientes="Salsichas, Pão, Molho, Queijo">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1559847844-5315695dadae" class="card-img-top" alt="Salsichas">
+          <div class="card-body">
+            <h6 class="card-title">Salsichas</h6>
+            <p class="card-text">4 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 3 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="3" data-ingredientes="Pão, Presunto, Queijo, Tomate">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb" class="card-img-top" alt="Barquinhas">
+          <div class="card-body">
+            <h6 class="card-title">Barquinhas</h6>
+            <p class="card-text">4 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 4 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="4" data-ingredientes="Ovos, Café, Açúcar">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb" class="card-img-top" alt="Sobremesa">
+          <div class="card-body">
+            <h6 class="card-title">Sobremesa</h6>
+            <p class="card-text">3 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 5 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="5" data-ingredientes="Farinha, Ovos, Chocolate, Açúcar, Manteiga">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1518779578993-ec3579fee39f" class="card-img-top" alt="Bolo de Chocolate">
+          <div class="card-body">
+            <h6 class="card-title">Bolo de Chocolate</h6>
+            <p class="card-text">5 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 6 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="6" data-ingredientes="Massa de pizza, Molho de tomate, Queijo, Presunto, Tomate, Orégano">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3" class="card-img-top" alt="Pizza">
+          <div class="card-body">
+            <h6 class="card-title">Pizza Caseira</h6>
+            <p class="card-text">6 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 7 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="7" data-ingredientes="Massa de lasanha, Carne moída, Molho branco, Queijo, Presunto">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1629115916087-7e8c114a24ed" class="card-img-top" alt="Lasanha">
+          <div class="card-body">
+            <h6 class="card-title">Lasanha</h6>
+            <p class="card-text">5 ingredientes</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Receita 8 -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card card-receita" data-receita-id="8" data-ingredientes="Alface, Tomate, Cebola, Azeite, Limão, Sal">
+          <div class="select-indicator"></div>
+          <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" class="card-img-top" alt="Salada">
+          <div class="card-body">
+            <h6 class="card-title">Salada Tropical</h6>
+            <p class="card-text">6 ingredientes</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Botão de confirmar -->
+    <button class="btn btn-rosa btn-confirmar d-none" id="confirmar-btn">
+      Adicionar à Lista
+    </button>
+  </div>
+    
+  <!-- Barra de navegação inferior -->
+  <nav class="nav-footer">
+    <a href="#" class="nav-item">
+      <i class="bi bi-house-door"></i>
+      Início
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-heart"></i>
+      Favoritos
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-box-seam"></i>
+      Estoque
+    </a>
+    <a href="#" class="nav-item active">
+      <i class="bi bi-cart3"></i>
+      Lista de mercado
+    </a>
+    <a href="#" class="nav-item">
+      <i class="bi bi-person"></i>
+      Assinatura
+    </a>
+  </nav>
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Variável para armazenar a receita selecionada
+    let receitaSelecionada = null;
+    
+    // Selecionar receita
+    document.querySelectorAll('.card-receita').forEach(card => {
+      card.addEventListener('click', function() {
+        // Remove a seleção de todas as outras receitas
+        document.querySelectorAll('.card-receita').forEach(c => {
+          c.classList.remove('selecionada');
+        });
+        
+        // Adiciona a seleção na receita clicada
+        this.classList.add('selecionada');
+        receitaSelecionada = {
+          id: this.getAttribute('data-receita-id'),
+          nome: this.querySelector('.card-title').textContent,
+          ingredientes: this.getAttribute('data-ingredientes').split(', ')
+        };
+        
+        // Mostra o botão de confirmar
+        document.getElementById('confirmar-btn').classList.remove('d-none');
+      });
+    });
+    
+    // Adicionar ingredientes à lista de mercado
+    document.getElementById('confirmar-btn').addEventListener('click', function() {
+      if (receitaSelecionada) {
+        // Armazena os dados da receita selecionada no localStorage
+        localStorage.setItem('receitaSelecionada', JSON.stringify(receitaSelecionada));
+        
+        // Redireciona de volta para a lista de mercado
+        window.location.href = 'lista-mercado.html';
+      }
+    });
+    
+    // Função de busca
+    document.querySelector('.search-container .btn').addEventListener('click', buscarReceitas);
+    document.getElementById('search-input').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        buscarReceitas();
+      }
+    });
+    
+    function buscarReceitas() {
+      const termo = document.getElementById('search-input').value.toLowerCase();
+      const cards = document.querySelectorAll('.card-receita');
+      
+      cards.forEach(card => {
+        const nome = card.querySelector('.card-title').textContent.toLowerCase();
+        const ingredientes = card.getAttribute('data-ingredientes').toLowerCase();
+        
+        if (nome.includes(termo) || ingredientes.includes(termo)) {
+          card.parentElement.style.display = 'block';
+        } else {
+          card.parentElement.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>
