@@ -1,35 +1,34 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { HouseDoor, Heart, BoxSeam, Cart3, Person } from 'react-bootstrap-icons';
-import './Footer.css'; // caso queira isolar o CSS
+import { Link, useLocation } from "react-router-dom";
+import { HouseDoor, Heart, BoxSeam, Cart3, Person } from "react-bootstrap-icons";
 
-const Footer = () => {
-  const navigate = useNavigate();
+export default function Footer() {
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const isActive = (path) => currentPath === path;
 
   return (
     <nav className="nav-footer">
-      <button className="nav-item" onClick={() => navigate('/')}>
+      <Link to="/home" className={`nav-item ${isActive("/home") ? "active" : ""}`}>
         <HouseDoor />
-        <span>Início</span>
-      </button>
-      <button className="nav-item" onClick={() => navigate('/favoritos')}>
+        Início
+      </Link>
+      <Link to="#" className="nav-item">
         <Heart />
-        <span>Favoritos</span>
-      </button>
-      <button className="nav-item" onClick={() => navigate('/estoque')}>
+        Favoritos
+      </Link>
+      <Link to="/estoque" className="nav-item">
         <BoxSeam />
-        <span>Estoque</span>
-      </button>
-      <button className="nav-item" onClick={() => navigate('/lista-mercado')}>
+        Estoque
+      </Link>
+      <Link to="/lista-mercado" className="nav-item">
         <Cart3 />
-        <span>Lista de mercado</span>
-      </button>
-      <button className="nav-item" onClick={() => window.location.href = '/assinatura.html'}>
-         <Person />
-         <span>Assinatura</span>
-      </button>
+        Lista de mercado
+      </Link>
+      <Link to="/assinatura" className={`nav-item ${isActive("/assinatura") ? "active" : ""}`}>
+        <Person />
+        Assinatura
+      </Link>
     </nav>
   );
-};
-
-export default Footer;
+}
