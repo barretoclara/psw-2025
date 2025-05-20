@@ -1,121 +1,218 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { gerarListaMercado, limparLista } from "../../storeConfig/slices/listaMercadoSlice";
-import { selectAllReceitas } from "../../storeConfig/slices/receitasSlice";
-import { selectCurrentUserId } from '../../storeConfig/slices/usuarioSlice';
-import { fetchEstoque } from "../../storeConfig/slices/estoqueSlice"; 
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './ListaMercado.css';
 
-export default function ListaMercado() {
-  const dispatch = useDispatch();
-  const { items, status } = useSelector(state => state.listaMercado);
-  const receitas = useSelector(selectAllReceitas);
-  const [receitasSelecionadas, setReceitasSelecionadas] = useState([]);
-  const userId = useSelector(selectCurrentUserId);
+const ListaMercado = () => {
+  const navigate = useNavigate();
+  const [itens, setItens] = useState([
+    { id: 1, texto: '', checked: false },
+    { id: 2, texto: '', checked: false },
+    { id: 3, texto: '', checked: false }
+  ]);
 
-  useEffect(() => {
-    if (userId) {
-      dispatch(fetchEstoque(userId));
-    }
-
-    if (userId && receitasSelecionadas.length > 0) {
-      dispatch(gerarListaMercado({ 
-        receitasIds: receitasSelecionadas,
-        userId 
-      }));
-    } else {
-     dispatch(limparLista());
-    }
-}, [receitasSelecionadas, userId, dispatch]);
-  const toggleReceita = (id) => {
-    setReceitasSelecionadas(prev => 
-      prev.includes(id) 
-        ? prev.filter(rId => rId !== id)
-        : [...prev, id]
-    );
+  // Adicionar novo item
+  const adicionarItem = () => {
+    const novoId = itens.length > 0 ? Math.max(...itens.map(item => item.id)) + 1 : 1;
+    setItens([...itens, { id: novoId, texto: '', checked: false }]);
   };
 
-  const textoLista = items.map(item => {
-    const unidadeFormatada = item.quantidade === 1 ? item.unidade : item.unidade + 's';
-    return `${item.quantidade} ${unidadeFormatada} de ${item.nome}`;
-  }).join("\n");
+  // Atualizar texto do item
+  const atualizarTexto = (id, novoTexto) => {
+    setItens(itens.map(item => 
+      item.id === id ? { ...item, texto: novoTexto } : item
+    ));
+  };
 
+  // Alternar estado checked
+  const toggleChecked = (id) => {
+    setItens(itens.map(item => 
+      item.id === id ? { ...item, checked: !item.checked } : item
+    ));
+  };
 
-  function copiarLista() {
-    navigator.clipboard.writeText(textoLista).then(() => {
+  // Remover item
+  const removerItem = (id) => {
+    const novosItens = itens.filter(item => item.id !== id);
+    setItens(novosItens.length > 0 ? novosItens : [{ id: 1, texto: '', checked: false }]);
+  };
+
+  // Copiar lista
+  const copiarLista = () => {
+    const texto = itens
+      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
+      .filter(item => item.replace('✓ ', '') !== "")
+      .join("\n");
+    
+    if (!texto) {
+      alert("A lista está vazia!");
+      return;
+    }
+    
+    navigator.clipboard.writeText(texto).then(() => {
       alert("Lista copiada para a área de transferência!");
     });
-  }
+  };
 
-  function baixarLista() {
-    const blob = new Blob([textoLista], { type: "text/plain" });
+  // Baixar lista
+  const baixarLista = () => {
+    const texto = itens
+      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
+      .filter(item => item.replace('✓ ', '') !== "")
+      .join("\n");
+    
+    if (!texto) {
+      alert("A lista está vazia!");
+      return;
+    }
+    
+    const blob = new Blob([texto], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
+
     const a = document.createElement("a");
     a.href = url;
     a.download = "lista_de_mercado.txt";
     a.click();
-    URL.revokeObjectURL(url);
-  }
 
-  function compartilharLista() {
+    URL.revokeObjectURL(url);
+  };
+
+  // Compartilhar lista
+  const compartilharLista = async () => {
+    const texto = itens
+      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
+      .filter(item => item.replace('✓ ', '') !== "")
+      .join("\n");
+    
+    if (!texto) {
+      alert("A lista está vazia!");
+      return;
+    }
+    
     if (navigator.share) {
-      navigator
-        .share({
-          title: "Lista de Mercado",
-          text: textoLista,
-        })
-        .catch((error) => console.error("Erro ao compartilhar:", error));
+      try {
+        await navigator.share({
+          title: "Minha Lista de Mercado",
+          text: texto
+        });
+      } catch (error) {
+        console.error("Erro ao compartilhar:", error);
+      }
     } else {
       alert("Compartilhamento não suportado neste navegador.");
     }
-  }
+  };
+
+  // Escolher receita
+  const escolherReceita = () => {
+    alert("Funcionalidade de escolher receita será implementada em breve!");
+    // navigate('/receitas'); // Descomente quando tiver a página de receitas
+  };
 
   return (
-    <div className="max-w-xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4 text-center">Lista de Mercado</h1>
-      
-      <div className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">Selecione as receitas:</h2>
-        <div className="space-y-2">
-          {receitas.map(receita => (
-            <div key={receita.id} className="flex items-center">
-              <input
-                type="checkbox"
-                id={`receita-${receita.id}`}
-                checked={receitasSelecionadas.includes(receita.id)}
-                onChange={() => toggleReceita(receita.id)}
-                className="mr-2"
-              />
-              <label htmlFor={`receita-${receita.id}`}>{receita.nome}</label>
-            </div>
-          ))}
-        </div>
-      </div>
+    <div className="lista-mercado-container">
+      {/* Header */}
+      <header className="header">
+        <button className="back-button" onClick={() => navigate(-1)}>
+          <span className="back-icon">←</span>
+        </button>
+        <div className="logo">Panelinha Digital</div>
+      </header>
 
-      {status === 'loading' ? (
-        <p>Calculando lista...</p>
-      ) : items.length === 0 ? (
-        <p className="text-center text-gray-600">
-          {receitasSelecionadas.length > 0 
-            ? "Você tem todos os ingredientes em estoque!" 
-            : "Selecione receitas para gerar a lista"}
-        </p>
-      ) : (
-        <>
-          <ul className="mb-6 space-y-2">
-            {items.map((item, index) => (
-              <li key={index} className="bg-pink-100 border border-gray-400 p-2 rounded">
-                {item.quantidade} {item.unidade} de {item.nome}
+      {/* Main Content */}
+      <main className="flex-grow-1">
+        <div className="container-custom">
+          <h1 className="text-center mb-4">Lista de Mercado</h1>
+          
+          <ul className="list-unstyled">
+            {itens.map((item) => (
+              <li 
+                key={item.id} 
+                className={`lista-item ${item.checked ? 'checked' : ''}`}
+              >
+                <button 
+                  className="toggle-check" 
+                  onClick={() => toggleChecked(item.id)}
+                >
+                  {item.checked ? (
+                    <span className="checked-icon">✓</span>
+                  ) : (
+                    <span className="unchecked-icon">○</span>
+                  )}
+                </button>
+                <input
+                  type="text"
+                  className="item-text"
+                  placeholder="Digite um item"
+                  value={item.texto}
+                  onChange={(e) => atualizarTexto(item.id, e.target.value)}
+                />
+                <button 
+                  className="remove-item" 
+                  onClick={() => removerItem(item.id)}
+                >
+                  <span className="trash-icon">×</span>
+                </button>
               </li>
             ))}
           </ul>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <button onClick={() => window.print()}>Imprimir</button>
-            <button onClick={copiarLista}>Copiar</button>
-            <button onClick={baixarLista}>Download</button>
-            <button onClick={compartilharLista}>Compartilhar</button>
+
+          <div className="divider">ou</div>
+          
+          <button className="btn btn-custom recipe-btn" onClick={escolherReceita}>
+            <span className="me-2">📝</span>
+            Escolha uma receita
+          </button>
+
+          <button className="add-item-btn" onClick={adicionarItem}>
+            <span className="plus-icon">+</span>
+          </button>
+
+          <div className="button-group">
+            <button className="btn btn-custom" onClick={() => window.print()}>
+              <span className="me-2">🖨️</span>
+              Imprimir
+            </button>
+            <button className="btn btn-custom" onClick={copiarLista}>
+              <span className="me-2">📋</span>
+              Copiar
+            </button>
+            <button className="btn btn-custom" onClick={baixarLista}>
+              <span className="me-2">⬇️</span>
+              Download
+            </button>
+            <button className="btn btn-custom" onClick={compartilharLista}>
+              <span className="me-2">↗️</span>
+              Compartilhar
+            </button>
           </div>
-        </>
-      )}
+        </div>
+      </main>
+
+      {/* Barra de navegação inferior */}
+      <nav className="nav-footer">
+        <button className="nav-item">
+          <span className="nav-icon">🏠</span>
+          Início
+        </button>
+        <button className="nav-item">
+          <span className="nav-icon">❤️</span>
+          Favoritos
+        </button>
+        <button className="nav-item">
+          <span className="nav-icon">📦</span>
+          Estoque
+        </button>
+        <button className="nav-item active">
+          <span className="nav-icon">🛒</span>
+          Lista de mercado
+        </button>
+        <button className="nav-item">
+          <span className="nav-icon">👤</span>
+          Assinatura
+        </button>
+      </nav>
     </div>
   );
-}
+};
+
+export default ListaMercado;
