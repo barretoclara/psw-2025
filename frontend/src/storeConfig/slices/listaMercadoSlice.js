@@ -3,37 +3,59 @@ import { selectCurrentUserId } from './usuarioSlice';
 
 export const gerarListaMercado = createAsyncThunk(
   'listaMercado/gerar',
-  async ({receitasIds}, { getState }) => {
+  async ({ receitasIds }, { getState }) => {
     const state = getState();
     const userId = selectCurrentUserId(state);
 
     const receitas = Object.values(state.receitas.entities)
       .filter(r => r.userId === userId && receitasIds.includes(r.id));
-    
+
     const estoque = Object.values(state.estoque.entities)
       .filter(e => e.userId === userId);
 
+    const normalizar = (texto) => texto.trim().toLowerCase();
+
     const ingredientesNecessarios = {};
-    
+
     receitas.forEach(receita => {
       receita.ingredientes.forEach(ing => {
-        const estoqueItem = estoque.find(e => e.id === ing.id);
-        const quantidadeNecessaria = ing.quantidade - (estoqueItem?.quantidade || 0);
-        
-        if (quantidadeNecessaria > 0) {
-          if (!ingredientesNecessarios[ing.id]) {
-            ingredientesNecessarios[ing.id] = {
-              ...ing,
-              quantidade: quantidadeNecessaria
-            };
-          } else {
-            ingredientesNecessarios[ing.id].quantidade += quantidadeNecessaria;
-          }
+        const chave = `${normalizar(ing.nome)}|${normalizar(ing.unidade)}`;
+
+        if (!ingredientesNecessarios[chave]) {
+          ingredientesNecessarios[chave] = {
+            nome: ing.nome,
+            unidade: ing.unidade,
+            quantidadeNecessaria: 0
+          };
         }
+
+        ingredientesNecessarios[chave].quantidadeNecessaria += ing.quantidade;
       });
     });
-    
-    return Object.values(ingredientesNecessarios);
+
+    Object.keys(ingredientesNecessarios).forEach(chave => {
+      const { nome, unidade, quantidadeNecessaria } = ingredientesNecessarios[chave];
+
+      const encontrado = estoque.find(e =>
+        normalizar(e.nome) === normalizar(nome) &&
+        normalizar(e.unidade) === normalizar(unidade)
+      );
+
+      const quantidadeEstoque = encontrado ? encontrado.quantidade : 0;
+      const quantidadeFaltante = Math.max(quantidadeNecessaria - quantidadeEstoque, 0);
+
+      ingredientesNecessarios[chave].quantidade = quantidadeFaltante;
+    });
+
+    const resultado = Object.values(ingredientesNecessarios)
+      .filter(item => item.quantidade > 0)
+      .map(item => ({
+        nome: item.nome,
+        unidade: item.unidade,
+        quantidade: item.quantidade
+      }));
+
+    return resultado;
   }
 );
 
@@ -66,4 +88,5 @@ const listaMercadoSlice = createSlice({
 });
 
 export const { limparLista } = listaMercadoSlice.actions;
+
 export default listaMercadoSlice.reducer;

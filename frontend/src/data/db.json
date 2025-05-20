@@ -18,7 +18,10 @@
       "nome": "Bolo de Chocolate",
       "tempo_preparo": 45,
       "categoriaId": 1,
-      "ingredientes": [1, 2],
+      "ingredientes": [
+      { "id": 1, "nome": "Farinha de Trigo", "quantidade": 2, "unidade": "xícaras" },
+      { "id": 2, "nome": "Ovo", "quantidade": 3, "unidade": "unidades" }
+    ],
       "modo_preparo": "Misture e asse por 40 minutos."
     },
     {
@@ -27,7 +30,10 @@
       "nome": "Strogonoff de frango",
       "tempo_preparo": 20,
       "categoriaId": 2,
-      "ingredientes": [3, 4],
+      "ingredientes": [
+        { "id": 3, "nome": "Peito de Frango", "quantidade": 2, "unidade": "unidades" },
+        { "id": 4, "nome": "Creme de Leite", "quantidade": 1, "unidade": "unidades" }
+      ],
       "modo_preparo": "Incorpore o creme de leite e retire do fogo antes de ferver."
     }
   ],
@@ -35,14 +41,14 @@
     { 
       "id": 1,
       "userId": 1,
-      "nome": "Farinha de trigo",
+      "nome": "Farinha de Trigo",
       "quantidade": 1,
       "unidade": "xícaras" 
     },
     { 
       "id": 2,
       "userId": 1,
-      "nome": "Ovos",
+      "nome": "Ovo",
       "quantidade": 2,
       "unidade": "unidades" 
     },

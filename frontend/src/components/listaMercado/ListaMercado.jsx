@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { gerarListaMercado, limparLista } from "../../storeConfig/slices/listaMercadoSlice";
 import { selectAllReceitas } from "../../storeConfig/slices/receitasSlice";
 import { selectCurrentUserId } from '../../storeConfig/slices/usuarioSlice';
+import { fetchEstoque } from "../../storeConfig/slices/estoqueSlice"; 
 
 export default function ListaMercado() {
   const dispatch = useDispatch();
@@ -12,16 +13,19 @@ export default function ListaMercado() {
   const userId = useSelector(selectCurrentUserId);
 
   useEffect(() => {
+    if (userId) {
+      dispatch(fetchEstoque(userId));
+    }
+
     if (userId && receitasSelecionadas.length > 0) {
       dispatch(gerarListaMercado({ 
         receitasIds: receitasSelecionadas,
         userId 
       }));
-    } else {    // !
-      dispatch(limparLista());
+    } else {
+     dispatch(limparLista());
     }
-  }, [receitasSelecionadas, userId, dispatch]);
-
+}, [receitasSelecionadas, userId, dispatch]);
   const toggleReceita = (id) => {
     setReceitasSelecionadas(prev => 
       prev.includes(id) 
@@ -30,9 +34,11 @@ export default function ListaMercado() {
     );
   };
 
-  const textoLista = items.map(item => 
-    `${item.quantidade} ${item.unidade} de ${item.nome}`
-  ).join("\n");
+  const textoLista = items.map(item => {
+    const unidadeFormatada = item.quantidade === 1 ? item.unidade : item.unidade + 's';
+    return `${item.quantidade} ${unidadeFormatada} de ${item.nome}`;
+  }).join("\n");
+
 
   function copiarLista() {
     navigator.clipboard.writeText(textoLista).then(() => {
