@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ListaMercado.css';
 
@@ -39,11 +39,11 @@ const ListaMercado = () => {
   // Copiar lista
   const copiarLista = () => {
     const texto = itens
-      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
-      .filter(item => item.replace('✓ ', '') !== "")
+      .map(item => (item.checked ? '[✓] ' : '[ ] ') + item.texto.trim())
+      .filter(item => item.replace(/\[[✓ ]\] /, '') !== "")
       .join("\n");
     
-    if (!texto) {
+    if (!texto.replace(/\[[✓ ]\] /g, '').trim()) {
       alert("A lista está vazia!");
       return;
     }
@@ -56,11 +56,11 @@ const ListaMercado = () => {
   // Baixar lista
   const baixarLista = () => {
     const texto = itens
-      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
-      .filter(item => item.replace('✓ ', '') !== "")
+      .map(item => (item.checked ? '[✓] ' : '[ ] ') + item.texto.trim())
+      .filter(item => item.replace(/\[[✓ ]\] /, '') !== "")
       .join("\n");
     
-    if (!texto) {
+    if (!texto.replace(/\[[✓ ]\] /g, '').trim()) {
       alert("A lista está vazia!");
       return;
     }
@@ -79,11 +79,11 @@ const ListaMercado = () => {
   // Compartilhar lista
   const compartilharLista = async () => {
     const texto = itens
-      .map(item => (item.checked ? '✓ ' : '') + item.texto.trim())
-      .filter(item => item.replace('✓ ', '') !== "")
+      .map(item => (item.checked ? '[✓] ' : '[ ] ') + item.texto.trim())
+      .filter(item => item.replace(/\[[✓ ]\] /, '') !== "")
       .join("\n");
     
-    if (!texto) {
+    if (!texto.replace(/\[[✓ ]\] /g, '').trim()) {
       alert("A lista está vazia!");
       return;
     }
@@ -105,7 +105,6 @@ const ListaMercado = () => {
   // Escolher receita
   const escolherReceita = () => {
     alert("Funcionalidade de escolher receita será implementada em breve!");
-    // navigate('/receitas'); // Descomente quando tiver a página de receitas
   };
 
   return (
@@ -159,7 +158,7 @@ const ListaMercado = () => {
           <div className="divider">ou</div>
           
           <button className="btn btn-custom recipe-btn" onClick={escolherReceita}>
-            <span className="me-2">📝</span>
+            <span className="me-2">📋</span>
             Escolha uma receita
           </button>
 
@@ -169,48 +168,25 @@ const ListaMercado = () => {
 
           <div className="button-group">
             <button className="btn btn-custom" onClick={() => window.print()}>
-              <span className="me-2">🖨️</span>
+              <span className="me-2">⎙</span>
               Imprimir
             </button>
             <button className="btn btn-custom" onClick={copiarLista}>
-              <span className="me-2">📋</span>
+              <span className="me-2">⎘</span>
               Copiar
             </button>
             <button className="btn btn-custom" onClick={baixarLista}>
-              <span className="me-2">⬇️</span>
+              <span className="me-2">↓</span>
               Download
             </button>
             <button className="btn btn-custom" onClick={compartilharLista}>
-              <span className="me-2">↗️</span>
+              <span className="me-2">↗</span>
               Compartilhar
             </button>
           </div>
         </div>
       </main>
 
-      {/* Barra de navegação inferior */}
-      <nav className="nav-footer">
-        <button className="nav-item">
-          <span className="nav-icon">🏠</span>
-          Início
-        </button>
-        <button className="nav-item">
-          <span className="nav-icon">❤️</span>
-          Favoritos
-        </button>
-        <button className="nav-item">
-          <span className="nav-icon">📦</span>
-          Estoque
-        </button>
-        <button className="nav-item active">
-          <span className="nav-icon">🛒</span>
-          Lista de mercado
-        </button>
-        <button className="nav-item">
-          <span className="nav-icon">👤</span>
-          Assinatura
-        </button>
-      </nav>
     </div>
   );
 };
