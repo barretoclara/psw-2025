@@ -12,8 +12,7 @@ import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import CadastroUsuario from './pages/CadastroUsuario';
 import SelecionaIngredientes from './pages/SelecionaIngredientes';
-
-
+import AssinaturaPremium from './pages/AssinaturaPremium';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,7 +20,6 @@ function App() {
   useEffect(() => {
     dispatch(loadUserFromStorage());
   }, [dispatch]);
-
 
   return (
     <Router>
@@ -71,6 +69,11 @@ function App() {
         <Route path="/editar-categoria/:id" element={
           <ProtectedRoute>
             <CadastroCategoriaPage />
+          </ProtectedRoute>
+        } />
+        <Route path="/assinatura" element={
+          <ProtectedRoute>
+            <AssinaturaPremium />
           </ProtectedRoute>
         } />
       </Routes>
