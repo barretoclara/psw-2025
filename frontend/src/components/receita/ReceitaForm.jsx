@@ -1,129 +1,116 @@
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addEstoqueItem } from '../../storeConfig/slices/estoqueSlice';
-import { v4 as uuidv4 } from 'uuid';
+import React, { useState } from 'react';
+import './ReceitaForm.css';
 
-const ReceitaForm = ({ onSubmit }) => {
-  const dispatch = useDispatch();
-  const userId = useSelector(selectCurrentUserId);
-
-  const categorias = useSelector(state => state.categorias.entities);
-  const estoque = useSelector(state => state.estoque.entities);
-
+function ReceitaForm() {
   const [nome, setNome] = useState('');
   const [categoria, setCategoria] = useState('');
-  const [tempoPreparo, setTempoPreparo] = useState('');
-  const [modoPreparo, setModoPreparo] = useState('');
+  const [tempo, setTempo] = useState('');
   const [ingredientes, setIngredientes] = useState([]);
   const [novoIngrediente, setNovoIngrediente] = useState('');
+  const [modoPreparo, setModoPreparo] = useState('');
 
   const adicionarIngrediente = () => {
-    const existente = Object.values(estoque).find(i => 
-      i.nome.toLowerCase() === novoIngrediente.toLowerCase()
-    );
-    
-    let ingredienteId;
-    if (existente) {
-      ingredienteId = existente.id;
-    } else {
-      ingredienteId = uuidv4();
-      dispatch(addEstoqueItem({ 
-        id: ingredienteId, 
-        nome: novoIngrediente,
-        quantidade: 0,
-        unidade: 'unidades'
-      }));
+    if (novoIngrediente.trim() !== '') {
+      setIngredientes([...ingredientes, novoIngrediente]);
+      setNovoIngrediente('');
     }
-    setIngredientes([...ingredientes, ingredienteId]);
-    setNovoIngrediente('');
   };
 
   const handleSubmit = (e) => {
-  e.preventDefault();
-  onSubmit({ 
-    id: uuidv4(), 
-    nome,
-    userId,
-    categoriaId: categoria,
-    tempo_preparo: tempoPreparo, 
-    modo_preparo: modoPreparo, 
-    ingredientes 
-  });
-};
+    e.preventDefault();
+    const novaReceita = { nome, categoria, tempo, ingredientes, modoPreparo };
+    console.log('Receita cadastrada:', novaReceita);
+    
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <input 
-        type="text" 
-        value={nome} 
-        onChange={e => setNome(e.target.value)} 
-        placeholder="Nome da receita" 
-        className="border p-2 w-full" 
-        required 
-      />
-      
-      <select 
-        value={categoria} 
-        onChange={e => setCategoria(e.target.value)} 
-        className="border p-2 w-full" 
-        required
-      >
-        <option value="">Selecione a categoria</option>
-        {categorias && Object.values(categorias).map(cat => (
-          <option key={cat.id} value={cat.nome}>{cat.nome}</option>
-        ))}
-      </select>
-      
-      <input 
-        type="number" 
-        value={tempoPreparo} 
-        onChange={e => setTempoPreparo(e.target.value)} 
-        placeholder="Tempo de preparo (min)" 
-        className="border p-2 w-full" 
-        required 
-      />
-      
-      <textarea 
-        value={modoPreparo} 
-        onChange={e => setModoPreparo(e.target.value)} 
-        placeholder="Modo de preparo" 
-        className="border p-2 w-full" 
-        required 
-      />
+    <div className="login-wrapper">
+      <div className="login-container">
+        <h1 className="logo">Nova Receita</h1>
+        <h2>Cadastrar Receita</h2>
 
-      <div>
-        <label className="block font-semibold mb-1">Ingredientes:</label>
-        <div className="flex gap-2">
-          <input 
-            type="text" 
-            value={novoIngrediente} 
-            onChange={e => setNovoIngrediente(e.target.value)} 
-            placeholder="Novo ingrediente" 
-            className="border p-2 flex-1" 
-          />
-          <button 
-            type="button" 
-            onClick={adicionarIngrediente} 
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            Adicionar
-          </button>
-        </div>
-        <ul className="list-disc list-inside mt-2">
-          {ingredientes.map((id, idx) => (
-            <li key={idx}>{estoque[id]?.nome || `Ingrediente #${id}`}</li>
-          ))}
-        </ul>
+        <form onSubmit={handleSubmit}>
+          <div className="input-field">
+            <label>Nome da Receita:</label>
+            <input
+              type="text"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              placeholder="Digite o nome da receita"
+            />
+          </div>
+
+          <div className="input-field">
+            <label>Categoria:</label>
+            <select
+              value={categoria}
+              onChange={(e) => setCategoria(e.target.value)}
+            >
+              <option value="">Selecione a categoria</option>
+              <option value="Café da manhã">Café da manhã</option>
+              <option value="Almoço">Almoço</option>
+              <option value="Jantar">Jantar</option>
+              <option value="Sobremesa">Sobremesa</option>
+            </select>
+          </div>
+
+          <div className="input-field">
+            <label>Tempo de preparo (min):</label>
+            <input
+              type="number"
+              value={tempo}
+              onChange={(e) => setTempo(e.target.value)}
+              placeholder="Ex: 30"
+            />
+          </div>
+
+          <div className="input-field">
+            <label>Ingredientes:</label>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <input
+                type="text"
+                value={novoIngrediente}
+                onChange={(e) => setNovoIngrediente(e.target.value)}
+                placeholder="Novo ingrediente"
+              />
+              <button
+                type="button"
+                className="secondary-btn"
+                onClick={adicionarIngrediente}
+              >
+                Adicionar
+              </button>
+            </div>
+            <ul style={{ textAlign: 'left', marginTop: '10px' }}>
+              {ingredientes.map((ing, i) => (
+                <li key={i}>{ing}</li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="input-field">
+            <label>Modo de preparo:</label>
+            <textarea
+              value={modoPreparo}
+              onChange={(e) => setModoPreparo(e.target.value)}
+              placeholder="Descreva o modo de preparo"
+              rows="4"
+              style={{
+                width: '90%',
+                padding: '12px 15px',
+                borderRadius: '8px',
+                backgroundColor: '#faf0fb',
+                border: '1px solid #e0e0e0',
+                resize: 'none'
+              }}
+            />
+          </div>
+
+          <button type="submit" className="login-btn">Cadastrar Receita</button>
+        </form>
       </div>
-
-      <button 
-        type="submit" 
-        className="bg-green-500 text-white px-4 py-2 rounded"
-      >
-        Salvar Receita
-      </button>
-    </form>
+    </div>
   );
-};
+}
 
 export default ReceitaForm;
