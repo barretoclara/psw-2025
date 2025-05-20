@@ -14,6 +14,7 @@ import CadastroUsuario from './pages/CadastroUsuario';
 import SelecionaIngredientes from './pages/SelecionaIngredientes';
 import AssinaturaPremium from './pages/AssinaturaPremium';
 import GerarListaMercado from "./components/listaMercado/GerarListaMercado";
+import FavoritosPage from './pages/FavoritosPage'; 
 
 function App() {
   const dispatch = useDispatch();
@@ -30,6 +31,11 @@ function App() {
         <Route path="/" element={
           <ProtectedRoute>
             <HomePage />
+          </ProtectedRoute>
+        } />
+        <Route path="/favoritos" element={ 
+          <ProtectedRoute>
+            <FavoritosPage />
           </ProtectedRoute>
         } />
         <Route path="/estoque" element={

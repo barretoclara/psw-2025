@@ -10,25 +10,25 @@ export default function Footer() {
 
   return (
     <nav className="nav-footer">
-      <Link to="" className={`nav-item ${isActive("") ? "active" : ""}`}>
+      <Link to="/" className={`nav-item ${isActive("/") ? "active" : ""}`}>
         <HouseDoor />
         Início
       </Link>
-      <Link to="#" className="nav-item">
+      <Link to="/favoritos" className={`nav-item ${isActive("/favoritos") ? "active" : ""}`}>
         <Heart />
         Favoritos
       </Link>
-      <Link to="/estoque" className="nav-item">
+      <Link to="/estoque" className={`nav-item ${isActive("/estoque") ? "active" : ""}`}>
         <BoxSeam />
         Estoque
       </Link>
-      <Link to="/lista-mercado" className="nav-item">
+      <Link to="/lista-mercado" className={`nav-item ${isActive("/lista-mercado") ? "active" : ""}`}>
         <Cart3 />
-        Lista de mercado
+        Lista
       </Link>
       <Link to="/assinatura" className={`nav-item ${isActive("/assinatura") ? "active" : ""}`}>
         <Person />
-        Assinatura
+        Perfil
       </Link>
     </nav>
   );

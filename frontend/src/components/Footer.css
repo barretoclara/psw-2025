@@ -22,6 +22,7 @@
   text-decoration: none;
   flex: 1;
   padding: 5px 0;
+  transition: color 0.3s ease;
 }
 
 .nav-item svg {
@@ -35,4 +36,21 @@
 
 .nav-item:hover {
   color: #dda1df;
+}
+
+.nav-item:focus {
+  outline: 2px solid #dda1df;
+  outline-offset: 2px;
+}
+
+
+@media (max-width: 480px) {
+  .nav-item {
+    font-size: 0.6rem;
+    padding: 5px 2px;
+  }
+  
+  .nav-item svg {
+    font-size: 1rem;
+  }
 }
