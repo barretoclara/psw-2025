@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './ReceitaForm.css';
 
 function ReceitaForm() {
@@ -8,19 +9,17 @@ function ReceitaForm() {
   const [ingredientes, setIngredientes] = useState([]);
   const [novoIngrediente, setNovoIngrediente] = useState('');
   const [modoPreparo, setModoPreparo] = useState('');
+  const navigate = useNavigate();
 
   const adicionarIngrediente = () => {
-    if (novoIngrediente.trim() !== '') {
-      setIngredientes([...ingredientes, novoIngrediente]);
-      setNovoIngrediente('');
-    }
+    navigate('/selecionar-ingredientes');
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const novaReceita = { nome, categoria, tempo, ingredientes, modoPreparo };
     console.log('Receita cadastrada:', novaReceita);
-    
+    // Aqui você pode adicionar lógica de envio para o backend
   };
 
   return (
@@ -67,12 +66,6 @@ function ReceitaForm() {
           <div className="input-field">
             <label>Ingredientes:</label>
             <div style={{ display: 'flex', gap: '10px' }}>
-              <input
-                type="text"
-                value={novoIngrediente}
-                onChange={(e) => setNovoIngrediente(e.target.value)}
-                placeholder="Novo ingrediente"
-              />
               <button
                 type="button"
                 className="secondary-btn"
