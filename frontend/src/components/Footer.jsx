@@ -9,7 +9,7 @@ export default function Footer() {
 
   return (
     <nav className="nav-footer">
-      <Link to="/home" className={`nav-item ${isActive("/home") ? "active" : ""}`}>
+      <Link to="" className={`nav-item ${isActive("") ? "active" : ""}`}>
         <HouseDoor />
         Início
       </Link>
