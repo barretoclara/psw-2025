@@ -46,8 +46,9 @@ export const addReceita = createAsyncThunk(
 
 export const updateReceita = createAsyncThunk(
   'receitas/update',
-  async ({ receitaData, userId }) => {
-    return httpPut(`${baseUrl}/receitas/${receitaData.id}`, { ...receitaData, userId });
+  async ({ id, receitaData }) => {
+    const { id: _, ...dadosParaAtualizar } = receitaData;
+    return httpPut(`${baseUrl}/receitas/${id}`, dadosParaAtualizar);
   }
 );
 

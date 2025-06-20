@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { addReceita } from '../../storeConfig/slices/receitasSlice';
+import { addReceita, updateReceita } from '../../storeConfig/slices/receitasSlice';
 import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
 
 function ReceitaForm() {
   const dispatch = useDispatch();
   const { userId } = useUserData();
+  const { id } = useParams();
   const categorias = useSelector(state => state.categorias.entities);
-  
+  const receitaExistente = useSelector(state => state.receitas.entities?.[id]);
+
   const [nome, setNome] = useState('');
   const [categoriaId, setCategoriaId] = useState('');
   const [tempo_preparo, setTempo_preparo] = useState('');
@@ -18,15 +20,23 @@ function ReceitaForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const dadosSalvos = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
-    setNome(dadosSalvos.nome || '');
-    setCategoriaId(dadosSalvos.categoriaId || '');
-    setTempo_preparo(dadosSalvos.tempo_preparo || '');
-    setModo_preparo(dadosSalvos.modo_preparo || '');
-    
-    const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
-    setIngredientes(ingredientesSalvos);
-  }, []);
+    if (id && receitaExistente) {
+      setNome(receitaExistente.nome || '');
+      setCategoriaId(receitaExistente.categoriaId?.toString() || '');
+      setTempo_preparo(receitaExistente.tempo_preparo?.toString() || '');
+      setModo_preparo(receitaExistente.modo_preparo || '');
+      setIngredientes(receitaExistente.ingredientes || []);
+    } else {
+      const dadosSalvos = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
+      setNome(dadosSalvos.nome || '');
+      setCategoriaId(dadosSalvos.categoriaId || '');
+      setTempo_preparo(dadosSalvos.tempo_preparo || '');
+      setModo_preparo(dadosSalvos.modo_preparo || '');
+
+      const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
+      setIngredientes(ingredientesSalvos);
+    }
+  }, [id, receitaExistente]);
 
   const adicionarIngrediente = () => {
     localStorage.setItem('dadosReceitaParcial', JSON.stringify({
@@ -40,38 +50,40 @@ function ReceitaForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
       alert('Preencha todos os campos obrigatórios!');
       return;
     }
 
-    try {
-      const novaReceita = {
-        nome,
-        tempo_preparo: Number(tempo_preparo),
-        categoriaId: Number(categoriaId),
-        ingredientes: ingredientes.map(ing => ({
-          id: ing.id,
-          nome: ing.nome,
-          quantidade: Number(ing.quantidade),
-          unidade: ing.unidade
-        })),
-        modo_preparo,
-        userId: Number(userId)
-      };
+    const receitaData = {
+      id: id ? Number(id) : undefined,
+      nome,
+      tempo_preparo: Number(tempo_preparo),
+      categoriaId: Number(categoriaId),
+      ingredientes: ingredientes.map(ing => ({
+        id: ing.id,
+        nome: ing.nome,
+        quantidade: Number(ing.quantidade),
+        unidade: ing.unidade
+      })),
+      modo_preparo,
+      userId: Number(userId)
+    };
 
-      await dispatch(addReceita({
-        receitaData: novaReceita,
-        userId
-      })).unwrap();
-      
+    try {
+      if (id) {
+        await dispatch(updateReceita({ id: Number(id), receitaData })).unwrap();
+      } else {
+        await dispatch(addReceita({ receitaData, userId })).unwrap();
+      }
+
       localStorage.removeItem('dadosReceitaParcial');
       localStorage.removeItem('ingredientesSelecionados');
       navigate('/');
     } catch (error) {
-      console.error('Erro ao cadastrar receita:', error);
-      alert('Erro ao cadastrar receita');
+      console.error('Erro ao salvar receita:', error);
+      alert('Erro ao salvar receita');
     }
   };
 
@@ -79,7 +91,7 @@ function ReceitaForm() {
     <div className="login-wrapper">
       <div className="login-container">
         <h1 className="logo">Nova Receita</h1>
-        <h2>Cadastrar Receita</h2>
+        <h2>{id ? 'Editar Receita' : 'Cadastrar Receita'}</h2>
 
         <form onSubmit={handleSubmit}>
           <div className="input-field">
@@ -155,7 +167,9 @@ function ReceitaForm() {
             />
           </div>
 
-          <button type="submit" className="login-btn">Cadastrar Receita</button>
+          <button type="submit" className="login-btn">
+            {id ? 'Salvar Alterações' : 'Cadastrar Receita'}
+          </button>
         </form>
       </div>
     </div>
