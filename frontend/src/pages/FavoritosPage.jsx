@@ -5,7 +5,7 @@ import {
   ArrowLeft,
   Heart
 } from "react-bootstrap-icons";
-import "./FavoritosPage.css";
+import './styles/FavoritosPage.css';
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 
