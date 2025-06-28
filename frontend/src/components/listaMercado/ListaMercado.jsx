@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../../components/Footer';
 import './ListaMercado.css';
 
 const ListaMercado = () => {
@@ -118,7 +119,7 @@ const ListaMercado = () => {
       </header>
 
       {/* Main Content */}
-      <main className="flex-grow-1">
+      <main className="main-content">
         <div className="container-custom">
           <h1 className="text-center mb-4">Lista de Mercado</h1>
           
@@ -187,6 +188,7 @@ const ListaMercado = () => {
         </div>
       </main>
 
+      <Footer />
     </div>
   );
 };

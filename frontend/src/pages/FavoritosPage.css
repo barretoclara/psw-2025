@@ -8,7 +8,7 @@ body, html {
   background-color: #fceeff;
   min-height: 100vh;
   color: #333;
-  padding-bottom: 80px;
+  padding-bottom: 80px; /* Tamanho para acomodar o footer */
   position: relative;
 }
 
