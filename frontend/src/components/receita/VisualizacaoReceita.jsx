@@ -21,7 +21,7 @@ export default function VisualizacaoReceita() {
 
   const handleDeletar = () => {
     if (window.confirm('Tem certeza que deseja excluir esta receita?')) {
-      dispatch(deleteReceita(id));
+      dispatch(deleteReceita({ id, userId: receita.userId }));
       navigate('/');
     }
   };
