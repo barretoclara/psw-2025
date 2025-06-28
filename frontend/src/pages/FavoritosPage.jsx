@@ -1,17 +1,13 @@
 import { useState, useEffect } from "react";
 import { 
-  Heart, 
   HeartFill, 
   Search, 
   ArrowLeft,
-  HouseDoor,
-  Heart as HeartIcon,
-  BoxSeam,
-  Cart3,
-  Person
+  Heart
 } from "react-bootstrap-icons";
 import "./FavoritosPage.css";
 import { useNavigate } from "react-router-dom";
+import Footer from "../components/Footer";
 
 export default function FavoritosPage() {
   const navigate = useNavigate();
@@ -28,7 +24,7 @@ export default function FavoritosPage() {
 
   return (
     <div className="favoritos-page">
-      {/* Cabeçalho */}
+
       <div className="header">
         <div className="logo-container">
           <ArrowLeft 
@@ -54,7 +50,6 @@ export default function FavoritosPage() {
         </div>
       </div>
 
-      {/* Conteúdo principal */}
       <div className="page-title">
         <HeartFill className="title-icon" />
         Receitas Favoritas
@@ -66,29 +61,7 @@ export default function FavoritosPage() {
         <p>Adicione receitas aos favoritos para vê-las aqui</p>
       </div>
 
-      {/* Barra de navegação inferior*/}
-      <nav className="bottom-navbar">
-        <div className="nav-item" onClick={() => navigate('/')}>
-          <HouseDoor className="nav-icon" />
-          <span>Início</span>
-        </div>
-        <div className="nav-item active">
-          <HeartIcon className="nav-icon" />
-          <span>Favoritos</span>
-        </div>
-        <div className="nav-item" onClick={() => navigate('/estoque')}>
-          <BoxSeam className="nav-icon" />
-          <span>Estoque</span>
-        </div>
-        <div className="nav-item" onClick={() => navigate('/lista')}>
-          <Cart3 className="nav-icon" />
-          <span>Lista</span>
-        </div>
-        <div className="nav-item" onClick={() => navigate('/perfil')}>
-          <Person className="nav-icon" />
-          <span>Perfil</span>
-        </div>
-      </nav>
+      <Footer />
     </div>
   );
 }
