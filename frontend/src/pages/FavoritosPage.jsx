@@ -8,6 +8,7 @@ import {
 import './styles/FavoritosPage.css';
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
+import PageHeader from "../components/PageHeader";
 
 export default function FavoritosPage() {
   const navigate = useNavigate();
@@ -24,31 +25,7 @@ export default function FavoritosPage() {
 
   return (
     <div className="favoritos-page">
-
-      <div className="header">
-        <div className="logo-container">
-          <ArrowLeft 
-            className="back-arrow"
-            onClick={() => navigate(-1)}
-          />
-          <div className="logo">Panelinha Digital</div>
-        </div>
-        <div className="search-container">
-          {(!isMobile || showSearch) && (
-            <input
-              type="text"
-              className={`search-input ${isMobile && showSearch ? 'visible' : ''}`}
-              placeholder="Pesquisar favoritos..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          )}
-          <Search
-            className="search-icon"
-            onClick={() => isMobile && setShowSearch(!showSearch)}
-          />
-        </div>
-      </div>
+      <PageHeader />
 
       <div className="page-title">
         <HeartFill className="title-icon" />

@@ -6,7 +6,7 @@ export default function PageHeader() {
   const navigate = useNavigate();
 
   return (
-    <header className="header">
+    <header className="page-header">
       <button className="back-button" onClick={() => navigate(-1)}>
         <ArrowLeft className="back-icon" size={24} />
       </button>
