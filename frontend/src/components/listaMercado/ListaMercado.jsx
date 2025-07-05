@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from "react-bootstrap-icons";
 import Footer from '../../components/Footer';
 import './ListaMercado.css';
 
@@ -113,7 +114,7 @@ const ListaMercado = () => {
       {/* Header */}
       <header className="header">
         <button className="back-button" onClick={() => navigate(-1)}>
-          <span className="back-icon">←</span>
+          <ArrowLeft className="back-icon" size={24} />
         </button>
         <div className="logo">Panelinha Digital</div>
       </header>
