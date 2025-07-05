@@ -1,0 +1,36 @@
+.header {
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 15px 0;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.back-icon {
+  color: #dda1df;
+  font-size: 1.5rem; 
+  transition: transform 0.2s;
+}
+
+.back-button:hover .back-icon {
+  transform: scale(1.1);
+  transition: transform 0.2s; 
+}
+
+.logo {
+  font-family: 'Comic Sans MS', cursive;
+  color: #dda1df;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+}

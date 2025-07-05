@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft } from "react-bootstrap-icons";
+import PageHeader from '../../components/PageHeader';
 import Footer from '../../components/Footer';
 import './ListaMercado.css';
 
@@ -110,16 +110,10 @@ const ListaMercado = () => {
   };
 
   return (
-    <div className="lista-mercado-container">
-      {/* Header */}
-      <header className="header">
-        <button className="back-button" onClick={() => navigate(-1)}>
-          <ArrowLeft className="back-icon" size={24} />
-        </button>
-        <div className="logo">Panelinha Digital</div>
-      </header>
+      <div className="lista-mercado-container">
+      <PageHeader /> 
 
-      {/* Main Content */}
+      {/* Conteúdo principal */}
       <main className="main-content">
         <div className="container-custom">
           <h1 className="text-center mb-4">Lista de Mercado</h1>
