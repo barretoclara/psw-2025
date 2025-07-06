@@ -5,9 +5,7 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  height: 60px;
-  position: sticky;
-  top: 0;
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,11 +45,12 @@
 
 @media (max-width: 480px) {
   .logo {
-    font-size: 1.2rem;
+    font-size: 1.1rem; 
     padding: 0 40px;
+    white-space: nowrap; 
   }
 
   .back-icon {
-    font-size: 1.2rem;
+    font-size: 1rem; 
   }
 }
