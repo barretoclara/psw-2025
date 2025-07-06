@@ -11,7 +11,6 @@ mongoose.connect(config.mongoURI)
   .then(() => console.log('MongoDB conectado'))
   .catch(err => console.error(err));
 
-// Rotas
 app.use('/api/usuarios', require('./routes/usuarios'));
 app.use('/api/receitas', require('./routes/receitas'));
 app.use('/api/estoque', require('./routes/estoque'));

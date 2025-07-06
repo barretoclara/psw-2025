@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import './styles/CadastroUsuario.css';
 import { Container } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { registerUser } from '../storeConfig/slices/usuarioSlice';
+import { useNavigate } from 'react-router-dom';
 
 const CadastroUsuario = () => {
   const [nome, setNome] = useState('');
@@ -9,6 +12,7 @@ const CadastroUsuario = () => {
   const [senha, setSenha] = useState('');
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erroSenha, setErroSenha] = useState(false);
+  const navigate = useNavigate();
 
   const formatarTelefone = (valor) => {
     let v = valor.replace(/\D/g, '');
@@ -21,15 +25,32 @@ const CadastroUsuario = () => {
     setTelefone(formatarTelefone(e.target.value));
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (senha !== confirmarSenha) {
-      setErroSenha(true);
-      return;
+ const dispatch = useDispatch();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  
+  if (senha !== confirmarSenha) {
+    setErroSenha(true);
+    return;
+  }
+
+  try {
+    const resultAction = await dispatch(registerUser({ 
+      nome, 
+      email, 
+      senha,
+      telefone
+    }));
+    
+    if (registerUser.fulfilled.match(resultAction)) {
+      navigate('/login');
     }
-    setErroSenha(false);
-    alert('Cadastro feito com sucesso!');
-  };
+  } catch (error) {
+    console.error("Erro no cadastro:", error);
+    alert("Erro ao cadastrar: " + (error.message || "Tente novamente mais tarde"));
+  }
+};
 
   return (
     <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 p-0 m-0 bg-light-purple">
