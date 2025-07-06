@@ -6,10 +6,12 @@ import {
   addEstoqueItem,
   selectAllEstoque
 } from "../storeConfig/slices/estoqueSlice";
+import "./styles/SelecionaIngredientes.css";
 import { useUserData } from "../hooks/useUserData";
 import { Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import PageHeader from "../components/PageHeader";
 
 const SelecionaIngredientes = () => {
   const dispatch = useDispatch();
@@ -169,122 +171,107 @@ const SelecionaIngredientes = () => {
     return ing ? ing.quantidade : 0;
   };
 
-  return (
-    <div className="container mt-4">
-      <h2 className="mb-4">Selecionar Ingredientes</h2>
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Pesquisar ingredientes..."
-        />
-      </div>
-      
-      <ul className="list-group mb-4">
-        {filteredIngredientes.map((ing) => (
-          <li key={ing.id} className="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <input
-                type="checkbox"
-                className="form-check-input me-2"
-                checked={estaSelecionado(ing.id)}
-                onChange={() => handleCheckboxChange(ing.id)}
-              />
-              {ing.nome} (
-              {estaSelecionado(ing.id) ? 
-                `${getQuantidadeSelecionada(ing.id)} ${ingredientesSelecionados.find(i => i.id === ing.id)?.unidade || ing.unidade}` : 
-                `0 ${ing.unidade}`}
-              )
-            </div>
-            {estaSelecionado(ing.id) && (
-              <button 
-                className="btn btn-sm btn-outline-secondary"
-                onClick={() => abrirModalEditar(ing.id)}
-              >
-                Editar
-              </button>
-            )}
-          </li>
-        ))}
-      </ul>
+   return (
+    <>
+      <PageHeader title="Selecionar Ingredientes" showBackButton={true} />
 
-      <div className="d-flex gap-2">
-        <button 
-          className="btn btn-primary"
-          onClick={abrirModalAdicionar}
-        >
-          Adicionar Ingrediente
-        </button>
-        <button 
-          className="btn btn-success"
-          onClick={confirmarIngredientes}
-        >
-          Confirmar e Voltar
-        </button>
-        <button 
-          className="btn btn-danger"
-          onClick={cancelar}
-        >
-          Cancelar
-        </button>
-      </div>
+      <div className="container seleciona-container" style={{ marginTop: '20px' }}></div>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)} centered backdrop="static">
-        <Modal.Header closeButton>
-          <Modal.Title>
-            {modalData.isEditing ? "Editar" : "Adicionar"} Ingrediente
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group className="mb-3">
-              <Form.Label>Nome do Ingrediente</Form.Label>
-              <Form.Control
-                ref={nomeInputRef}
-                type="text"
-                value={modalData.nome}
-                onChange={(e) => setModalData({ ...modalData, nome: e.target.value })}
-                placeholder="Ex: Farinha de trigo"
-                required
-                readOnly={modalData.isEditing}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Quantidade na Receita</Form.Label>
-              <Form.Control
-                type="number"
-                min="1"
-                value={modalData.quantidade}
-                onChange={(e) => setModalData({ ...modalData, quantidade: e.target.value })}
-                placeholder="Quantidade usada na receita"
-                required
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Unidade de Medida</Form.Label>
-              <Form.Control
-                type="text"
-                value={modalData.unidade}
-                onChange={(e) => setModalData({ ...modalData, unidade: e.target.value })}
-                placeholder="Ex: xícaras, gramas, unidades"
-                required
-                readOnly={modalData.isEditing}
-              />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            Cancelar
-          </Button>
-          <Button variant="primary" onClick={salvarIngrediente}>
-            {modalData.isEditing ? "Atualizar" : "Salvar"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </div>
+      <div className="seleciona-container">
+
+        <div className="mb-3">
+          <input
+            type="text"
+            className="form-control"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Pesquisar ingredientes..."
+          />
+        </div>
+
+        <ul className="list-group mb-4">
+          {filteredIngredientes.map((ing) => (
+            <li key={ing.id} className="list-group-item d-flex justify-content-between align-items-center">
+              <div>
+                <input
+                  type="checkbox"
+                  className="form-check-input me-2"
+                  checked={estaSelecionado(ing.id)}
+                  onChange={() => handleCheckboxChange(ing.id)}
+                />
+                {ing.nome} (
+                {estaSelecionado(ing.id) ?
+                  `${getQuantidadeSelecionada(ing.id)} ${ingredientesSelecionados.find(i => i.id === ing.id)?.unidade || ing.unidade}` :
+                  `0 ${ing.unidade}`}
+                )
+              </div>
+              {estaSelecionado(ing.id) && (
+                <button
+                  className="btn btn-sm btn-outline-secondary"
+                  onClick={() => abrirModalEditar(ing.id)}
+                >
+                  Editar
+                </button>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        <div className="d-flex gap-2">
+          <button className="btn btn-primary" onClick={abrirModalAdicionar}>Adicionar Ingrediente</button>
+          <button className="btn btn-success" onClick={confirmarIngredientes}>Confirmar e Voltar</button>
+          <button className="btn btn-danger" onClick={cancelar}>Cancelar</button>
+        </div>
+
+        <Modal show={showModal} onHide={() => setShowModal(false)} centered backdrop="static">
+          <Modal.Header closeButton>
+            <Modal.Title>{modalData.isEditing ? "Editar" : "Adicionar"} Ingrediente</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Nome do Ingrediente</Form.Label>
+                <Form.Control
+                  ref={nomeInputRef}
+                  type="text"
+                  value={modalData.nome}
+                  onChange={(e) => setModalData({ ...modalData, nome: e.target.value })}
+                  placeholder="Ex: Farinha de trigo"
+                  required
+                  readOnly={modalData.isEditing}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Quantidade na Receita</Form.Label>
+                <Form.Control
+                  type="number"
+                  min="1"
+                  value={modalData.quantidade}
+                  onChange={(e) => setModalData({ ...modalData, quantidade: e.target.value })}
+                  placeholder="Quantidade usada na receita"
+                  required
+                />
+              </Form.Group>
+              <Form.Group className="mb-3">
+                <Form.Label>Unidade de Medida</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={modalData.unidade}
+                  onChange={(e) => setModalData({ ...modalData, unidade: e.target.value })}
+                  placeholder="Ex: xícaras, gramas, unidades"
+                  required
+                  readOnly={modalData.isEditing}
+                />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowModal(false)}>Cancelar</Button>
+            <Button variant="primary" onClick={salvarIngrediente}>{modalData.isEditing ? "Atualizar" : "Salvar"}</Button>
+          </Modal.Footer>
+        </Modal>
+      </div>
+    </>
   );
 };
 

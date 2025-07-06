@@ -1,0 +1,9 @@
+.seleciona-container {
+  margin-top: 90px;
+  padding-left: 15px;   /* mesmo padding lateral do container */
+  padding-right: 15px;
+  padding-bottom: 20px;
+  background-color: #fceeff;
+  width: 100%;          /* ocupar 100% da largura da viewport */
+  box-sizing: border-box;
+}
