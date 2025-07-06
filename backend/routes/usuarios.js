@@ -6,15 +6,31 @@ const Usuario = require('../models/usuarios');
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-  const { nome, email, senha } = req.body;
+  const { nome, email, senha, telefone } = req.body;
+  
   try {
+    const usuarioExistente = await Usuario.findOne({ email });
+    if (usuarioExistente) {
+      return res.status(400).json({ 
+        msg: 'Email já cadastrado',
+        error: "EMAIL_EXISTS" 
+      });
+    }
+
     const novoUsuario = new Usuario({ nome, email, senha });
     await novoUsuario.save();
 
     const token = jwt.sign({ id: novoUsuario._id }, config.jwtSecret);
-    res.json({ token, userId: novoUsuario._id, nome: novoUsuario.nome });
+    res.status(201).json({ 
+      token,
+      userId: novoUsuario._id,
+      nome: novoUsuario.nome
+    });
   } catch (err) {
-    res.status(400).json({ msg: 'Erro ao registrar usuário', erro: err.message });
+    res.status(500).json({ 
+      msg: 'Erro no servidor',
+      error: err.message 
+    });
   }
 });
 
