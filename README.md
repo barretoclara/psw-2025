@@ -5,7 +5,13 @@
 Execute os seguintes comandos no terminal:
 
 ```bash
-npx json-server --watch src/data/db.json --port 3000
+cd backend
+npm install
+npm start
+```
+
+```bash
+cd frontend
 npm install
 npm run dev
 ```
