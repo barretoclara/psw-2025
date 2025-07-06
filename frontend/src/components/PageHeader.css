@@ -34,6 +34,41 @@
   transform: scale(1.1);
 }
 
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-image {
+  height: 50px; 
+  transition: transform 0.3s ease;
+    
+}
+
+
+.logo-image:hover {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  font-family: 'Comic Sans MS', cursive;
+  color: #dda1df;
+  font-size: 1.8rem; 
+  font-weight: bold;
+}
+
+
+@media (max-width: 480px) {
+  .logo-text {
+    font-size: 1.4rem;
+  }
+  .logo-image {
+    height: 40px; 
+  }
+}
+
+/*
 .logo {
   font-family: 'Comic Sans MS', cursive;
   color: #dda1df;
@@ -42,6 +77,7 @@
   text-align: center;
   z-index: 0;
 }
+*/
 
 @media (max-width: 480px) {
   .logo {

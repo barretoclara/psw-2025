@@ -10,7 +10,15 @@ export default function PageHeader() {
       <button className="back-button" onClick={() => navigate(-1)}>
         <ArrowLeft className="back-icon" size={24} />
       </button>
-      <div className="logo">Panelinha Digital</div>
+      <div className="logo-container">
+        <span className="logo-text">Panelinha Digital</span>
+        {/* Imagem direto da pasta public */}
+        <img 
+          src="/Panelinha digital - Logo.png" 
+          alt="Logo Panelinha Digital" 
+          className="logo-image" 
+        />
+      </div>
     </header>
   );
 }
