@@ -13,6 +13,7 @@ const CadastroUsuario = () => {
   const [confirmarSenha, setConfirmarSenha] = useState('');
   const [erroSenha, setErroSenha] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const formatarTelefone = (valor) => {
     let v = valor.replace(/\D/g, '');
@@ -25,32 +26,38 @@ const CadastroUsuario = () => {
     setTelefone(formatarTelefone(e.target.value));
   };
 
- const dispatch = useDispatch();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  
-  if (senha !== confirmarSenha) {
-    setErroSenha(true);
-    return;
-  }
-
-  try {
-    const resultAction = await dispatch(registerUser({ 
-      nome, 
-      email, 
-      senha,
-      telefone
-    }));
-    
-    if (registerUser.fulfilled.match(resultAction)) {
-      navigate('/login');
+    if (senha !== confirmarSenha) {
+      setErroSenha(true);
+      return;
     }
-  } catch (error) {
-    console.error("Erro no cadastro:", error);
-    alert("Erro ao cadastrar: " + (error.message || "Tente novamente mais tarde"));
-  }
-};
+
+    if (!telefone.trim()) {
+      alert("O campo telefone é obrigatório.");
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(registerUser({
+        nome,
+        email,
+        senha,
+        telefone
+      }));
+
+      if (registerUser.fulfilled.match(resultAction)) {
+        alert("Cadastro realizado com sucesso! Faça o login.");
+        navigate('/login');
+      } else {
+        alert("Erro no cadastro: " + (resultAction.payload || "Tente novamente"));
+      }
+    } catch (error) {
+      console.error("Erro no cadastro:", error);
+      alert("Erro ao cadastrar: " + (error.message || "Tente novamente mais tarde"));
+    }
+  };
 
   return (
     <Container fluid className="d-flex justify-content-center align-items-center min-vh-100 p-0 m-0 bg-light-purple">
@@ -93,6 +100,7 @@ const handleSubmit = async (e) => {
                   placeholder="(xx) xxxx-xxxx"
                   value={telefone}
                   onChange={handleTelefoneChange}
+                  required
                   maxLength={15}
                   className="form-control"
                 />
