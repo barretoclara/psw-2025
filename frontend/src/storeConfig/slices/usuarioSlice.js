@@ -6,21 +6,42 @@ export const login = createAsyncThunk(
   'usuario/login',
   async ({ email, senha }, thunkAPI) => {
     try {
-      const response = await fetch(`${baseUrl}/usuarios?email=${email}&senha=${senha}`);
-      const data = await response.json();
+      const response = await fetch(`${baseUrl}/api/usuarios/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, senha })
+      });
 
-      if (data.length === 1) {
-        localStorage.setItem('currentUserId', data[0].id);
-        return data[0];
-      } else {
-        return thunkAPI.rejectWithValue('Credenciais inválidas');
+      if (!response.ok) {
+        return thunkAPI.rejectWithValue('Email ou senha inválidos');
       }
+
+      const data = await response.json();
+      localStorage.setItem('currentUserId', data.userId);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
+export const registerUser = createAsyncThunk(
+  'usuario/register',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await httpPost(`${baseUrl}/api/usuarios/register`, {
+        nome: userData.nome,
+        email: userData.email,
+        senha: userData.senha
+      });
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message || 'Erro desconhecido no cadastro');
+    }
+  }
+);
 
 const initialState = {
   usuario: null,
@@ -39,13 +60,13 @@ const usuarioSlice = createSlice({
       state.error = null;
     },
     loadUserFromStorage(state) {
-    const userId = localStorage.getItem('currentUserId');
-    if (userId) {
-      state.status = 'loading';
+      const userId = localStorage.getItem('currentUserId');
+      if (userId) {
+        state.status = 'loading';
+      }
     }
-  }
   },
-  extraReducers: (builder) => { 
+  extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
         state.status = 'loading';
@@ -57,7 +78,7 @@ const usuarioSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.payload?.error || 'Erro ao fazer login';
+        state.error = action.payload || 'Erro ao fazer login';
       })
       .addCase(registerUser.pending, (state) => {
         state.status = 'loading';
@@ -72,24 +93,8 @@ const usuarioSlice = createSlice({
         state.status = 'failed';
         state.error = action.payload;
       });
-  },
-});
-
-export const registerUser = createAsyncThunk(
-  'usuario/register',
-  async (userData, { rejectWithValue }) => {
-    try {
-      const response = await httpPost(`${baseUrl}/api/usuarios/register`, {
-        nome: userData.nome,
-        email: userData.email,
-        senha: userData.senha
-      });
-      return response;
-    } catch (error) {
-      return rejectWithValue(error.message || 'Erro desconhecido no cadastro');
-    }
   }
-);
+});
 
 export const { logout, loadUserFromStorage } = usuarioSlice.actions;
 export const selectCurrentUserId = (state) => state.usuario.usuario?.id;
