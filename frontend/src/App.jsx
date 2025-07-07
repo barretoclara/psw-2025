@@ -9,7 +9,7 @@ import LoginPage from './pages/LoginPage';
 import ReceitaPage from './pages/ReceitaPage';
 import CadastroReceitaPage from './pages/CadastroReceitaPage';
 import CadastroCategoriaPage from './pages/CadastroCategoriaPage';
-import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute.jsx';
 import CadastroUsuario from './pages/CadastroUsuario';
 import SelecionaIngredientes from './pages/SelecionaIngredientes';
 import AssinaturaPremium from './pages/AssinaturaPremium';
