@@ -2,10 +2,13 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './styles/AssinaturaPremium.css'; 
+import Footer from "../components/Footer";
+import PageHeader from "../components/PageHeader";
 
 export default function AssinaturaPremium() {
   return (
-    <div>
+    <div className="favoritos-page">
+          <PageHeader />
       
 
       {/* Conteúdo principal */}
@@ -48,7 +51,7 @@ export default function AssinaturaPremium() {
         </p>
       </div>
 
-      
+      <Footer />
     </div>
   );
 }
