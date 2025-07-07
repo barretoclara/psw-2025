@@ -27,27 +27,14 @@ const IngredienteItem = ({ ingrediente }) => {
   };
 
   return (
-    <li className="flex justify-between items-center p-2 border rounded">
-      <span>{ingrediente.nome} - {ingrediente.quantidade}</span>
-      <div className="space-x-2">
-        <button 
-          onClick={diminuirQuantidade}
-          className="px-2 bg-yellow-100"
-        >
-          -
-        </button>
-        <button 
-          onClick={() => handleUpdate({ quantidade: ingrediente.quantidade + 1 })}
-          className="px-2 bg-green-100"
-        >
-          +
-        </button>
-        <button 
-          onClick={handleDelete}
-          className="px-2 bg-red-100"
-        >
-          Remover
-        </button>
+    <li className="ingrediente-item">
+      <span className="ingrediente-nome">
+        {ingrediente.nome} - {ingrediente.quantidade}
+      </span>
+      <div className="ingrediente-acoes">
+        <button onClick={diminuirQuantidade}>-</button>
+        <button onClick={() => handleUpdate({ quantidade: ingrediente.quantidade + 1 })}>+</button>
+        <button onClick={handleDelete}>🗑</button>
       </div>
     </li>
   );

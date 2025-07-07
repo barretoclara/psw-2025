@@ -1,8 +1,12 @@
-import EstoqueList from '../components/estoque/EstoqueList';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { fetchEstoque } from '../storeConfig/slices/estoqueSlice';
 import { useUserData } from '../hooks/useUserData';
+import EstoqueList from '../components/estoque/EstoqueList';
+import './styles/EstoquePage.css';
+import PageHeader from '../components/PageHeader';
+import Footer from "../components/Footer";
+
 
 const EstoquePage = () => {
   const dispatch = useDispatch();
@@ -18,10 +22,15 @@ const EstoquePage = () => {
   }, [dispatch, validateUser]);
 
   return (
-    <div>
-      <h1 className="text-xl font-bold mb-4">Estoque</h1>
-      <EstoqueList />
-    </div>
+    <>
+      <PageHeader showBackButton={true} />
+      <div className="estoque-container">
+        <EstoqueList />
+        
+      </div>
+      <Footer />
+
+    </>
   );
 };
 

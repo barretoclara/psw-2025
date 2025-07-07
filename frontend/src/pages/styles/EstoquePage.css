@@ -1,0 +1,47 @@
+.estoque-container {
+  margin-top: 300px; /* espaço reservado para o PageHeader */
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 20px;
+  background-color: #fceeff;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+.ingrediente-item {
+  background-color: white;
+  border-radius: 12px;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ingrediente-nome {
+  font-weight: 600;
+  color: #333;
+  font-size: 1.1rem;
+}
+
+.ingrediente-acoes {
+  display: flex;
+  gap: 10px;
+}
+
+.ingrediente-acoes button {
+  background: none;
+  border: none;
+  color: #dda1df;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.ingrediente-acoes button:hover {
+  background-color: #f3e0f6;
+}
