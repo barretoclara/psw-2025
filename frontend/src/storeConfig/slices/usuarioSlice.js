@@ -84,11 +84,11 @@ const usuarioSlice = createSlice({
         state.status = 'loading';
         state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.usuario = action.payload;
-        localStorage.setItem('currentUserId', action.payload.userId);
+      .addCase(registerUser.fulfilled, (state) => {
+        state.status = 'idle';
+        state.usuario = null;
       })
+      
       .addCase(registerUser.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.payload;
