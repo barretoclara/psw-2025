@@ -8,7 +8,9 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const isLoggedIn = useSelector(state => state.usuario.isLoggedIn);
+  const usuario = useSelector((state) => state.usuario.usuario);
+  const loginStatus = useSelector((state) => state.usuario.status);
+  const loginError = useSelector((state) => state.usuario.error);
 
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
@@ -19,10 +21,10 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (usuario) {
       navigate('/');
     }
-  }, [isLoggedIn, navigate]);
+  }, [usuario, navigate]);
 
   return (
     <div className="login-wrapper">
@@ -35,11 +37,11 @@ const LoginForm = () => {
           E é <span className="highlight">gratuito</span>!
         </p>
 
-        <button className="social-btn">
+        <button className="social-btn" disabled>
           <i className="bi bi-google"></i> Continuar com Google
         </button>
 
-        <button className="social-btn">
+        <button className="social-btn" disabled>
           <i className="bi bi-facebook"></i> Continuar com Facebook
         </button>
 
@@ -70,11 +72,14 @@ const LoginForm = () => {
             />
           </div>
 
+          {loginStatus === 'failed' && (
+            <p className="error-message">{loginError || 'Erro ao fazer login.'}</p>
+          )}
+
           <a href="#" className="forgot-password">Esqueceu sua senha?</a>
 
           <button type="submit" className="login-btn">Entrar</button>
 
-          
           <button
             type="button"
             className="secondary-btn"
