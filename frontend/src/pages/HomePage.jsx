@@ -32,12 +32,10 @@ export default function HomePage() {
   const receitasUsuario = receitas.filter(r => r.userId === userId);
 
   const receitasFiltradas = receitasUsuario.filter((receita) => {
-    if (!receita || typeof receita !== 'object') return false;
-
-    const correspondeCategoria =
-      filtroCategoria === 'todos' ||
+    const correspondeCategoria = 
+      filtroCategoria === 'todos' || 
       receita.categoriaId === filtroCategoria;
-
+  
     const termoBusca = typeof busca === 'string' ? busca.toLowerCase() : '';
     const nomeReceita = receita.nome ? receita.nome.toLowerCase() : '';
     const correspondeBusca = nomeReceita.includes(termoBusca);
@@ -46,13 +44,14 @@ export default function HomePage() {
   });
 
   const getNomeCategoria = (categoriaId) => {
-    const categoria = categorias.find(c => c.id === categoriaId);
+    if (!categoriaId) return 'Sem categoria';
+      const categoria = categorias.find(c => c._id === categoriaId || c.id === categoriaId);
     return categoria ? categoria.nome : 'Sem categoria';
   };
 
   const getCategoriaSelecionada = () => {
     if (filtroCategoria === 'todos') return 'Todas categorias';
-    const categoria = categorias.find(c => c.id === filtroCategoria);
+      const categoria = categorias.find(c => c._id === filtroCategoria || c.id === filtroCategoria);
     return categoria ? categoria.nome : 'Selecionar categoria';
   };
 
@@ -104,10 +103,10 @@ export default function HomePage() {
                 </button>
                 {categorias.map(c => (
                   <button
-                    key={c.id}
-                    className={`dropdown-item ${filtroCategoria === c.id ? 'active' : ''}`}
+                    key={c._id || c.id}
+                    className={`dropdown-item ${filtroCategoria === (c._id || c.id) ? 'active' : ''}`}
                     onClick={() => {
-                      setFiltroCategoria(c.id);
+                      setFiltroCategoria(c._id || c.id);
                       setShowCategoryDropdown(false);
                     }}
                   >
