@@ -14,10 +14,10 @@ export default function Footer() {
         <HouseDoor />
         Início
       </Link>
-      <Link to="/favoritos" className={`nav-item ${isActive("/favoritos") ? "active" : ""}`}>
+      {/*<Link to="/favoritos" className={`nav-item ${isActive("/favoritos") ? "active" : ""}`}>
         <Heart />
         Favoritos
-      </Link>
+      </Link>*/
       <Link to="/estoque" className={`nav-item ${isActive("/estoque") ? "active" : ""}`}>
         <BoxSeam />
         Estoque
