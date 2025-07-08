@@ -1,24 +1,29 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addCategoria, updateCategoria } from '../../storeConfig/slices/categoriasSlice';
+import {
+  addCategoria,
+  updateCategoria,
+  fetchCategorias
+} from '../../storeConfig/slices/categoriasSlice';
 
 export default function CategoriaForm({ categoriaExistente, userId }) {
   const [nome, setNome] = useState(categoriaExistente?.nome || '');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const categoriaData = { nome, userId };
 
     if (categoriaExistente) {
-      dispatch(updateCategoria({
+      await dispatch(updateCategoria({
         categoria: { ...categoriaExistente, ...categoriaData },
         userId
       }));
     } else {
-      dispatch(addCategoria(categoriaData));
+      await dispatch(addCategoria(categoriaData));
+      await dispatch(fetchCategorias(userId)); 
     }
 
     navigate('/');
