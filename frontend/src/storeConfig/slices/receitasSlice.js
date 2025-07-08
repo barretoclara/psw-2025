@@ -70,46 +70,55 @@ const receitasSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(fetchReceitas.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        receitasAdapter.setAll(state, action.payload);
-      })
-      .addCase(deleteReceita.fulfilled, (state, action) => {
+  builder
+    .addCase(fetchReceitas.fulfilled, (state, action) => {
+      state.status = "succeeded";
+      const receitasComId = action.payload.map((r) => ({
+        ...r,
+        id: r._id,
+      }));
+      receitasAdapter.setAll(state, receitasComId);
+    })
+    .addCase(deleteReceita.fulfilled, (state, action) => {
+      state.status = "updated";
+      receitasAdapter.removeOne(state, action.payload);
+    })
+    .addMatcher(
+      isAnyOf(addReceita.fulfilled, updateReceita.fulfilled),
+      (state, action) => {
         state.status = "updated";
-        receitasAdapter.removeOne(state, action.payload);
-      })
-      .addMatcher(
-        isAnyOf(addReceita.fulfilled, updateReceita.fulfilled),
-        (state, action) => {
-          state.status = "updated";
-          receitasAdapter.upsertOne(state, action.payload);
-        }
-      )
-      .addMatcher(
-        isAnyOf(
-          fetchReceitas.pending,
-          addReceita.pending,
-          updateReceita.pending,
-          deleteReceita.pending
-        ),
-        (state) => {
-          state.status = "loading";
-        }
-      )
-      .addMatcher(
-        isAnyOf(
-          fetchReceitas.rejected,
-          addReceita.rejected,
-          updateReceita.rejected,
-          deleteReceita.rejected
-        ),
-        (state, action) => {
-          state.status = "failed";
-          state.error = action.error.message;
-        }
-      );
-  },
+        const receitaComId = {
+          ...action.payload,
+          id: action.payload._id,
+        };
+        receitasAdapter.upsertOne(state, receitaComId);
+      }
+    )
+    .addMatcher(
+      isAnyOf(
+        fetchReceitas.pending,
+        addReceita.pending,
+        updateReceita.pending,
+        deleteReceita.pending
+      ),
+      (state) => {
+        state.status = "loading";
+      }
+    )
+    .addMatcher(
+      isAnyOf(
+        fetchReceitas.rejected,
+        addReceita.rejected,
+        updateReceita.rejected,
+        deleteReceita.rejected
+      ),
+      (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      }
+    );
+},
+
 });
 
 export const {

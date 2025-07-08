@@ -19,7 +19,7 @@ export const login = createAsyncThunk(
       }
 
       const data = await response.json();
-      localStorage.setItem('currentUserId', data.userId);
+      localStorage.setItem('jwtToken', data.token);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

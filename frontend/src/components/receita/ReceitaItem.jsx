@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 const ReceitaItem = ({ receita }) => (
   <li className="border p-4 rounded shadow hover:shadow-md transition-shadow">
     <Link 
-      to={`/receita/${receita.id}`} 
+      to={`/receita/${receita.id || receita._id}`} 
       className="text-lg font-semibold text-purple-600 hover:underline block"
     >
       {receita.nome}

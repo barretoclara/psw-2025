@@ -70,7 +70,7 @@ function ReceitaForm() {
 
   try {
     if (id) {
-      await dispatch(updateReceita(receitaData)).unwrap();
+      await dispatch(updateReceita({ id, ...receitaData })).unwrap();
     } else {
       await dispatch(addReceita(receitaData)).unwrap();
     }
@@ -111,7 +111,7 @@ function ReceitaForm() {
             >
               <option value="">Selecione a categoria</option>
               {categorias && Object.values(categorias).map(cat => (
-                <option key={cat.id} value={cat.id}>{cat.nome}</option>
+                <option key={cat.id || cat._id} value={cat.id || cat._id}>{cat.nome}</option>
               ))}
             </select>
           </div>

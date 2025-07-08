@@ -13,17 +13,18 @@ export const httpGet = (url, options = {}) =>
     ...options,
   }).then((res) => res.json());
 
-export const httpPost = (url, data, options = {}) =>
-  fetch(url, {
-    method: "POST",
+export const httpPost = async (url, data) => {
+  const token = localStorage.getItem('jwtToken');
+  const response = await fetch(url, {
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      ...getAuthHeader(),
-      ...(options.headers || {})
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` })
     },
-    body: JSON.stringify(data),
-    ...options,
-  }).then((res) => res.json());
+    body: JSON.stringify(data)
+  });
+  return response.json();
+};
 
 export const httpPut = (url, data, options = {}) =>
   fetch(url, {
