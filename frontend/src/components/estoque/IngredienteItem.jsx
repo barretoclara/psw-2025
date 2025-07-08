@@ -4,12 +4,12 @@ import { useUserData } from '../../hooks/useUserData';
 
 const IngredienteItem = ({ ingrediente }) => {
   const dispatch = useDispatch();
-  const { validateUser } = useUserData();
+  const { userId } = useUserData();
 
   const handleDelete = () => {
     dispatch(deleteEstoqueItem({
-      id: ingrediente.id,
-      userId: validateUser()
+      id: ingrediente._id || ingrediente.id,
+      userId
     }));
   };
 
@@ -17,9 +17,9 @@ const IngredienteItem = ({ ingrediente }) => {
     dispatch(updateEstoqueItem({
       ...ingrediente,
       ...novosDados,
-      userId: validateUser()
+      id: ingrediente._id || ingrediente.id,
+      userId
     }));
-
   };
 
   const diminuirQuantidade = () => {
@@ -28,14 +28,18 @@ const IngredienteItem = ({ ingrediente }) => {
     }
   };
 
+  const aumentarQuantidade = () => {
+    handleUpdate({ quantidade: ingrediente.quantidade + 1 });
+  };
+
   return (
     <li className="ingrediente-item">
       <span className="ingrediente-nome">
-        {ingrediente.nome} - {ingrediente.quantidade}
+        {ingrediente.nome} - {ingrediente.quantidade} {ingrediente.unidade}
       </span>
       <div className="ingrediente-acoes">
         <button onClick={diminuirQuantidade}>-</button>
-        <button onClick={() => handleUpdate({ quantidade: ingrediente.quantidade + 1 })}>+</button>
+        <button onClick={aumentarQuantidade}>+</button>
         <button onClick={handleDelete}>🗑</button>
       </div>
     </li>

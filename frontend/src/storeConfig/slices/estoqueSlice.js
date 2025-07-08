@@ -25,13 +25,11 @@ export const fetchEstoque = createAsyncThunk(
 
 export const addEstoqueItem = createAsyncThunk(
   'estoque/add',
-  async (itemData, { getState }) => {
-    const userId = getState().usuario.usuario?.id;
+  async (itemData) => {
     return httpPost(`${baseUrl}/estoque`, {
-    ...itemData,
-    quantidade: Number(itemData.quantidade || 0)
+      ...itemData,
+      quantidade: Number(itemData.quantidade || 0)
     });
-
   }
 );
 
@@ -42,13 +40,12 @@ export const updateEstoqueItem = createAsyncThunk(
       ...itemData,
       quantidade: Number(itemData.quantidade || 0)
     });
-
   }
 );
 
 export const deleteEstoqueItem = createAsyncThunk(
   'estoque/delete',
-  async (id) => {
+  async ({ id, userId }) => {
     await httpDelete(`${baseUrl}/estoque/${id}`);
     return id;
   }
