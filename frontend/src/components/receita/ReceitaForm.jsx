@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addReceita, updateReceita } from '../../storeConfig/slices/receitasSlice';
 import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
-
+import PageHeader from '../../components/PageHeader';
 
 function ReceitaForm() {
   const dispatch = useDispatch();
@@ -24,23 +24,23 @@ function ReceitaForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const dadosParciais = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
-  const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
+    const dadosParciais = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
+    const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
 
-  if (id && receitaExistente) {
-    setNome(dadosParciais.nome || receitaExistente.nome || '');
-    setCategoriaId(dadosParciais.categoriaId || receitaExistente.categoriaId?.toString() || '');
-    setTempo_preparo(dadosParciais.tempo_preparo || receitaExistente.tempo_preparo?.toString() || '');
-    setModo_preparo(dadosParciais.modo_preparo || receitaExistente.modo_preparo || '');
-    setIngredientes(ingredientesSalvos.length > 0 ? ingredientesSalvos : receitaExistente.ingredientes || []);
-  } else {
-    setNome(dadosParciais.nome || '');
-    setCategoriaId(dadosParciais.categoriaId || '');
-    setTempo_preparo(dadosParciais.tempo_preparo || '');
-    setModo_preparo(dadosParciais.modo_preparo || '');
-    setIngredientes(ingredientesSalvos);
-  }
-}, [id, receitaExistente]);
+    if (id && receitaExistente) {
+      setNome(dadosParciais.nome || receitaExistente.nome || '');
+      setCategoriaId(dadosParciais.categoriaId || receitaExistente.categoriaId?.toString() || '');
+      setTempo_preparo(dadosParciais.tempo_preparo || receitaExistente.tempo_preparo?.toString() || '');
+      setModo_preparo(dadosParciais.modo_preparo || receitaExistente.modo_preparo || '');
+      setIngredientes(ingredientesSalvos.length > 0 ? ingredientesSalvos : receitaExistente.ingredientes || []);
+    } else {
+      setNome(dadosParciais.nome || '');
+      setCategoriaId(dadosParciais.categoriaId || '');
+      setTempo_preparo(dadosParciais.tempo_preparo || '');
+      setModo_preparo(dadosParciais.modo_preparo || '');
+      setIngredientes(ingredientesSalvos);
+    }
+  }, [id, receitaExistente]);
 
   const adicionarIngrediente = () => {
     localStorage.setItem('dadosReceitaParcial', JSON.stringify({
@@ -94,89 +94,92 @@ function ReceitaForm() {
   };
 
   return (
-    <div className="login-wrapper">
-      <div className="login-container">
-        <h1 className="logo">Nova Receita</h1>
-        <h2>{id ? 'Editar Receita' : 'Cadastrar Receita'}</h2>
+    <div style={{ width: '100%' }}>
+      <PageHeader title={id ? 'Editar Receita' : 'Nova Receita'} />
+      
+      <div className="login-wrapper">
+        <div className="login-container">
+          <h1 className="logo">Nova Receita</h1>
+          <h2>{id ? 'Editar Receita' : 'Cadastrar Receita'}</h2>
 
-        <form onSubmit={handleSubmit}>
-          <div className="input-field">
-            <label>Nome da Receita:</label>
-            <input
-              type="text"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              placeholder="Digite o nome da receita"
-              required
-            />
-          </div>
-
-          <div className="input-field">
-            <label>Categoria:</label>
-            <select
-              value={categoriaId}
-              onChange={(e) => setCategoriaId(e.target.value)}
-              required
-            >
-              <option value="">Selecione a categoria</option>
-              {categorias && Object.values(categorias).map(cat => (
-                <option key={cat.id || cat._id} value={cat.id || cat._id}>{cat.nome}</option>
-              ))}
-            </select>
-          </div>
-
-          <div className="input-field">
-            <label>Tempo de preparo (min):</label>
-            <input
-              type="number"
-              value={tempo_preparo}
-              onChange={(e) => setTempo_preparo(e.target.value)}
-              placeholder="Ex: 30"
-              required
-            />
-          </div>
-
-          <div className="input-field">
-            <label>Ingredientes:</label>
-            <div style={{ display: 'flex', gap: '10px' }}>
-              <button
-                type="button"
-                className="secondary-btn"
-                onClick={adicionarIngrediente}
-              >
-                Adicionar
-              </button>
+          <form onSubmit={handleSubmit}>
+            <div className="input-field">
+              <label>Nome da Receita:</label>
+              <input
+                type="text"
+                value={nome}
+                onChange={(e) => setNome(e.target.value)}
+                placeholder="Digite o nome da receita"
+                required
+              />
             </div>
-            <ul style={{ textAlign: 'left', marginTop: '10px' }}>
-              {ingredientes.map((ing, i) => (
-                <li key={i}>{ing.nome} - {ing.quantidade} {ing.unidade}</li>
-              ))}
-            </ul>
-          </div>
 
-          <div className="input-field">
-            <label>Modo de preparo:</label>
-            <textarea
-              value={modo_preparo}
-              onChange={(e) => setModo_preparo(e.target.value)}
-              placeholder="Descreva o modo de preparo"
-              rows="4"
-              style={{
-                width: '90%',
-                padding: '12px 15px',
-                borderRadius: '8px',
-                backgroundColor: '#faf0fb',
-                border: '1px solid #e0e0e0',
-                resize: 'none'
-              }}
-              required
-            />
-          </div>
+            <div className="input-field">
+              <label>Categoria:</label>
+              <select
+                value={categoriaId}
+                onChange={(e) => setCategoriaId(e.target.value)}
+                required
+              >
+                <option value="">Selecione a categoria</option>
+                {categorias && Object.values(categorias).map(cat => (
+                  <option key={cat.id || cat._id} value={cat.id || cat._id}>{cat.nome}</option>
+                ))}
+              </select>
+            </div>
 
-          <button type="submit" className="login-btn">
-            {id ? 'Salvar Alterações' : 'Cadastrar Receita'}
-          </button>
-        </form>
+            <div className="input-field">
+              <label>Tempo de preparo (min):</label>
+              <input
+                type="number"
+                value={tempo_preparo}
+                onChange={(e) => setTempo_preparo(e.target.value)}
+                placeholder="Ex: 30"
+                required
+              />
+            </div>
+
+            <div className="input-field">
+              <label>Ingredientes:</label>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button
+                  type="button"
+                  className="secondary-btn"
+                  onClick={adicionarIngrediente}
+                >
+                  Adicionar
+                </button>
+              </div>
+              <ul style={{ textAlign: 'left', marginTop: '10px' }}>
+                {ingredientes.map((ing, i) => (
+                  <li key={i}>{ing.nome} - {ing.quantidade} {ing.unidade}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="input-field">
+              <label>Modo de preparo:</label>
+              <textarea
+                value={modo_preparo}
+                onChange={(e) => setModo_preparo(e.target.value)}
+                placeholder="Descreva o modo de preparo"
+                rows="4"
+                style={{
+                  width: '90%',
+                  padding: '12px 15px',
+                  borderRadius: '8px',
+                  backgroundColor: '#faf0fb',
+                  border: '1px solid #e0e0e0',
+                  resize: 'none'
+                }}
+              />
+            </div>
+
+            <button type="submit" className="login-btn">
+              {id ? 'Salvar Alterações' : 'Cadastrar Receita'}
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );
