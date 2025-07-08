@@ -7,7 +7,9 @@ import {
 import baseUrl from '../../api/baseUrl';
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
-const categoriasAdapter = createEntityAdapter();
+const categoriasAdapter = createEntityAdapter({
+  selectId: (entity) => entity._id || entity.id
+});
 
 const initialState = categoriasAdapter.getInitialState({
   status: "idle",
@@ -17,28 +19,29 @@ const initialState = categoriasAdapter.getInitialState({
 export const fetchCategorias = createAsyncThunk(
   'categorias/fetchAll',
   async (userId) => {
-    return httpGet(`${baseUrl}/api/categorias?userId=${userId}`);
+    return httpGet(`${baseUrl}/categorias?userId=${userId}`);
   }
 );
 
 export const addCategoria = createAsyncThunk(
   'categorias/add',
-  async ({ nome, userId }) => {
-    return httpPost(`${baseUrl}/api/categorias`, { nome, userId });
+  async (categoriaData, { getState }) => {
+    const userId = getState().usuario.usuario?.id;
+    return httpPost(`${baseUrl}/categorias`, { ...categoriaData, userId });
   }
 );
 
 export const updateCategoria = createAsyncThunk(
   'categorias/update',
-  async ({ categoria, userId }) => {
-    return httpPut(`${baseUrl}/api/categorias/${categoria.id}`, { ...categoria, userId });
+  async (categoriaData) => {
+    return httpPut(`${baseUrl}/categorias/${categoriaData._id || categoriaData.id}`, categoriaData);
   }
 );
 
 export const deleteCategoria = createAsyncThunk(
   'categorias/delete',
-  async ({ id, userId }) => {
-    await httpDelete(`${baseUrl}/api/categorias/${id}`);
+  async (id) => {
+    await httpDelete(`${baseUrl}/categorias/${id}`);
     return id;
   }
 );

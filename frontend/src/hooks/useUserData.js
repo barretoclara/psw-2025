@@ -6,7 +6,8 @@ export const useUserData = () => {
   
   const validateUser = () => {
     if (!userId) {
-      throw new Error('Acesso negado: usuário não autenticado');
+      console.warn('Usuário não autenticado - redirecionando para login');
+      return null;
     }
     return userId;
   };

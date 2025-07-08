@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const EstoqueSchema = new mongoose.Schema({
+const estoqueSchema = new mongoose.Schema({
   nome: { type: String, required: true },
   unidade: String,
   quantidade: Number,

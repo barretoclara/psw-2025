@@ -1,33 +1,25 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import {
-  addCategoria,
-  updateCategoria,
-  fetchCategorias
-} from '../../storeConfig/slices/categoriasSlice';
+import { addCategoria, updateCategoria } from '../../storeConfig/slices/categoriasSlice';
 
 export default function CategoriaForm({ categoriaExistente, userId }) {
   const [nome, setNome] = useState(categoriaExistente?.nome || '');
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const categoriaData = { nome, userId };
+  const handleSubmit = (e) => {
+  e.preventDefault();
+  const categoriaData = { nome };
 
-    if (categoriaExistente) {
-      await dispatch(updateCategoria({
-        categoria: { ...categoriaExistente, ...categoriaData },
-        userId
-      }));
-    } else {
-      await dispatch(addCategoria(categoriaData));
-      await dispatch(fetchCategorias(userId)); 
-    }
+  if (categoriaExistente) {
+    dispatch(updateCategoria(categoriaData));
+  } else {
+    dispatch(addCategoria(categoriaData));
+  }
 
-    navigate('/');
-  };
+  navigate('/');
+};
 
   return (
     <div className="card p-4 rounded-4 shadow" style={{ width: '100%', maxWidth: '400px' }}>

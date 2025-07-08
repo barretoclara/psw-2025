@@ -15,10 +15,16 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    dispatch(login({ email, senha }));
-  };
+  const handleLogin = async (e) => {
+  e.preventDefault();
+  try {
+    const result = await dispatch(login({ email, senha })).unwrap();
+    localStorage.setItem('token', result.token);
+    navigate('/');
+  } catch (error) {
+    console.error('Erro no login:', error);
+  }
+};
 
   useEffect(() => {
     if (usuario) {

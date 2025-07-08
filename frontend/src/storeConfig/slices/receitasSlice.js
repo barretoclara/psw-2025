@@ -7,7 +7,9 @@ import {
 import baseUrl from '../../api/baseUrl';
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
-const receitasAdapter = createEntityAdapter();
+const receitasAdapter = createEntityAdapter({
+  selectId: (entity) => entity._id || entity.id
+});
 
 const initialState = receitasAdapter.getInitialState({
   status: "idle",
@@ -17,45 +19,44 @@ const initialState = receitasAdapter.getInitialState({
 
 export const fetchReceitas = createAsyncThunk(
   'receitas/fetchAll',
-  async (userId) => {
-    return httpGet(`${baseUrl}/api/receitas?userId=${userId}`);
+  async () => {
+    return httpGet(`${baseUrl}/receitas`);
   }
 );
 
 export const addReceita = createAsyncThunk(
   'receitas/add',
-  async ({ receitaData, userId }) => {
-    try {
-      const dadosParaEnviar = {
-        nome: receitaData.nome,
-        tempo_preparo: Number(receitaData.tempo_preparo),
-        categoriaId: Number(receitaData.categoriaId),
-        ingredientes: receitaData.ingredientes,
-        modo_preparo: receitaData.modo_preparo,
-        userId: Number(userId)
-      };
-
-      const response = await httpPost(`${baseUrl}/api/receitas`, dadosParaEnviar);
-      return response;
-    } catch (error) {
-      console.error("Erro na requisição:", error);
-      throw error;
-    }
+  async (receitaData) => {
+    return httpPost(`${baseUrl}/receitas`, {
+      ...receitaData,
+      tempo_preparo: Number(receitaData.tempo_preparo),
+      ingredientes: receitaData.ingredientes.map(ing => ({
+        ...ing,
+        quantidade: Number(ing.quantidade)
+      }))
+    });
   }
 );
 
 export const updateReceita = createAsyncThunk(
   'receitas/update',
-  async ({ id, receitaData }) => {
-    const { id: _, ...dadosParaAtualizar } = receitaData;
-    return httpPut(`${baseUrl}/api/receitas/${id}`, dadosParaAtualizar);
+  async (receitaData) => {
+    const { id, ...dados } = receitaData;
+    return httpPut(`${baseUrl}/receitas/${id}`, {
+      ...dados,
+      tempo_preparo: Number(dados.tempo_preparo),
+      ingredientes: dados.ingredientes?.map(ing => ({
+        ...ing,
+        quantidade: Number(ing.quantidade)
+      }))
+    });
   }
 );
 
 export const deleteReceita = createAsyncThunk(
   'receitas/delete',
-  async ({ id, userId }) => {
-    await httpDelete(`${baseUrl}/api/receitas/${id}`);
+  async (id) => {
+    await httpDelete(`${baseUrl}/receitas/${id}`);
     return id;
   }
 );
@@ -132,6 +133,3 @@ export const selectReceitasPorCategoria = (state, categoriaId) => {
 
 export const { setFiltro } = receitasSlice.actions;
 export default receitasSlice.reducer;
-
-
-/**/

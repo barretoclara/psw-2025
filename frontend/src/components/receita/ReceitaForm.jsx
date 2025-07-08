@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addReceita, updateReceita } from '../../storeConfig/slices/receitasSlice';
-import { fetchCategorias } from '../../storeConfig/slices/categoriasSlice'; 
 import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
 
@@ -21,10 +20,6 @@ function ReceitaForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (userId) {
-      dispatch(fetchCategorias(userId)); // garante que categorias estejam carregadas
-    }
-
     if (id && receitaExistente) {
       setNome(receitaExistente.nome || '');
       setCategoriaId(receitaExistente.categoriaId?.toString() || '');
@@ -41,7 +36,7 @@ function ReceitaForm() {
       const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
       setIngredientes(ingredientesSalvos);
     }
-  }, [userId, id, receitaExistente, dispatch]);
+  }, [id, receitaExistente]);
 
   const adicionarIngrediente = () => {
     localStorage.setItem('dadosReceitaParcial', JSON.stringify({
@@ -54,43 +49,40 @@ function ReceitaForm() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
-      alert('Preencha todos os campos obrigatórios!');
-      return;
-    }
+  if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
+    alert('Preencha todos os campos obrigatórios!');
+    return;
+  }
 
-    const receitaData = {
-      id: id ? Number(id) : undefined,
-      nome,
-      tempo_preparo: Number(tempo_preparo),
-      categoriaId: Number(categoriaId),
-      ingredientes: ingredientes.map(ing => ({
-        id: ing.id,
-        nome: ing.nome,
-        quantidade: Number(ing.quantidade),
-        unidade: ing.unidade
-      })),
-      modo_preparo,
-      userId: Number(userId)
-    };
-
-    try {
-      if (id) {
-        await dispatch(updateReceita({ id: Number(id), receitaData })).unwrap();
-      } else {
-        await dispatch(addReceita({ receitaData, userId })).unwrap();
-      }
-
-      localStorage.removeItem('dadosReceitaParcial');
-      localStorage.removeItem('ingredientesSelecionados');
-      navigate('/');
-    } catch (error) {
-      console.error('Erro ao salvar receita:', error);
-      alert('Erro ao salvar receita');
-    }
+  const receitaData = {
+    nome,
+    tempo_preparo: Number(tempo_preparo),
+    categoriaId,
+    ingredientes: ingredientes.map(ing => ({
+      nome: ing.nome,
+      quantidade: Number(ing.quantidade),
+      unidade: ing.unidade
+    })),
+    modo_preparo
   };
+
+  try {
+    if (id) {
+      await dispatch(updateReceita(receitaData)).unwrap();
+    } else {
+      await dispatch(addReceita(receitaData)).unwrap();
+    }
+
+    localStorage.removeItem('dadosReceitaParcial');
+    localStorage.removeItem('ingredientesSelecionados');
+    navigate('/');
+  } catch (error) {
+    console.error('Erro ao salvar receita:', error);
+    alert('Erro ao salvar receita');
+  }
+};
 
   return (
     <div className="login-wrapper">

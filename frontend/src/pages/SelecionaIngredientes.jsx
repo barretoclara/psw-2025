@@ -13,8 +13,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import PageHeader from "../components/PageHeader";
 
-// ...imports iguais
-
 const SelecionaIngredientes = () => {
   const dispatch = useDispatch();
   const { userId } = useUserData();

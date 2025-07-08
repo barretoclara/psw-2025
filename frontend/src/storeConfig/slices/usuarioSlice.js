@@ -6,7 +6,7 @@ export const login = createAsyncThunk(
   'usuario/login',
   async ({ email, senha }, thunkAPI) => {
     try {
-      const response = await fetch(`${baseUrl}/api/usuarios/login`, {
+      const response = await fetch(`${baseUrl}/usuarios/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -74,7 +74,11 @@ const usuarioSlice = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.usuario = action.payload;
+        state.usuario = {
+          id: action.payload.userId,
+          nome: action.payload.nome,
+          token: action.payload.token
+        };
       })
       .addCase(login.rejected, (state, action) => {
         state.status = 'failed';
