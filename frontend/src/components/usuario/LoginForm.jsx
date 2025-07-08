@@ -82,8 +82,6 @@ const LoginForm = () => {
             <p className="error-message">{loginError || 'Erro ao fazer login.'}</p>
           )}
 
-          <a href="#" className="forgot-password">Esqueceu sua senha?</a>
-
           <button type="submit" className="login-btn">Entrar</button>
 
           <button
