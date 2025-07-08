@@ -18,7 +18,7 @@ const initialState = receitasAdapter.getInitialState({
 export const fetchReceitas = createAsyncThunk(
   'receitas/fetchAll',
   async (userId) => {
-    return httpGet(`${baseUrl}/receitas?userId=${userId}`);
+    return httpGet(`${baseUrl}/api/receitas?userId=${userId}`);
   }
 );
 
@@ -35,7 +35,7 @@ export const addReceita = createAsyncThunk(
         userId: Number(userId)
       };
 
-      const response = await httpPost(`${baseUrl}/receitas`, dadosParaEnviar);
+      const response = await httpPost(`${baseUrl}/api/receitas`, dadosParaEnviar);
       return response;
     } catch (error) {
       console.error("Erro na requisição:", error);
@@ -48,14 +48,14 @@ export const updateReceita = createAsyncThunk(
   'receitas/update',
   async ({ id, receitaData }) => {
     const { id: _, ...dadosParaAtualizar } = receitaData;
-    return httpPut(`${baseUrl}/receitas/${id}`, dadosParaAtualizar);
+    return httpPut(`${baseUrl}/api/receitas/${id}`, dadosParaAtualizar);
   }
 );
 
 export const deleteReceita = createAsyncThunk(
   'receitas/delete',
   async ({ id, userId }) => {
-    await httpDelete(`${baseUrl}/receitas/${id}`);
+    await httpDelete(`${baseUrl}/api/receitas/${id}`);
     return id;
   }
 );
@@ -132,3 +132,6 @@ export const selectReceitasPorCategoria = (state, categoriaId) => {
 
 export const { setFiltro } = receitasSlice.actions;
 export default receitasSlice.reducer;
+
+
+/**/
