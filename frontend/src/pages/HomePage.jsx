@@ -32,18 +32,18 @@ export default function HomePage() {
   const receitasUsuario = receitas.filter(r => r.userId === userId);
 
   const receitasFiltradas = receitasUsuario.filter((receita) => {
-  if (!receita || typeof receita !== 'object') return false;
-  
-  const correspondeCategoria = 
-    filtroCategoria === 'todos' || 
-    receita.categoriaId === filtroCategoria;
-  
-  const termoBusca = typeof busca === 'string' ? busca.toLowerCase() : '';
-  const nomeReceita = receita.nome ? receita.nome.toLowerCase() : '';
-  const correspondeBusca = nomeReceita.includes(termoBusca);
-  
-  return correspondeCategoria && correspondeBusca;
-});
+    if (!receita || typeof receita !== 'object') return false;
+
+    const correspondeCategoria =
+      filtroCategoria === 'todos' ||
+      receita.categoriaId === filtroCategoria;
+
+    const termoBusca = typeof busca === 'string' ? busca.toLowerCase() : '';
+    const nomeReceita = receita.nome ? receita.nome.toLowerCase() : '';
+    const correspondeBusca = nomeReceita.includes(termoBusca);
+
+    return correspondeCategoria && correspondeBusca;
+  });
 
   const getNomeCategoria = (categoriaId) => {
     const categoria = categorias.find(c => c.id === categoriaId);
@@ -150,7 +150,7 @@ export default function HomePage() {
             <div key={rec.id} className="col-6 col-md-4 col-lg-3">
               <div
                 className="card card-receita h-100 cursor-pointer"
-                onClick={() => navigate(`/visualizar-receita/${rec.id}`)}
+                onClick={() => navigate(`/visualizar-receita/${rec.id}`)} // ✅ corrigido aqui
               >
                 {rec.imagem ? (
                   <img
