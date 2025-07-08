@@ -31,7 +31,7 @@ export const registerUser = createAsyncThunk(
   'usuario/register',
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await httpPost(`${baseUrl}/api/usuarios/register`, {
+      const response = await httpPost(`${baseUrl}/usuarios/register`, {
         nome: userData.nome,
         email: userData.email,
         senha: userData.senha
