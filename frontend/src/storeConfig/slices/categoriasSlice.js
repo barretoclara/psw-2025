@@ -17,28 +17,28 @@ const initialState = categoriasAdapter.getInitialState({
 export const fetchCategorias = createAsyncThunk(
   'categorias/fetchAll',
   async (userId) => {
-    return httpGet(`${baseUrl}/categorias?userId=${userId}`);
+    return httpGet(`${baseUrl}/api/categorias?userId=${userId}`);
   }
 );
 
 export const addCategoria = createAsyncThunk(
   'categorias/add',
   async ({ nome, userId }) => {
-    return httpPost(`${baseUrl}/categorias`, { nome, userId });
+    return httpPost(`${baseUrl}/api/categorias`, { nome, userId });
   }
 );
 
 export const updateCategoria = createAsyncThunk(
   'categorias/update',
   async ({ categoria, userId }) => {
-    return httpPut(`${baseUrl}/categorias/${categoria.id}`, { ...categoria, userId });
+    return httpPut(`${baseUrl}/api/categorias/${categoria.id}`, { ...categoria, userId });
   }
 );
 
 export const deleteCategoria = createAsyncThunk(
   'categorias/delete',
   async ({ id, userId }) => {
-    await httpDelete(`${baseUrl}/categorias/${id}`);
+    await httpDelete(`${baseUrl}/api/categorias/${id}`);
     return id;
   }
 );
