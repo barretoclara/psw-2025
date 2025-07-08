@@ -13,6 +13,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import PageHeader from "../components/PageHeader";
 
+// ...imports iguais
+
 const SelecionaIngredientes = () => {
   const dispatch = useDispatch();
   const { userId } = useUserData();
@@ -38,9 +40,8 @@ const SelecionaIngredientes = () => {
     setIngredientesSelecionados(selecionadosSalvos);
   }, [userId, dispatch]);
 
-  const filteredIngredientes = estoque.filter((ing) =>
-    ing.nome.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredIngredientes = estoque
+    .filter((ing) => ing?.nome?.toLowerCase().includes(searchTerm.toLowerCase()));
 
   const handleCheckboxChange = (id) => {
     setIngredientesSelecionados(prev => {
@@ -48,9 +49,9 @@ const SelecionaIngredientes = () => {
       if (existe) {
         return prev.filter(ing => ing.id !== id);
       } else {
-        const ingrediente = estoque.find(ing => ing.id === id);
+        const ingrediente = estoque.find(ing => (ing._id || ing.id) === id);
         return [...prev, { 
-          id: ingrediente.id, 
+          id: ingrediente._id || ingrediente.id, 
           nome: ingrediente.nome, 
           quantidade: 1, 
           unidade: ingrediente.unidade 
@@ -72,8 +73,8 @@ const SelecionaIngredientes = () => {
 
   const abrirModalEditar = (id) => {
     const ingSelecionado = ingredientesSelecionados.find(i => i.id === id);
-    const ingEstoque = estoque.find(i => i.id === id);
-    
+    const ingEstoque = estoque.find(i => (i._id || i.id) === id);
+
     if (ingSelecionado) {
       setModalData({
         id: ingSelecionado.id,
@@ -85,7 +86,7 @@ const SelecionaIngredientes = () => {
       setShowModal(true);
     } else if (ingEstoque) {
       setModalData({
-        id: ingEstoque.id,
+        id: ingEstoque._id || ingEstoque.id,
         nome: ingEstoque.nome,
         quantidade: 1,
         unidade: ingEstoque.unidade,
@@ -115,20 +116,18 @@ const SelecionaIngredientes = () => {
         );
       } else {
         const resultAction = await dispatch(addEstoqueItem({
-          itemData: { 
-            nome,
-            quantidade: 0,
-            unidade: uni
-          },
+          nome,
+          quantidade: 0,
+          unidade: uni,
           userId
         }));
 
         const novoIngrediente = resultAction.payload;
-        
+
         setIngredientesSelecionados(prev => [
           ...prev, 
           { 
-            id: novoIngrediente.id, 
+            id: novoIngrediente._id || novoIngrediente.id, 
             nome: novoIngrediente.nome, 
             quantidade: qtdReceita, 
             unidade: novoIngrediente.unidade 
@@ -171,14 +170,11 @@ const SelecionaIngredientes = () => {
     return ing ? ing.quantidade : 0;
   };
 
-   return (
+  return (
     <>
       <PageHeader title="Selecionar Ingredientes" showBackButton={true} />
-
       <div className="container seleciona-container" style={{ marginTop: '20px' }}></div>
-
       <div className="seleciona-container">
-
         <div className="mb-3">
           <input
             type="text"
@@ -191,24 +187,24 @@ const SelecionaIngredientes = () => {
 
         <ul className="list-group mb-4">
           {filteredIngredientes.map((ing) => (
-            <li key={ing.id} className="list-group-item d-flex justify-content-between align-items-center">
+            <li key={ing._id || ing.id} className="list-group-item d-flex justify-content-between align-items-center">
               <div>
                 <input
                   type="checkbox"
                   className="form-check-input me-2"
-                  checked={estaSelecionado(ing.id)}
-                  onChange={() => handleCheckboxChange(ing.id)}
+                  checked={estaSelecionado(ing._id || ing.id)}
+                  onChange={() => handleCheckboxChange(ing._id || ing.id)}
                 />
                 {ing.nome} (
-                {estaSelecionado(ing.id) ?
-                  `${getQuantidadeSelecionada(ing.id)} ${ingredientesSelecionados.find(i => i.id === ing.id)?.unidade || ing.unidade}` :
+                {estaSelecionado(ing._id || ing.id) ?
+                  `${getQuantidadeSelecionada(ing._id || ing.id)} ${ingredientesSelecionados.find(i => i.id === (ing._id || ing.id))?.unidade || ing.unidade}` :
                   `0 ${ing.unidade}`}
                 )
               </div>
-              {estaSelecionado(ing.id) && (
+              {estaSelecionado(ing._id || ing.id) && (
                 <button
                   className="btn btn-sm btn-outline-secondary"
-                  onClick={() => abrirModalEditar(ing.id)}
+                  onClick={() => abrirModalEditar(ing._id || ing.id)}
                 >
                   Editar
                 </button>

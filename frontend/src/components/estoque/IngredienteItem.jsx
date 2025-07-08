@@ -15,9 +15,11 @@ const IngredienteItem = ({ ingrediente }) => {
 
   const handleUpdate = (novosDados) => {
     dispatch(updateEstoqueItem({
-      itemData: { ...ingrediente, ...novosDados },
+      ...ingrediente,
+      ...novosDados,
       userId: validateUser()
     }));
+
   };
 
   const diminuirQuantidade = () => {

@@ -7,7 +7,9 @@ import {
 import baseUrl from '../../api/baseUrl';
 import { httpGet, httpPost, httpPut, httpDelete } from "../../api/utils";
 
-const estoqueAdapter = createEntityAdapter();
+const estoqueAdapter = createEntityAdapter({
+  selectId: (entity) => entity._id || entity.id
+});
 
 const initialState = estoqueAdapter.getInitialState({
   status: "idle",
@@ -16,28 +18,37 @@ const initialState = estoqueAdapter.getInitialState({
 
 export const fetchEstoque = createAsyncThunk(
   'estoque/fetchAll',
-  async (userId) => {
-    return httpGet(`${baseUrl}/estoque?userId=${userId}`);
+  async () => {
+    return httpGet(`${baseUrl}/estoque`);
   }
 );
 
 export const addEstoqueItem = createAsyncThunk(
   'estoque/add',
-  async ({ itemData, userId }) => {
-    return httpPost(`${baseUrl}/estoque`, { ...itemData, userId });
+  async (itemData, { getState }) => {
+    const userId = getState().usuario.usuario?.id;
+    return httpPost(`${baseUrl}/estoque`, {
+    ...itemData,
+    quantidade: Number(itemData.quantidade || 0)
+    });
+
   }
 );
 
 export const updateEstoqueItem = createAsyncThunk(
   'estoque/update',
-  async ({ itemData, userId }) => {
-    return httpPut(`${baseUrl}/estoque/${itemData.id}`, { ...itemData, userId });
+  async (itemData) => {
+    return httpPut(`${baseUrl}/estoque/${itemData.id}`, {
+      ...itemData,
+      quantidade: Number(itemData.quantidade || 0)
+    });
+
   }
 );
 
 export const deleteEstoqueItem = createAsyncThunk(
   'estoque/delete',
-  async ({ id, userId }) => {
+  async (id) => {
     await httpDelete(`${baseUrl}/estoque/${id}`);
     return id;
   }

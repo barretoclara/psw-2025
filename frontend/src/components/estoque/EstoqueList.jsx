@@ -24,11 +24,8 @@ const EstoqueList = () => {
   }, [userId, dispatch]);
 
   const handleAddItem = (novoItem) => {
-    dispatch(addEstoqueItem({
-      itemData: novoItem,
-      userId: validateUser()
-    }));
-  };
+  dispatch(addEstoqueItem(novoItem));
+};
 
   if (!estoque) return <p>Carregando estoque...</p>;
   if (ingredientes.length === 0) return <p>Nenhum ingrediente no estoque.</p>;
@@ -37,7 +34,7 @@ const EstoqueList = () => {
     <div>
       <ul className="space-y-2">
         {estoque.map(ing => (
-          <IngredienteItem key={ing.id} ingrediente={ing} />
+          <IngredienteItem key={ing._id || ing.id} ingrediente={ing} />
         ))}
       </ul>
     </div>
