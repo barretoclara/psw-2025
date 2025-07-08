@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import PageHeader from '../components/PageHeader';
 import Footer from '../components/Footer';
-import './styles/TermosDeUso.css';
+import './styles/TermosDeUsoPage.css';
 
 const TermosDeUsoPage = () => {
   const navigate = useNavigate();
