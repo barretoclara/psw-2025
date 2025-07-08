@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { addReceita, updateReceita } from '../../storeConfig/slices/receitasSlice';
+import { fetchCategorias } from '../../storeConfig/slices/categoriasSlice'; 
 import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
 
@@ -20,6 +21,10 @@ function ReceitaForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (userId) {
+      dispatch(fetchCategorias(userId)); // garante que categorias estejam carregadas
+    }
+
     if (id && receitaExistente) {
       setNome(receitaExistente.nome || '');
       setCategoriaId(receitaExistente.categoriaId?.toString() || '');
@@ -36,7 +41,7 @@ function ReceitaForm() {
       const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
       setIngredientes(ingredientesSalvos);
     }
-  }, [id, receitaExistente]);
+  }, [userId, id, receitaExistente, dispatch]);
 
   const adicionarIngrediente = () => {
     localStorage.setItem('dadosReceitaParcial', JSON.stringify({
