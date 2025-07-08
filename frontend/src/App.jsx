@@ -16,6 +16,7 @@ import AssinaturaPremium from './pages/AssinaturaPremium';
 import GerarListaMercado from "./components/listaMercado/GerarListaMercado";
 import FavoritosPage from './pages/FavoritosPage'; 
 import VisualizacaoReceita from './components/receita/VisualizacaoReceita';
+import TermosDeUsoPage from './pages/TermosDeUsoPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -94,6 +95,12 @@ function App() {
             <AssinaturaPremium />
           </ProtectedRoute>
         } />
+        <Route path="/termos-de-uso" element={
+          <ProtectedRoute>
+            <TermosDeUsoPage />
+          </ProtectedRoute>
+        } />
+
       </Routes>
     </Router>
   );

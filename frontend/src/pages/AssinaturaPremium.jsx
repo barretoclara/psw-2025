@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './styles/AssinaturaPremium.css'; 
@@ -8,9 +9,8 @@ import PageHeader from "../components/PageHeader";
 export default function AssinaturaPremium() {
   return (
     <div className="favoritos-page">
-          <PageHeader />
+      <PageHeader />
       
-
       {/* Conteúdo principal */}
       <div className="card-premium">
         <i className="bi bi-stars beneficio-icon"></i>
@@ -22,10 +22,9 @@ export default function AssinaturaPremium() {
           <small>7 dias grátis • Cancele quando quiser</small>
         </div>
 
-        <a href="/termosDeUso.html">
+        <Link to="/termos-de-uso">
           <button className="btn-premium">Experimente Grátis</button>
-        </a>
-
+        </Link>
 
         <p className="text-muted">Cobrança mensal apenas após o teste gratuito.</p>
       </div>
@@ -47,7 +46,7 @@ export default function AssinaturaPremium() {
       {/* Termos */}
       <div className="termos">
         <p>
-          Ao assinar, você concorda com nossos <a href="#">Termos de Uso e Política de Privacidade</a>
+          Ao assinar, você concorda com nossos <Link to="/termos-de-uso">Termos de Uso e Política de Privacidade</Link>
         </p>
       </div>
 
