@@ -5,12 +5,16 @@ import { addReceita, updateReceita } from '../../storeConfig/slices/receitasSlic
 import { useUserData } from '../../hooks/useUserData';
 import './ReceitaForm.css';
 
+
 function ReceitaForm() {
   const dispatch = useDispatch();
   const { userId } = useUserData();
-  const { id } = useParams();
+  const { id: routeId } = useParams();
   const categorias = useSelector(state => state.categorias.entities);
-  const receitaExistente = useSelector(state => state.receitas.entities?.[id]);
+  const receitas = useSelector(state => state.receitas.entities);
+
+  const id = routeId || localStorage.getItem('receitaEditandoId');
+  const receitaExistente = receitas?.[id];
 
   const [nome, setNome] = useState('');
   const [categoriaId, setCategoriaId] = useState('');
@@ -20,23 +24,23 @@ function ReceitaForm() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (id && receitaExistente) {
-      setNome(receitaExistente.nome || '');
-      setCategoriaId(receitaExistente.categoriaId?.toString() || '');
-      setTempo_preparo(receitaExistente.tempo_preparo?.toString() || '');
-      setModo_preparo(receitaExistente.modo_preparo || '');
-      setIngredientes(receitaExistente.ingredientes || []);
-    } else {
-      const dadosSalvos = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
-      setNome(dadosSalvos.nome || '');
-      setCategoriaId(dadosSalvos.categoriaId || '');
-      setTempo_preparo(dadosSalvos.tempo_preparo || '');
-      setModo_preparo(dadosSalvos.modo_preparo || '');
+  const dadosParciais = JSON.parse(localStorage.getItem('dadosReceitaParcial')) || {};
+  const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
 
-      const ingredientesSalvos = JSON.parse(localStorage.getItem('ingredientesSelecionados')) || [];
-      setIngredientes(ingredientesSalvos);
-    }
-  }, [id, receitaExistente]);
+  if (id && receitaExistente) {
+    setNome(dadosParciais.nome || receitaExistente.nome || '');
+    setCategoriaId(dadosParciais.categoriaId || receitaExistente.categoriaId?.toString() || '');
+    setTempo_preparo(dadosParciais.tempo_preparo || receitaExistente.tempo_preparo?.toString() || '');
+    setModo_preparo(dadosParciais.modo_preparo || receitaExistente.modo_preparo || '');
+    setIngredientes(ingredientesSalvos.length > 0 ? ingredientesSalvos : receitaExistente.ingredientes || []);
+  } else {
+    setNome(dadosParciais.nome || '');
+    setCategoriaId(dadosParciais.categoriaId || '');
+    setTempo_preparo(dadosParciais.tempo_preparo || '');
+    setModo_preparo(dadosParciais.modo_preparo || '');
+    setIngredientes(ingredientesSalvos);
+  }
+}, [id, receitaExistente]);
 
   const adicionarIngrediente = () => {
     localStorage.setItem('dadosReceitaParcial', JSON.stringify({
@@ -45,44 +49,49 @@ function ReceitaForm() {
       tempo_preparo,
       modo_preparo
     }));
+    if (id) {
+      localStorage.setItem('receitaEditandoId', id);
+    }
     navigate('/selecionar-ingredientes');
   };
 
   const handleSubmit = async (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
-    alert('Preencha todos os campos obrigatórios!');
-    return;
-  }
-
-  const receitaData = {
-    nome,
-    tempo_preparo: Number(tempo_preparo),
-    categoriaId,
-    ingredientes: ingredientes.map(ing => ({
-      nome: ing.nome,
-      quantidade: Number(ing.quantidade),
-      unidade: ing.unidade
-    })),
-    modo_preparo
-  };
-
-  try {
-    if (id) {
-      await dispatch(updateReceita({ id, ...receitaData })).unwrap();
-    } else {
-      await dispatch(addReceita(receitaData)).unwrap();
+    if (!nome || !categoriaId || !tempo_preparo || ingredientes.length === 0) {
+      alert('Preencha todos os campos obrigatórios!');
+      return;
     }
 
-    localStorage.removeItem('dadosReceitaParcial');
-    localStorage.removeItem('ingredientesSelecionados');
-    navigate('/');
-  } catch (error) {
-    console.error('Erro ao salvar receita:', error);
-    alert('Erro ao salvar receita');
-  }
-};
+    const receitaData = {
+      nome,
+      tempo_preparo: Number(tempo_preparo),
+      categoriaId,
+      ingredientes: ingredientes.map(ing => ({
+        nome: ing.nome,
+        quantidade: Number(ing.quantidade),
+        unidade: ing.unidade
+      })),
+      modo_preparo
+    };
+
+    try {
+      if (id) {
+        await dispatch(updateReceita({ id, ...receitaData })).unwrap();
+      } else {
+        await dispatch(addReceita(receitaData)).unwrap();
+      }
+
+      localStorage.removeItem('dadosReceitaParcial');
+      localStorage.removeItem('ingredientesSelecionados');
+      localStorage.removeItem('receitaEditandoId');
+
+      navigate('/');
+    } catch (error) {
+      console.error('Erro ao salvar receita:', error);
+      alert('Erro ao salvar receita');
+    }
+  };
 
   return (
     <div className="login-wrapper">

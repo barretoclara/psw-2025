@@ -141,23 +141,36 @@ const SelecionaIngredientes = () => {
   };
 
   const confirmarIngredientes = () => {
-    const selecionados = ingredientesSelecionados
-      .filter(ing => ing.quantidade > 0)
-      .map(({ id, nome, quantidade, unidade }) => ({ 
-        id, 
-        nome, 
-        quantidade, 
-        unidade 
-      }));
-    
-    localStorage.setItem("ingredientesSelecionados", JSON.stringify(selecionados));
-    navigate('/cadastrar-receita');
-  };
+  const selecionados = ingredientesSelecionados
+    .filter(ing => ing.quantidade > 0)
+    .map(({ id, nome, quantidade, unidade }) => ({ 
+      id, 
+      nome, 
+      quantidade, 
+      unidade 
+    }));
 
-  const cancelar = () => {
-    localStorage.removeItem("ingredientesSelecionados");
+  localStorage.setItem("ingredientesSelecionados", JSON.stringify(selecionados));
+
+  const receitaId = localStorage.getItem("receitaEditandoId");
+  if (receitaId) {
+    navigate(`/editar-receita/${receitaId}`);
+  } else {
     navigate('/cadastrar-receita');
-  };
+  }
+};
+
+const cancelar = () => {
+  localStorage.removeItem("ingredientesSelecionados");
+
+  const receitaId = localStorage.getItem("receitaEditandoId");
+  if (receitaId) {
+    navigate(`/editar-receita/${receitaId}`);
+  } else {
+    navigate('/cadastrar-receita');
+  }
+};
+
 
   const estaSelecionado = (id) => {
     return ingredientesSelecionados.some(ing => ing.id === id);
